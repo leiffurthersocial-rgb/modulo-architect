@@ -1,0 +1,58 @@
+{
+  "name": "modulo-architect",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Modulo: Architect — a minimalist, browser-based 3D house and room planner.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test --trace off",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
+    "camera-controls": "3.1.2",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "geist": "^1.9.2",
+    "idb-keyval": "^6.3.0",
+    "immer": "^11.2.9",
+    "lucide-react": "^1.70.0",
+    "nanoid": "^6.0.2",
+    "next": "^16.4.5",
+    "radix-ui": "^1.8.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0",
+    "zod": "^4.6.7",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.5",
+    "eslint-config-prettier": "^10.1.8",
+    "fake-indexeddb": "^6.2.8",
+    "postcss": "^8.5.32",
+    "prettier": "^3.9.10",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
+  },
+  "packageManager": "pnpm@10.28.0"
+}
