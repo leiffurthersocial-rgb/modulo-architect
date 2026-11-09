@@ -90,12 +90,10 @@ export function buildWalkWorld(project: Project): WalkWorld {
       continue;
     }
     const fp = def.footprint
-      ? def
-          .footprint({ size: it.size, params: it.params })
-          .map((p) => ({
-            x: it.x + p.x * Math.cos(it.rotation) - p.y * Math.sin(it.rotation),
-            y: it.y + p.x * Math.sin(it.rotation) + p.y * Math.cos(it.rotation),
-          }))
+      ? def.footprint({ size: it.size, params: it.params }).map((p) => ({
+          x: it.x + p.x * Math.cos(it.rotation) - p.y * Math.sin(it.rotation),
+          y: it.y + p.x * Math.sin(it.rotation) + p.y * Math.cos(it.rotation),
+        }))
       : itemBox(it);
     add(fp, it.z, it.z + it.size.h);
   }

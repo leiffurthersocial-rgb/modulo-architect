@@ -73,7 +73,7 @@ function ProjectName() {
   return (
     <button
       onClick={() => setEditing(true)}
-      className="h-7 max-w-[180px] truncate rounded-md px-2 text-[13px] font-medium hover:bg-hover"
+      className="h-7 max-w-[120px] truncate xl:max-w-[200px] rounded-md px-2 text-[13px] font-medium hover:bg-hover"
       title="Rename project"
       data-testid="project-name"
     >
@@ -159,7 +159,7 @@ export function TopBar() {
           className="bg-transparent"
           options={MODES.map((m, i) => ({
             value: m.value,
-            label: <span className="hidden lg:inline">{m.label}</span>,
+            label: <span className="hidden xl:inline">{m.label}</span>,
             icon: m.icon,
             tooltip: m.label,
             shortcut: String(i + 1),

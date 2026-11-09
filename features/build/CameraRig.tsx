@@ -12,7 +12,7 @@ function buildingBounds() {
   const p = useDocument.getState().project;
   const pts = p.building.levels.flatMap((l) => l.nodes.map((n) => ({ x: n.x, y: n.y })));
   const top = p.building.levels[p.building.levels.length - 1]!;
-  if (pts.length < 2) return { cx: 0, cz: 0, r: 8, h: 1.5 };
+  if (pts.length < 2) return { cx: 0, cz: 0, r: 5, h: 1.5 };
   const b = bounds(pts);
   return {
     cx: (b.minX + b.maxX) / 2,
@@ -34,7 +34,7 @@ export function CameraRig({ controls, drawing }: { controls: ControlsRef; drawin
       first.current = false;
       const b = buildingBounds();
       const d = b.r * 2.4 + 6;
-      void c.setLookAt(b.cx + d * 0.7, d * 0.75, b.cz + d * 0.9, b.cx, b.h * 0.4, b.cz, false);
+      void c.setLookAt(b.cx + d * 0.55, d * 1.05, b.cz + d * 0.75, b.cx, 0, b.cz, false);
     }
   }, [controls]);
 
@@ -58,7 +58,7 @@ export function CameraRig({ controls, drawing }: { controls: ControlsRef; drawin
       case 'iso':
       case 'fit':
       default:
-        void c.setLookAt(b.cx + d * 0.7, d * 0.75, b.cz + d * 0.9, b.cx, b.h * 0.4, b.cz, true);
+        void c.setLookAt(b.cx + d * 0.55, d * 1.05, b.cz + d * 0.75, b.cx, 0, b.cz, true);
     }
   }, [request, controls]);
 

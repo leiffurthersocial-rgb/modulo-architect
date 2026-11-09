@@ -24,3 +24,19 @@ describe('templates', () => {
     expect(p.building.levels[1]!.rooms.length).toBeGreaterThanOrEqual(4);
   });
 });
+
+import { itemIssues } from '../model/footprint';
+
+describe('template furniture', () => {
+  for (const t of TEMPLATE_LIST) {
+    it(`${t.id} has no overlapping items`, () => {
+      const p = createFromTemplate(t.id);
+      for (const l of p.building.levels)
+        for (const it of l.items)
+          expect(
+            itemIssues(null, l.items, it).map((i) => `${it.type}×${i.with}`),
+            it.type,
+          ).toEqual([]);
+    });
+  }
+});

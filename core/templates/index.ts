@@ -110,7 +110,7 @@ function twoBedroom(p: P) {
   add(item('floor-lamp', ox + 0.45, oy + 0.45));
   add(item('plant', ox + 0.45, oy + 3.2));
   // Kitchen & dining
-  add(item('kitchen-base', ox + 5.66, oy + 5.4, Math.PI / 2, { size: { w: 2.4, d: 0.62, h: 0.9 } }));
+  add(item('kitchen-base', ox + 5.66, oy + 4.85, Math.PI / 2, { size: { w: 2.4, d: 0.62, h: 0.9 } }));
   add(item('fridge', ox + 5.6, oy + 6.4, Math.PI / 2));
   add(item('dining-table', ox + 2.9, oy + 5.0, 0, { size: { w: 1.6, d: 0.9, h: 0.75 } }));
   for (const dx of [-0.45, 0.45]) {
@@ -161,7 +161,7 @@ function twoStorey(p: P) {
   opening(g, 'window-casement', ox + 6.5, oy + 7);
   const add = (lid: string, i: Omit<Item, 'id'>) => ops.addItem(p, lid, i);
   add(g.id, item('sofa-corner', ox + 1.5, oy + 1.0, -Math.PI / 2, { size: { w: 2.7, d: 1.7, h: 0.8 } }));
-  add(g.id, item('coffee-table', ox + 2.6, oy + 1.4, Math.PI / 2));
+  add(g.id, item('coffee-table', ox + 3.4, oy + 1.9, Math.PI / 2));
   add(g.id, item('kitchen-base', ox + 7.2, oy + 6.66, Math.PI, { size: { w: 3.0, d: 0.62, h: 0.9 } }));
   add(g.id, item('kitchen-island', ox + 7.2, oy + 4.9, 0, { size: { w: 2.0, d: 1.0, h: 0.92 } }));
   add(g.id, item('dining-table-round', ox + 3.3, oy + 5.2));

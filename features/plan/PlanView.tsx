@@ -14,16 +14,29 @@ import { outlineCenter } from '@/features/tools/select';
 import { bounds } from '@/core/geometry/polygon';
 import { smartStep } from '@/core/snapping/snap';
 
-function fitBuilding(w: number, h: number) {
+function fitBuilding(w: number, h: number, left = 0) {
   const p = useDocument.getState().project;
   const pts = p.building.levels.flatMap((l) => l.nodes.map((n) => ({ x: n.x, y: n.y })));
-  const src = pts.length >= 2 ? pts : p.site.plot;
+  const src =
+    pts.length >= 2
+      ? pts
+      : [
+          { x: -8, y: -6 },
+          { x: 8, y: 6 },
+        ];
   const b = bounds(src);
   const pad = pts.length >= 2 ? 3 : 1;
   const scale = Math.min(w / (b.width + pad * 2), h / (b.height + pad * 2));
   usePlanView
     .getState()
     .set({ cx: (b.minX + b.maxX) / 2, cy: (b.minY + b.maxY) / 2, scale: Math.max(8, Math.min(220, scale)) });
+}
+
+/** Width of the floating UI covering the left edge of this pane (0 when the pane starts mid-screen). */
+function occludedLeft(el: HTMLElement | null) {
+  if (!el) return 0;
+  const r = el.getBoundingClientRect();
+  return r.left < 10 ? 350 : 0;
 }
 
 export default function PlanView() {
@@ -58,11 +71,11 @@ export default function PlanView() {
     if (size.w < 10) return;
     if (!fitted.current) {
       fitted.current = true;
-      fitBuilding(size.w, size.h);
+      fitBuilding(size.w, size.h, occludedLeft(ref.current));
     }
   }, [size]);
   useEffect(() => {
-    if (planFit) fitBuilding(size.w, size.h);
+    if (planFit) fitBuilding(size.w, size.h, occludedLeft(ref.current));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planFit]);
 
