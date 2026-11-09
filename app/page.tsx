@@ -32,8 +32,8 @@ export default function Landing() {
               <span className="text-fg-subtle">Walk through your house.</span>
             </h1>
             <p className="max-w-md text-[17px] leading-relaxed text-fg-muted">
-              Draw rooms, raise walls, add a roof, furnish every corner and step inside. A calm, precise house planner that runs
-              entirely in your browser.
+              Draw rooms, raise walls, add a roof, furnish every corner and step inside. A calm, precise house
+              planner that runs entirely in your browser.
             </p>
             <LandingActions />
             <RecentProjects />
@@ -44,7 +44,10 @@ export default function Landing() {
         </main>
 
         <section className="mx-auto max-w-6xl px-6 pb-20" aria-labelledby="templates-heading">
-          <h2 id="templates-heading" className="mb-4 text-xs font-medium uppercase tracking-[0.08em] text-fg-subtle">
+          <h2
+            id="templates-heading"
+            className="mb-4 text-xs font-medium uppercase tracking-[0.08em] text-fg-subtle"
+          >
             Start from a template
           </h2>
           <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -78,7 +81,11 @@ export default function Landing() {
 function TemplateGlyph({ id }: { id: string }) {
   const common = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.4, strokeLinejoin: 'round' as const };
   return (
-    <svg viewBox="0 0 80 48" className="h-12 w-20 text-fg-muted transition-colors group-hover:text-accent" aria-hidden>
+    <svg
+      viewBox="0 0 80 48"
+      className="h-12 w-20 text-fg-muted transition-colors group-hover:text-accent"
+      aria-hidden
+    >
       {id === 'empty' && <rect x="6" y="6" width="68" height="36" rx="2" {...common} strokeDasharray="3 3" />}
       {id === 'studio' && (
         <>

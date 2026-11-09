@@ -27,7 +27,14 @@ export function ShareDialog() {
     >
       <div className="flex flex-col gap-3 px-5 py-4">
         <div className="flex gap-2">
-          <input readOnly value={link} aria-label="Share link" onFocus={(e) => e.target.select()} className="tnum h-9 min-w-0 flex-1 rounded-[9px] border border-line bg-bg-elevated px-2.5 text-[12.5px] text-fg-muted outline-none" data-testid="share-link" />
+          <input
+            readOnly
+            value={link}
+            aria-label="Share link"
+            onFocus={(e) => e.target.select()}
+            className="tnum h-9 min-w-0 flex-1 rounded-[9px] border border-line bg-bg-elevated px-2.5 text-[12.5px] text-fg-muted outline-none"
+            data-testid="share-link"
+          />
           <Button
             variant="primary"
             icon={copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
@@ -44,13 +51,25 @@ export function ShareDialog() {
           </Button>
         </div>
         <p className="text-xs text-fg-subtle">
-          Link size {kb} KB. Very large projects may exceed what some apps accept in a link; share the file instead.
+          Link size {kb} KB. Very large projects may exceed what some apps accept in a link; share the file
+          instead.
         </p>
         <div className="flex flex-wrap gap-2">
-          <Button size="sm" variant="secondary" icon={<ExternalLink className="h-3.5 w-3.5" />} onClick={() => window.open(link, '_blank', 'noopener')} disabled={!link}>
+          <Button
+            size="sm"
+            variant="secondary"
+            icon={<ExternalLink className="h-3.5 w-3.5" />}
+            onClick={() => window.open(link, '_blank', 'noopener')}
+            disabled={!link}
+          >
             Open viewer
           </Button>
-          <Button size="sm" variant="secondary" icon={<Download className="h-3.5 w-3.5" />} onClick={() => downloadProject(project)}>
+          <Button
+            size="sm"
+            variant="secondary"
+            icon={<Download className="h-3.5 w-3.5" />}
+            onClick={() => downloadProject(project)}
+          >
             Download .modulo.json
           </Button>
         </div>

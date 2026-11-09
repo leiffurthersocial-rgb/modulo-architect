@@ -17,7 +17,8 @@ const STEPS: Step[] = [
     title: 'Draw your first room',
     body: (
       <>
-        Press <Kbd shortcut="r" /> and drag on the grid, or pick a quick room on the left. Type <b>4x3</b> + Enter for exact sizes.
+        Press <Kbd shortcut="r" /> and drag on the grid, or pick a quick room on the left. Type <b>4x3</b> +
+        Enter for exact sizes.
       </>
     ),
     done: () => useDocument.getState().project.building.levels.some((l) => l.rooms.length > 0),
@@ -31,7 +32,8 @@ const STEPS: Step[] = [
     title: 'Add a door and a sofa',
     body: (
       <>
-        <Kbd shortcut="d" /> places doors on walls. Then switch to <b>Furnish</b> (<Kbd shortcut="3" />) and drag a sofa in.
+        <Kbd shortcut="d" /> places doors on walls. Then switch to <b>Furnish</b> (<Kbd shortcut="3" />) and
+        drag a sofa in.
       </>
     ),
     done: () => useDocument.getState().project.building.levels.some((l) => l.items.length > 0),
@@ -57,7 +59,8 @@ export function Onboarding() {
   useEffect(() => {
     const start = () => setStep(0);
     try {
-      if (!localStorage.getItem('modulo:onboarded') && !readOnly) setStep(0);
+      const empty = useDocument.getState().project.building.levels.every((l) => l.walls.length === 0);
+      if (!localStorage.getItem('modulo:onboarded') && !readOnly && empty) setStep(0);
     } catch {
       /* ignore */
     }
@@ -88,7 +91,12 @@ export function Onboarding() {
   if (step === null || mode === 'walk') return null;
   const s = STEPS[step]!;
   return (
-    <div role="dialog" aria-label="Getting started" className="panel animate-in pointer-events-auto w-[300px] bg-panel-solid p-4 shadow-pop" data-testid="onboarding">
+    <div
+      role="dialog"
+      aria-label="Getting started"
+      className="panel animate-in pointer-events-auto w-[300px] bg-panel-solid p-4 shadow-pop"
+      data-testid="onboarding"
+    >
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="mb-1 text-[11px] font-medium uppercase tracking-[0.07em] text-accent">
@@ -96,7 +104,11 @@ export function Onboarding() {
           </div>
           <h2 className="text-sm font-semibold">{s.title}</h2>
         </div>
-        <button aria-label="Skip tour" onClick={finish} className="rounded-md p-1 text-fg-subtle hover:bg-hover hover:text-fg">
+        <button
+          aria-label="Skip tour"
+          onClick={finish}
+          className="rounded-md p-1 text-fg-subtle hover:bg-hover hover:text-fg"
+        >
           <X className="h-4 w-4" />
         </button>
       </div>
@@ -111,7 +123,10 @@ export function Onboarding() {
           <button onClick={finish} className="h-7 rounded-md px-2 text-xs text-fg-muted hover:bg-hover">
             Skip
           </button>
-          <button onClick={() => (step + 1 >= STEPS.length ? finish() : setStep(step + 1))} className="h-7 rounded-md bg-fg px-2.5 text-xs font-medium text-bg">
+          <button
+            onClick={() => (step + 1 >= STEPS.length ? finish() : setStep(step + 1))}
+            className="h-7 rounded-md bg-fg px-2.5 text-xs font-medium text-bg"
+          >
             {step + 1 >= STEPS.length ? 'Done' : 'Next'}
           </button>
         </div>

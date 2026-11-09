@@ -36,10 +36,22 @@ export function OpeningView({
   const cx = shape.a.x + shape.dir.x * opening.offset;
   const cz = shape.a.y + shape.dir.y * opening.offset;
   const rotY = -Math.atan2(shape.dir.y, shape.dir.x);
-  const resolve = (slot: string) => (slot === 'frame' || slot === 'leaf' ? (opening.material ?? OPENING_SLOTS[slot]!) : (OPENING_SLOTS[slot] ?? slot));
+  const resolve = (slot: string) =>
+    slot === 'frame' || slot === 'leaf'
+      ? (opening.material ?? OPENING_SLOTS[slot]!)
+      : (OPENING_SLOTS[slot] ?? slot);
   return (
-    <group position={[cx, elevation + opening.sill, cz]} rotation={[0, rotY, 0]} scale={[opening.mirror ? -1 : 1, 1, opening.flip ? -1 : 1]}>
-      <PartsGroup parts={parts} resolve={resolve} variant={variant} pickId={preview ? undefined : opening.id} />
+    <group
+      position={[cx, elevation + opening.sill, cz]}
+      rotation={[0, rotY, 0]}
+      scale={[opening.mirror ? -1 : 1, 1, opening.flip ? -1 : 1]}
+    >
+      <PartsGroup
+        parts={parts}
+        resolve={resolve}
+        variant={variant}
+        pickId={preview ? undefined : opening.id}
+      />
     </group>
   );
 }

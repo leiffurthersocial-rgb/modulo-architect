@@ -28,7 +28,16 @@ export const useToolUI = create<ToolUIState>()((set) => ({
   tick: 0,
   tip: null,
   set: (patch) => set((s) => ({ ...patch, tick: s.tick + 1 })),
-  reset: () => set((s) => ({ overlay: [], ghost: null, snap: null, input: null, tip: null, cursor: 'default', tick: s.tick + 1 })),
+  reset: () =>
+    set((s) => ({
+      overlay: [],
+      ghost: null,
+      snap: null,
+      input: null,
+      tip: null,
+      cursor: 'default',
+      tick: s.tick + 1,
+    })),
 }));
 
 export const toolUI = () => useToolUI.getState();

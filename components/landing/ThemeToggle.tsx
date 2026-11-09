@@ -6,7 +6,11 @@ import { IconButton } from '@/components/ui/Button';
 
 const order: ThemePref[] = ['system', 'light', 'dark'];
 
-export function ThemeToggle({ tooltipSide = 'bottom' }: { tooltipSide?: 'bottom' | 'top' | 'left' | 'right' }) {
+export function ThemeToggle({
+  tooltipSide = 'bottom',
+}: {
+  tooltipSide?: 'bottom' | 'top' | 'left' | 'right';
+}) {
   const [pref, setPref] = useState<ThemePref>('system');
   useEffect(() => setPref(readTheme()), []);
   const next = order[(order.indexOf(pref) + 1) % order.length]!;

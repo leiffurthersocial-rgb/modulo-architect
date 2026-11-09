@@ -30,7 +30,8 @@ export default defineElement({
       slab(w + 0.3, 0.18, 0.08, 0, h, d / 2 - p / 2, 'wood'),
     ];
     const n = Math.max(3, Math.round(w / 0.4));
-    for (let i = 0; i <= n; i++) parts.push(slab(0.05, 0.14, d + 0.4, -w / 2 + (w * i) / n, h + 0.18, 0, 'wood'));
+    for (let i = 0; i <= n; i++)
+      parts.push(slab(0.05, 0.14, d + 0.4, -w / 2 + (w * i) / n, h + 0.18, 0, 'wood'));
     return parts;
   },
 });

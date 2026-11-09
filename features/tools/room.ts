@@ -29,7 +29,12 @@ let current: Vec2 | null = null;
 let dragging = false;
 let text = '';
 
-const rect = (a: Vec2, b: Vec2) => ({ x: Math.min(a.x, b.x), y: Math.min(a.y, b.y), w: Math.abs(b.x - a.x), h: Math.abs(b.y - a.y) });
+const rect = (a: Vec2, b: Vec2) => ({
+  x: Math.min(a.x, b.x),
+  y: Math.min(a.y, b.y),
+  w: Math.abs(b.x - a.x),
+  h: Math.abs(b.y - a.y),
+});
 
 function template(): RoomTemplate | null {
   const place = editor().place;
@@ -53,10 +58,19 @@ function render() {
     o.push({ kind: 'poly', pts, style: 'accent', fill: true, closed: true });
     o.push({ kind: 'dim', a: pts[0]!, b: pts[1]!, offset: -0.45, text: formatLength(r.w, u) });
     o.push({ kind: 'dim', a: pts[1]!, b: pts[2]!, offset: -0.45, text: formatLength(r.h, u) });
-    o.push({ kind: 'label', p: { x: r.x + r.w / 2, y: r.y + r.h / 2 }, text: `${t?.name ?? 'Room'} · ${formatArea(r.w * r.h, u)}`, style: 'accent' });
+    o.push({
+      kind: 'label',
+      p: { x: r.x + r.w / 2, y: r.y + r.h / 2 },
+      text: `${t?.name ?? 'Room'} · ${formatArea(r.w * r.h, u)}`,
+      style: 'accent',
+    });
   }
   if (current) o.push({ kind: 'point', p: current, style: 'draft' });
-  toolUI().set({ overlay: o, cursor: 'crosshair', input: text && current ? { label: 'Width × length', text, p: current } : null });
+  toolUI().set({
+    overlay: o,
+    cursor: 'crosshair',
+    input: text && current ? { label: 'Width × length', text, p: current } : null,
+  });
 }
 
 function create(x: number, y: number, w: number, h: number, name?: string, floor?: string) {
@@ -152,7 +166,8 @@ export const roomTool: Tool = {
     return false;
   },
   hint() {
-    if (template()) return `Click to place the ${template()!.name.toLowerCase()} · Shift-click to keep placing · Esc to cancel`;
+    if (template())
+      return `Click to place the ${template()!.name.toLowerCase()} · Shift-click to keep placing · Esc to cancel`;
     if (text) return 'Enter to create the room (e.g. 4x3) · Esc to clear';
     if (start) return 'Click or release to set the opposite corner · Esc to cancel';
     return 'Drag to draw a room, or type its size (4x3) and press Enter';

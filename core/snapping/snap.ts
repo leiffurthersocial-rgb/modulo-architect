@@ -1,5 +1,14 @@
 import type { Vec2 } from '../geometry/vec2';
-import { add, angleOf, closestOnSegment, dist, lineIntersection, scale, sub, wrapAngle } from '../geometry/vec2';
+import {
+  add,
+  angleOf,
+  closestOnSegment,
+  dist,
+  lineIntersection,
+  scale,
+  sub,
+  wrapAngle,
+} from '../geometry/vec2';
 
 export type SnapKind =
   | 'endpoint'
@@ -64,7 +73,10 @@ export function smartStep(metersPerPixel: number, minPx = 12): number {
 
 export const roundTo = (n: number, step: number) => Math.round(n / step) * step;
 
-const snapGrid = (p: Vec2, step: number): Vec2 => ({ x: clean(roundTo(p.x, step)), y: clean(roundTo(p.y, step)) });
+const snapGrid = (p: Vec2, step: number): Vec2 => ({
+  x: clean(roundTo(p.x, step)),
+  y: clean(roundTo(p.y, step)),
+});
 const clean = (n: number) => Math.round(n * 1e6) / 1e6 + 0;
 
 export function snapPoint(raw: Vec2, target: SnapTarget, opts: SnapOptions): SnapResult {
@@ -104,7 +116,10 @@ export function snapPoint(raw: Vec2, target: SnapTarget, opts: SnapOptions): Sna
     const p = add(best.seg.a, scale(sub(best.seg.b, best.seg.a), t));
     if (ax.x !== null || ax.y !== null) {
       // Prefer alignment along the wall if a guide crosses it.
-      const guide = ax.x !== null ? { p: { x: ax.x, y: 0 }, d: { x: 0, y: 1 } } : { p: { x: 0, y: ax.y! }, d: { x: 1, y: 0 } };
+      const guide =
+        ax.x !== null
+          ? { p: { x: ax.x, y: 0 }, d: { x: 0, y: 1 } }
+          : { p: { x: 0, y: ax.y! }, d: { x: 1, y: 0 } };
       const hit = lineIntersection(best.seg.a, sub(best.seg.b, best.seg.a), guide.p, guide.d);
       if (hit && hit.t >= 0 && hit.t <= 1 && dist(hit.point, raw) < opts.radius * 1.5)
         return { point: hit.point, kind: 'align', guides: ax.guides };
@@ -113,7 +128,11 @@ export function snapPoint(raw: Vec2, target: SnapTarget, opts: SnapOptions): Sna
   }
   if (ax.x !== null || ax.y !== null) {
     const g = snapGrid(raw, opts.step);
-    return { point: { x: ax.x ?? g.x, y: ax.y ?? g.y }, kind: 'align', guides: ax.guides.map((l) => fixGuide(l, ax, g)) };
+    return {
+      point: { x: ax.x ?? g.x, y: ax.y ?? g.y },
+      kind: 'align',
+      guides: ax.guides.map((l) => fixGuide(l, ax, g)),
+    };
   }
   return { point: snapGrid(raw, opts.step), kind: 'grid', guides: [] };
 }
@@ -149,7 +168,8 @@ function snapFromAnchor(
     for (const s of target.segments) {
       const wa = angleOf(sub(s.b, s.a));
       for (const k of [0, Math.PI]) cands.push({ a: wa + k, kind: 'parallel', tol: 0.05, prio: 1.5 });
-      for (const k of [Math.PI / 2, -Math.PI / 2]) cands.push({ a: wa + k, kind: 'perpendicular', tol: 0.05, prio: 1.5 });
+      for (const k of [Math.PI / 2, -Math.PI / 2])
+        cands.push({ a: wa + k, kind: 'perpendicular', tol: 0.05, prio: 1.5 });
     }
   }
   let chosen: Cand | null = null;
@@ -189,7 +209,8 @@ function snapFromAnchor(
         const hit = lineIntersection(anchor, dir, p, gd);
         if (!hit || hit.t <= 0) continue;
         const d = Math.abs(hit.t - along);
-        if (d < opts.radius && (!bestAlign || d < bestAlign.d)) bestAlign = { p: hit.point, guide: { a: p, b: hit.point }, d };
+        if (d < opts.radius && (!bestAlign || d < bestAlign.d))
+          bestAlign = { p: hit.point, guide: { a: p, b: hit.point }, d };
       }
     }
     if (bestAlign) return { point: bestAlign.p, kind: 'align', guides: [bestAlign.guide] };
@@ -244,7 +265,11 @@ function alignment(p: Vec2, points: Vec2[], radius: number) {
 }
 
 /** Snap a translation delta (moving objects) to round values, honouring axis lock. */
-export function snapDelta(delta: Vec2, step: number, opts: { axisLock?: boolean; disabled?: boolean } = {}): Vec2 {
+export function snapDelta(
+  delta: Vec2,
+  step: number,
+  opts: { axisLock?: boolean; disabled?: boolean } = {},
+): Vec2 {
   let d = delta;
   if (opts.axisLock) d = Math.abs(d.x) >= Math.abs(d.y) ? { x: d.x, y: 0 } : { x: 0, y: d.y };
   if (opts.disabled) return d;

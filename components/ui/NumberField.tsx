@@ -1,7 +1,14 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/cn';
-import { baseStep, editableValue, formatValue, parseValue, type UnitSystem, type ValueKind } from '@/core/units/units';
+import {
+  baseStep,
+  editableValue,
+  formatValue,
+  parseValue,
+  type UnitSystem,
+  type ValueKind,
+} from '@/core/units/units';
 
 export interface NumberFieldProps {
   label: string;
@@ -23,7 +30,8 @@ export interface NumberFieldProps {
   short?: string;
 }
 
-const clamp = (v: number, min?: number, max?: number) => Math.min(max ?? Infinity, Math.max(min ?? -Infinity, v));
+const clamp = (v: number, min?: number, max?: number) =>
+  Math.min(max ?? Infinity, Math.max(min ?? -Infinity, v));
 
 /**
  * Numeric input with units. Type a value or an expression (2.5*3, 320cm, 10' 6"), use ↑/↓
@@ -72,7 +80,11 @@ export function NumberField({
   const nudge = (dir: number, e: { shiftKey: boolean; altKey: boolean }) => {
     const mult = e.shiftKey ? 10 : e.altKey ? 0.1 : 1;
     const base = focused ? (parseValue(text, kind, units) ?? value) : value;
-    const next = clamp(Math.round((base + dir * s * mult) / (s * (e.altKey ? 0.1 : 1))) * s * (e.altKey ? 0.1 : 1), min, max);
+    const next = clamp(
+      Math.round((base + dir * s * mult) / (s * (e.altKey ? 0.1 : 1))) * s * (e.altKey ? 0.1 : 1),
+      min,
+      max,
+    );
     onChange(next, 'nudge');
     setText(editableValue(next, kind, units));
   };

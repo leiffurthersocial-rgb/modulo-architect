@@ -145,7 +145,9 @@ export function addWall(level: Level, p: Vec2, q: Vec2, props: WallProps): strin
     stops.push({ t: hit.t, id });
   }
   stops.sort((x, y) => x.t - y.t);
-  const chain = [startId, ...stops.map((s) => s.id), endId].filter((id, i, arr) => i === 0 || id !== arr[i - 1]);
+  const chain = [startId, ...stops.map((s) => s.id), endId].filter(
+    (id, i, arr) => i === 0 || id !== arr[i - 1],
+  );
   const created: string[] = [];
   for (let i = 0; i < chain.length - 1; i++) {
     const a = chain[i]!;
@@ -153,7 +155,14 @@ export function addWall(level: Level, p: Vec2, q: Vec2, props: WallProps): strin
     const exists = level.walls.some((w) => (w.a === a && w.b === b) || (w.a === b && w.b === a));
     if (exists || a === b) continue;
     const id = createId('wall');
-    level.walls.push({ id, a, b, thickness: props.thickness, height: props.height, materials: { ...props.materials } });
+    level.walls.push({
+      id,
+      a,
+      b,
+      thickness: props.thickness,
+      height: props.height,
+      materials: { ...props.materials },
+    });
     created.push(id);
   }
   return created;
@@ -250,7 +259,11 @@ export function detectFaces(level: Level, minArea = 0.05): string[][] {
   return faces;
 }
 
-function pushAdj(m: Map<string, { to: string; angle: number }[]>, k: string, v: { to: string; angle: number }) {
+function pushAdj(
+  m: Map<string, { to: string; angle: number }[]>,
+  k: string,
+  v: { to: string; angle: number },
+) {
   const l = m.get(k);
   if (l) {
     if (!l.some((x) => x.to === v.to)) l.push(v);

@@ -19,7 +19,10 @@ export default defineElement({
     const parts = [slab(w, h, d - 0.02, 0, 0, -0.01, 'fronts')];
     const n = Math.max(1, Math.round(w / 0.6));
     const fw = w / n;
-    for (let i = 0; i < n; i++) parts.push(slab(fw - 0.004, h - 0.004, 0.018, -w / 2 + fw * (i + 0.5), 0.002, d / 2 - 0.01, 'fronts', 0.002));
+    for (let i = 0; i < n; i++)
+      parts.push(
+        slab(fw - 0.004, h - 0.004, 0.018, -w / 2 + fw * (i + 0.5), 0.002, d / 2 - 0.01, 'fronts', 0.002),
+      );
     return parts;
   },
 });

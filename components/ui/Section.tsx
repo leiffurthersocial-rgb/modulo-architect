@@ -3,7 +3,17 @@ import { ChevronRight } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
-export function Section({ title, children, action, className }: { title?: string; children: ReactNode; action?: ReactNode; className?: string }) {
+export function Section({
+  title,
+  children,
+  action,
+  className,
+}: {
+  title?: string;
+  children: ReactNode;
+  action?: ReactNode;
+  className?: string;
+}) {
   return (
     <section className={cn('flex flex-col gap-2 border-t border-line px-4 py-3 first:border-t-0', className)}>
       {title && (

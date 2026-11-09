@@ -3,7 +3,17 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/lib/cn';
 
 /** Text input that commits on Enter / blur (one undo step per edit). */
-export function TextField({ value, onChange, label, className }: { value: string; onChange: (v: string) => void; label: string; className?: string }) {
+export function TextField({
+  value,
+  onChange,
+  label,
+  className,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  label: string;
+  className?: string;
+}) {
   const [text, setText] = useState(value);
   useEffect(() => setText(value), [value]);
   return (

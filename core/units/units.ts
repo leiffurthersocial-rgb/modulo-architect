@@ -46,7 +46,11 @@ export function parseValue(text: string, kind: ValueKind, system: UnitSystem): n
 
 const FRACTIONS: Record<number, string> = { 0.25: '¼', 0.5: '½', 0.75: '¾' };
 
-export function formatLength(m: number, system: UnitSystem, opts: { unit?: boolean; precision?: number } = {}) {
+export function formatLength(
+  m: number,
+  system: UnitSystem,
+  opts: { unit?: boolean; precision?: number } = {},
+) {
   const withUnit = opts.unit ?? true;
   if (system === 'metric') {
     const p = opts.precision ?? 2;

@@ -40,5 +40,7 @@ export function searchElements(query: string, kind?: ElementDef['kind']): Elemen
   const q = query.trim().toLowerCase();
   const list = kind ? elementsOfKind(kind) : allElements();
   if (!q) return list;
-  return list.filter((e) => [e.name, e.category, e.id, ...(e.tags ?? [])].some((s) => s.toLowerCase().includes(q)));
+  return list.filter((e) =>
+    [e.name, e.category, e.id, ...(e.tags ?? [])].some((s) => s.toLowerCase().includes(q)),
+  );
 }

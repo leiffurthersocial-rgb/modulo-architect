@@ -1,4 +1,5 @@
-export const isMac = () => typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+export const isMac = () =>
+  typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 
 /** Render a shortcut like "mod+shift+z" as platform glyphs. */
 export function formatShortcut(shortcut: string): string[] {

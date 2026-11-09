@@ -12,17 +12,39 @@ export function EntityActions({ locked, duplicate = false }: { locked?: boolean;
     <Section>
       <div className="flex flex-wrap gap-1.5">
         {duplicate && (
-          <Button size="sm" variant="ghost" icon={<Copy className="h-3.5 w-3.5" />} onClick={A.duplicateSelection}>
+          <Button
+            size="sm"
+            variant="ghost"
+            icon={<Copy className="h-3.5 w-3.5" />}
+            onClick={A.duplicateSelection}
+          >
             Duplicate
           </Button>
         )}
-        <Button size="sm" variant="ghost" icon={locked ? <LockOpen className="h-3.5 w-3.5" /> : <Lock className="h-3.5 w-3.5" />} onClick={() => A.toggleFlag('locked')}>
+        <Button
+          size="sm"
+          variant="ghost"
+          icon={locked ? <LockOpen className="h-3.5 w-3.5" /> : <Lock className="h-3.5 w-3.5" />}
+          onClick={() => A.toggleFlag('locked')}
+        >
           {locked ? 'Unlock' : 'Lock'}
         </Button>
-        <Button size="sm" variant="ghost" icon={<EyeOff className="h-3.5 w-3.5" />} onClick={() => A.toggleFlag('hidden')}>
+        <Button
+          size="sm"
+          variant="ghost"
+          icon={<EyeOff className="h-3.5 w-3.5" />}
+          onClick={() => A.toggleFlag('hidden')}
+        >
           Hide
         </Button>
-        <Button size="sm" variant="danger" icon={<Trash2 className="h-3.5 w-3.5" />} onClick={A.deleteSelection} disabled={locked} data-testid="delete-selection">
+        <Button
+          size="sm"
+          variant="danger"
+          icon={<Trash2 className="h-3.5 w-3.5" />}
+          onClick={A.deleteSelection}
+          disabled={locked}
+          data-testid="delete-selection"
+        >
           Delete
         </Button>
       </div>

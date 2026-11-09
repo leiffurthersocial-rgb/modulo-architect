@@ -16,7 +16,10 @@ export default defineElement({
   },
   snap: 'floor',
   footprint: ({ size: { w } }) =>
-    Array.from({ length: 10 }, (_, i) => ({ x: (Math.cos((i / 10) * Math.PI * 2) * w) / 2, y: (Math.sin((i / 10) * Math.PI * 2) * w) / 2 })),
+    Array.from({ length: 10 }, (_, i) => ({
+      x: (Math.cos((i / 10) * Math.PI * 2) * w) / 2,
+      y: (Math.sin((i / 10) * Math.PI * 2) * w) / 2,
+    })),
   build: ({ size: { w, h } }) => [
     cyl(w * 0.32, h * 0.28, 0, 0, 0, 'pot', w * 0.4, 24),
     cyl(0.02, h * 0.4, 0, h * 0.28, 0, 'bark', 0.015, 8),

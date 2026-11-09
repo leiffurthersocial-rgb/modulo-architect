@@ -8,7 +8,10 @@ import type { Project } from '@/core/model/schema';
 export function Lighting({ project, sky, dark }: { project: Project; sky: boolean; dark: boolean }) {
   const { latitude, northAngle } = project.site;
   const { hour, month } = project.exterior.sun;
-  const dir = useMemo(() => sunDirection(latitude, month, hour, northAngle), [latitude, month, hour, northAngle]);
+  const dir = useMemo(
+    () => sunDirection(latitude, month, hour, northAngle),
+    [latitude, month, hour, northAngle],
+  );
   const up = dir[1];
   const day = Math.max(0, Math.min(1, up * 4));
   const light = useRef<THREE.DirectionalLight>(null);
@@ -21,7 +24,9 @@ export function Lighting({ project, sky, dark }: { project: Project; sky: boolea
   const warm = new THREE.Color('#ffd8a8').lerp(new THREE.Color('#fffaf0'), Math.min(1, up * 2));
   return (
     <>
-      <hemisphereLight args={[dark ? '#9aa4b8' : '#ffffff', dark ? '#30302c' : '#c9c2b4', dark ? 0.75 : 0.9]} />
+      <hemisphereLight
+        args={[dark ? '#9aa4b8' : '#ffffff', dark ? '#30302c' : '#c9c2b4', dark ? 0.75 : 0.9]}
+      />
       <ambientLight intensity={0.15} />
       <directionalLight
         ref={light}
@@ -41,7 +46,16 @@ export function Lighting({ project, sky, dark }: { project: Project; sky: boolea
         shadow-camera-far={120}
       />
       <primitive object={target} />
-      {sky && <Sky distance={4500} sunPosition={sunPos} turbidity={5} rayleigh={up > 0.1 ? 1.2 : 2.6} mieCoefficient={0.004} mieDirectionalG={0.85} />}
+      {sky && (
+        <Sky
+          distance={4500}
+          sunPosition={sunPos}
+          turbidity={5}
+          rayleigh={up > 0.1 ? 1.2 : 2.6}
+          mieCoefficient={0.004}
+          mieDirectionalG={0.85}
+        />
+      )}
     </>
   );
 }

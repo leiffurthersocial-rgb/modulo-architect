@@ -45,7 +45,9 @@ export function deleteSelection() {
     return ref && !(ref.entity as { locked?: boolean }).locked && ref.kind !== 'level';
   });
   if (ids.length === 0) return;
-  D().mutate(ids.length === 1 ? 'Delete' : `Delete ${ids.length} objects`, (d) => ops.deleteEntities(d as Project, ids));
+  D().mutate(ids.length === 1 ? 'Delete' : `Delete ${ids.length} objects`, (d) =>
+    ops.deleteEntities(d as Project, ids),
+  );
   E().clearSelection();
   E().notify(ids.length === 1 ? 'Deleted' : `Deleted ${ids.length} objects`);
 }
@@ -106,7 +108,12 @@ export function selectAll() {
   }
   const level = p.building.levels.find((l) => l.id === activeLevelId())!;
   if (mode === 'furnish') E().select(level.items.filter((i) => !i.hidden).map((i) => i.id));
-  else E().select([...level.walls, ...level.openings, ...level.stairs, ...level.items].filter((e) => !e.hidden).map((e) => e.id));
+  else
+    E().select(
+      [...level.walls, ...level.openings, ...level.stairs, ...level.items]
+        .filter((e) => !e.hidden)
+        .map((e) => e.id),
+    );
 }
 
 /** Select every item/opening/stair inside a room (or the room under the selection). */
@@ -120,9 +127,13 @@ export function selectAllInRoom(roomId?: string) {
   const ref = findEntity(p, id);
   if (!ref || ref.kind !== 'room') return;
   const poly = roomPolygon(ref.level, ref.entity);
-  const inside = [...ref.level.items, ...ref.level.stairs].filter((e) => pointInPolygon({ x: e.x, y: e.y }, poly)).map((e) => e.id);
+  const inside = [...ref.level.items, ...ref.level.stairs]
+    .filter((e) => pointInPolygon({ x: e.x, y: e.y }, poly))
+    .map((e) => e.id);
   E().select(inside);
-  E().notify(inside.length ? `Selected ${inside.length} objects in ${ref.entity.name}` : `${ref.entity.name} is empty`);
+  E().notify(
+    inside.length ? `Selected ${inside.length} objects in ${ref.entity.name}` : `${ref.entity.name} is empty`,
+  );
 }
 
 export function toggleFlag(flag: 'locked' | 'hidden') {
@@ -134,7 +145,8 @@ export function toggleFlag(flag: 'locked' | 'hidden') {
   D().mutate(flag === 'locked' ? (next ? 'Lock' : 'Unlock') : next ? 'Hide' : 'Show', (d) => {
     for (const id of ids) {
       const ref = findEntity(d as Project, id);
-      if (ref && ref.kind !== 'level') (ref.entity as { locked?: boolean; hidden?: boolean })[flag] = next || undefined;
+      if (ref && ref.kind !== 'level')
+        (ref.entity as { locked?: boolean; hidden?: boolean })[flag] = next || undefined;
     }
   });
   if (flag === 'hidden' && next) E().clearSelection();
@@ -143,14 +155,18 @@ export function toggleFlag(flag: 'locked' | 'hidden') {
 
 export function showAllHidden() {
   D().mutate('Show all', (d) => {
-    for (const l of d.building.levels) for (const list of [l.walls, l.rooms, l.openings, l.stairs, l.items]) for (const e of list) delete e.hidden;
+    for (const l of d.building.levels)
+      for (const list of [l.walls, l.rooms, l.openings, l.stairs, l.items])
+        for (const e of list) delete e.hidden;
     for (const i of d.exterior.items) delete i.hidden;
     for (const r of d.building.roofs) delete r.hidden;
   });
 }
 
 /** Align or distribute selected items/stairs (plan space). */
-export function alignSelection(how: 'left' | 'right' | 'top' | 'bottom' | 'center-x' | 'center-y' | 'distribute-x' | 'distribute-y') {
+export function alignSelection(
+  how: 'left' | 'right' | 'top' | 'bottom' | 'center-x' | 'center-y' | 'distribute-x' | 'distribute-y',
+) {
   const p = D().project;
   const ids = E().selection.filter((id) => kindOf(id) === 'item' || kindOf(id) === 'stair');
   if (ids.length < 2) {
@@ -158,14 +174,18 @@ export function alignSelection(how: 'left' | 'right' | 'top' | 'bottom' | 'cente
     return;
   }
   const boxes = ids.map((id) => ({ id, b: bounds(entityOutline(p, id)!.polygons.flat()) }));
-  const all = bounds(boxes.flatMap((x) => [
-    { x: x.b.minX, y: x.b.minY },
-    { x: x.b.maxX, y: x.b.maxY },
-  ]));
+  const all = bounds(
+    boxes.flatMap((x) => [
+      { x: x.b.minX, y: x.b.minY },
+      { x: x.b.maxX, y: x.b.maxY },
+    ]),
+  );
   const delta = new Map<string, { x: number; y: number }>();
   if (how.startsWith('distribute')) {
     const axis = how === 'distribute-x' ? 'x' : 'y';
-    const sorted = [...boxes].sort((a, b) => (axis === 'x' ? a.b.minX + a.b.maxX - b.b.minX - b.b.maxX : a.b.minY + a.b.maxY - b.b.minY - b.b.maxY));
+    const sorted = [...boxes].sort((a, b) =>
+      axis === 'x' ? a.b.minX + a.b.maxX - b.b.minX - b.b.maxX : a.b.minY + a.b.maxY - b.b.minY - b.b.maxY,
+    );
     const first = sorted[0]!;
     const last = sorted[sorted.length - 1]!;
     const c0 = axis === 'x' ? (first.b.minX + first.b.maxX) / 2 : (first.b.minY + first.b.maxY) / 2;
@@ -233,7 +253,8 @@ export function rotateSelection(delta: number) {
     (d) => {
       for (const id of ids) {
         const ref = findEntity(d as Project, id);
-        if (ref && (ref.kind === 'item' || ref.kind === 'stair') && !ref.entity.locked) ref.entity.rotation = normAngle(ref.entity.rotation + delta);
+        if (ref && (ref.kind === 'item' || ref.kind === 'stair') && !ref.entity.locked)
+          ref.entity.rotation = normAngle(ref.entity.rotation + delta);
       }
     },
     { mergeKey: `rotate:${ids.join(',')}` },
@@ -251,7 +272,16 @@ const normAngle = (a: number) => {
 export function newItem(type: string, x: number, y: number, rotation = 0): Omit<Item, 'id'> | null {
   const def = getElement(type);
   if (!def) return null;
-  return { type, x, y, z: def.elevation ?? 0, rotation, size: { ...def.size }, params: defaultParams(def), materials: {} };
+  return {
+    type,
+    x,
+    y,
+    z: def.elevation ?? 0,
+    rotation,
+    size: { ...def.size },
+    params: defaultParams(def),
+    materials: {},
+  };
 }
 
 export function addLevel(copyWalls = false) {
@@ -271,7 +301,11 @@ export function removeLevel(levelId: string) {
   }
   D().mutate('Remove level', (d) => ops.removeLevel(d as Project, levelId));
   const levels = D().project.building.levels;
-  E().setActiveLevel(levels[Math.min(levels.length - 1, Math.max(0, p.building.levels.findIndex((l) => l.id === levelId) - 1))]!.id);
+  E().setActiveLevel(
+    levels[
+      Math.min(levels.length - 1, Math.max(0, p.building.levels.findIndex((l) => l.id === levelId) - 1))
+    ]!.id,
+  );
 }
 
 export function addRoof(type: 'flat' | 'gable' | 'hip' | 'shed' = 'gable') {
@@ -304,6 +338,9 @@ export function focusSelection() {
   const y0 = Math.min(...outlines.map((o) => o.y0));
   const y1 = Math.max(...outlines.map((o) => o.y1));
   E().requestCamera({
-    focus: { center: [(b.minX + b.maxX) / 2, (y0 + y1) / 2, (b.minY + b.maxY) / 2], radius: Math.max(1, Math.hypot(b.width, b.height, y1 - y0) / 2) },
+    focus: {
+      center: [(b.minX + b.maxX) / 2, (y0 + y1) / 2, (b.minY + b.maxY) / 2],
+      radius: Math.max(1, Math.hypot(b.width, b.height, y1 - y0) / 2),
+    },
   });
 }

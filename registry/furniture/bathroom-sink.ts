@@ -25,7 +25,8 @@ export default defineElement({
       cyl(0.01, 0.16, 0, h, -d / 2 + 0.07, 'metal', 0.01, 12),
       slab(0.02, 0.02, 0.12, 0, h + 0.14, -d / 2 + 0.12, 'metal'),
     ];
-    if (params.mirror !== false) parts.push(slab(w * 0.9, 0.7, 0.02, 0, h + 0.3, -d / 2 + 0.01, 'metal', 0.01));
+    if (params.mirror !== false)
+      parts.push(slab(w * 0.9, 0.7, 0.02, 0, h + 0.3, -d / 2 + 0.01, 'metal', 0.01));
     return parts;
   },
 });

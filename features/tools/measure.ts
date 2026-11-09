@@ -11,8 +11,10 @@ const done: [Vec2, Vec2][] = [];
 function render() {
   const u = units();
   const o: Overlay[] = [];
-  for (const [p, q] of done) o.push({ kind: 'dim', a: p, b: q, offset: 0, text: formatLength(dist(p, q), u), style: 'accent' });
-  if (a && cursor) o.push({ kind: 'dim', a, b: cursor, offset: 0, text: formatLength(dist(a, cursor), u), style: 'draft' });
+  for (const [p, q] of done)
+    o.push({ kind: 'dim', a: p, b: q, offset: 0, text: formatLength(dist(p, q), u), style: 'accent' });
+  if (a && cursor)
+    o.push({ kind: 'dim', a, b: cursor, offset: 0, text: formatLength(dist(a, cursor), u), style: 'draft' });
   if (cursor) o.push({ kind: 'point', p: cursor, style: 'draft' });
   if (a) o.push({ kind: 'point', p: a, style: 'accent' });
   toolUI().set({ overlay: o, cursor: 'crosshair' });
@@ -58,5 +60,6 @@ export const measureTool: Tool = {
     }
     return false;
   },
-  hint: () => (a ? 'Click the second point · Shift locks the axis' : 'Click two points to measure · Esc clears'),
+  hint: () =>
+    a ? 'Click the second point · Shift locks the axis' : 'Click two points to measure · Esc clears',
 };

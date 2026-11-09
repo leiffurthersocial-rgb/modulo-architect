@@ -21,7 +21,12 @@ export const MIGRATIONS: Record<number, (doc: AnyDoc) => AnyDoc> = {
       ...doc,
       schemaVersion: 1,
       building: { roofs: [], ...doc.building, levels },
-      exterior: { items: [], facadeMaterial: 'render-white', ...doc.exterior, sun: doc.exterior?.sun ?? { hour: 15, month: 6 } },
+      exterior: {
+        items: [],
+        facadeMaterial: 'render-white',
+        ...doc.exterior,
+        sun: doc.exterior?.sun ?? { hour: 15, month: 6 },
+      },
       settings: { ...DEFAULT_SETTINGS, ...(doc.settings ?? {}) },
     };
   },
@@ -46,7 +51,10 @@ export function migrateProject(raw: unknown): MigrateResult {
   const parsed = ProjectSchema.safeParse(doc);
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
-    return { ok: false, error: `Invalid project: ${issue?.path.join('.') || 'root'} ${issue?.message ?? ''}`.trim() };
+    return {
+      ok: false,
+      error: `Invalid project: ${issue?.path.join('.') || 'root'} ${issue?.message ?? ''}`.trim(),
+    };
   }
   return { ok: true, project: parsed.data, migrated };
 }

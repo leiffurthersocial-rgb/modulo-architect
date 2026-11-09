@@ -28,8 +28,18 @@ export function StatusBar() {
   void selection;
   const hint = mode === 'walk' ? '' : getTool(tool).hint();
   return (
-    <footer className="panel pointer-events-auto flex h-9 min-w-0 items-center gap-3 rounded-[12px] px-3 text-[12.5px]" role="status" aria-live="polite">
-      <span className={cn('min-w-0 flex-1 truncate', showToast && toast ? 'font-medium text-fg' : 'text-fg-muted')} data-testid="status-hint">
+    <footer
+      className="panel pointer-events-auto flex h-9 min-w-0 items-center gap-3 rounded-[12px] px-3 text-[12.5px]"
+      role="status"
+      aria-live="polite"
+    >
+      <span
+        className={cn(
+          'min-w-0 flex-1 truncate',
+          showToast && toast ? 'font-medium text-fg' : 'text-fg-muted',
+        )}
+        data-testid="status-hint"
+      >
         {showToast && toast ? toast.text : hint}
       </span>
       {cursor && (
@@ -38,12 +48,19 @@ export function StatusBar() {
         </span>
       )}
       <span className="h-4 w-px bg-line" />
-      <Tooltip label={settings.snapping ? 'Snapping on (hold Alt to bypass)' : 'Snapping off'} shortcut="shift+s" side="top">
+      <Tooltip
+        label={settings.snapping ? 'Snapping on (hold Alt to bypass)' : 'Snapping off'}
+        shortcut="shift+s"
+        side="top"
+      >
         <button
           aria-pressed={settings.snapping}
           aria-label="Toggle snapping"
           onClick={() => runCommand('view.snap')}
-          className={cn('flex h-6 items-center gap-1 rounded-md px-1.5 font-medium', settings.snapping ? 'text-accent' : 'text-fg-subtle hover:text-fg')}
+          className={cn(
+            'flex h-6 items-center gap-1 rounded-md px-1.5 font-medium',
+            settings.snapping ? 'text-accent' : 'text-fg-subtle hover:text-fg',
+          )}
         >
           <Magnet className="h-3.5 w-3.5" /> Snap
         </button>
@@ -53,13 +70,21 @@ export function StatusBar() {
           aria-pressed={settings.showDimensions}
           aria-label="Toggle dimensions"
           onClick={() => runCommand('view.dims')}
-          className={cn('flex h-6 items-center gap-1 rounded-md px-1.5 font-medium', settings.showDimensions ? 'text-accent' : 'text-fg-subtle hover:text-fg')}
+          className={cn(
+            'flex h-6 items-center gap-1 rounded-md px-1.5 font-medium',
+            settings.showDimensions ? 'text-accent' : 'text-fg-subtle hover:text-fg',
+          )}
         >
           <Ruler className="h-3.5 w-3.5" />
         </button>
       </Tooltip>
       <Tooltip label="Units" shortcut="u" side="top">
-        <button aria-label="Toggle units" onClick={() => runCommand('view.units')} className="h-6 rounded-md px-1.5 font-medium text-fg-muted hover:bg-hover hover:text-fg" data-testid="units-toggle">
+        <button
+          aria-label="Toggle units"
+          onClick={() => runCommand('view.units')}
+          className="h-6 rounded-md px-1.5 font-medium text-fg-muted hover:bg-hover hover:text-fg"
+          data-testid="units-toggle"
+        >
           {settings.units === 'metric' ? 'm' : 'ft'}
         </button>
       </Tooltip>

@@ -57,14 +57,20 @@ export function WallInspector({ wall, level }: { wall: Wall; level: Level }) {
             max={20}
             mergeKey={`wall-h-${wall.id}`}
             disabled={wall.locked}
-            apply={(d, v) => set((w) => void (w.height = Math.abs(v - level.height) < 1e-6 ? null : v))(d as Project)}
+            apply={(d, v) =>
+              set((w) => void (w.height = Math.abs(v - level.height) < 1e-6 ? null : v))(d as Project)
+            }
           />
         </Row>
         <LabeledRow label="Follow floor height">
           <Switch
             label="Wall height follows the level's floor height"
             checked={wall.height === null}
-            onChange={(on) => mutate('Wall height', (d) => set((w) => void (w.height = on ? null : level.height))(d as Project))}
+            onChange={(on) =>
+              mutate('Wall height', (d) =>
+                set((w) => void (w.height = on ? null : level.height))(d as Project),
+              )
+            }
           />
         </LabeledRow>
       </Section>
@@ -73,16 +79,27 @@ export function WallInspector({ wall, level }: { wall: Wall; level: Level }) {
           label={dw?.leftExterior ? 'Facade (left)' : 'Left side'}
           category={dw?.leftExterior ? 'facade' : 'wall'}
           value={dw?.leftExterior ? (wall.facade ?? project.exterior.facadeMaterial) : wall.materials.left}
-          onChange={(id) => mutate('Wall finish', (d) => set((w) => (dw?.leftExterior ? (w.facade = id) : (w.materials.left = id)))(d as Project))}
+          onChange={(id) =>
+            mutate('Wall finish', (d) =>
+              set((w) => (dw?.leftExterior ? (w.facade = id) : (w.materials.left = id)))(d as Project),
+            )
+          }
         />
         <MaterialPicker
           label={dw?.rightExterior ? 'Facade (right)' : 'Right side'}
           category={dw?.rightExterior ? 'facade' : 'wall'}
           value={dw?.rightExterior ? (wall.facade ?? project.exterior.facadeMaterial) : wall.materials.right}
-          onChange={(id) => mutate('Wall finish', (d) => set((w) => (dw?.rightExterior ? (w.facade = id) : (w.materials.right = id)))(d as Project))}
+          onChange={(id) =>
+            mutate('Wall finish', (d) =>
+              set((w) => (dw?.rightExterior ? (w.facade = id) : (w.materials.right = id)))(d as Project),
+            )
+          }
         />
         {exterior && wall.facade && (
-          <button className="self-start text-xs text-accent hover:underline" onClick={() => mutate('Reset facade', (d) => set((w) => void delete w.facade)(d as Project))}>
+          <button
+            className="self-start text-xs text-accent hover:underline"
+            onClick={() => mutate('Reset facade', (d) => set((w) => void delete w.facade)(d as Project))}
+          >
             Use the house facade
           </button>
         )}
@@ -91,8 +108,11 @@ export function WallInspector({ wall, level }: { wall: Wall; level: Level }) {
         <More>
           <Readout label="Start" value={`${formatLength(a.x, u)}, ${formatLength(a.y, u)}`} />
           <Readout label="End" value={`${formatLength(b.x, u)}, ${formatLength(b.y, u)}`} />
-          <Readout label="Angle" value={`${Math.round((ang * 180) / Math.PI * 10) / 10}°`} />
-          <Readout label="Openings" value={String(level.openings.filter((o) => o.wallId === wall.id).length)} />
+          <Readout label="Angle" value={`${Math.round(((ang * 180) / Math.PI) * 10) / 10}°`} />
+          <Readout
+            label="Openings"
+            value={String(level.openings.filter((o) => o.wallId === wall.id).length)}
+          />
         </More>
       </Section>
       <EntityActions locked={wall.locked} />

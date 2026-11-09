@@ -35,7 +35,13 @@ export class MeshBuilder {
     const ax = Math.abs(n[0]!);
     const ay = Math.abs(n[1]!);
     const az = Math.abs(n[2]!);
-    const proj = verts.map((v) => (ax >= ay && ax >= az ? new THREE.Vector2(v[1]!, v[2]!) : ay >= az ? new THREE.Vector2(v[0]!, v[2]!) : new THREE.Vector2(v[0]!, v[1]!)));
+    const proj = verts.map((v) =>
+      ax >= ay && ax >= az
+        ? new THREE.Vector2(v[1]!, v[2]!)
+        : ay >= az
+          ? new THREE.Vector2(v[0]!, v[2]!)
+          : new THREE.Vector2(v[0]!, v[1]!),
+    );
     let tris: number[][];
     if (verts.length === 3) tris = [[0, 1, 2]];
     else tris = THREE.ShapeUtils.triangulateShape(proj, []);
@@ -55,7 +61,14 @@ export class MeshBuilder {
    * Vertical prism from a plan polygon between heights y0..y1. `sideKey` picks a material per
    * side face from its outward plan normal.
    */
-  prism(polygon: Vec2[], y0: number, y1: number, id: string, capKey: string, sideKey: (n: Vec2, mid: Vec2) => string) {
+  prism(
+    polygon: Vec2[],
+    y0: number,
+    y1: number,
+    id: string,
+    capKey: string,
+    sideKey: (n: Vec2, mid: Vec2) => string,
+  ) {
     if (polygon.length < 3 || y1 - y0 < 1e-5) return;
     const ccw = signedArea(polygon) > 0;
     const pts = ccw ? polygon : [...polygon].reverse();

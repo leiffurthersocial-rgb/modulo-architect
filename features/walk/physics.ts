@@ -51,21 +51,30 @@ export function buildWalkWorld(project: Project): WalkWorld {
       const shape = shapes.get(w.id);
       if (!shape || w.hidden) continue;
       const cuts = level.openings.filter((o) => o.wallId === w.id);
-      for (const p of wallPieces(shape, w.height ?? level.height, cuts)) add(p.polygon, level.elevation + p.y0, level.elevation + p.y1);
+      for (const p of wallPieces(shape, w.height ?? level.height, cuts))
+        add(p.polygon, level.elevation + p.y0, level.elevation + p.y1);
     }
     for (const j of junctions) add(j.polygon, level.elevation, level.elevation + level.height);
     for (const o of level.openings) {
       if (!o.type.startsWith('door')) continue;
       const shape = shapes.get(o.wallId);
-      if (shape) doors.push({ id: o.id, center: { x: shape.a.x + shape.dir.x * o.offset, y: shape.a.y + shape.dir.y * o.offset }, y: level.elevation });
+      if (shape)
+        doors.push({
+          id: o.id,
+          center: { x: shape.a.x + shape.dir.x * o.offset, y: shape.a.y + shape.dir.y * o.offset },
+          y: level.elevation,
+        });
     }
     const below = levels[i - 1];
-    const holes = below ? below.stairs.filter((s) => s.rise === null).flatMap((s) => stairLayout(s, below.height).footprint) : [];
+    const holes = below
+      ? below.stairs.filter((s) => s.rise === null).flatMap((s) => stairLayout(s, below.height).footprint)
+      : [];
     for (const r of level.rooms) {
       const poly = roomPolygon(level, r);
       if (poly.length >= 3) surfaces.push({ poly, y: level.elevation, holes });
     }
-    for (const s of level.stairs) stairs.push({ layout: stairLayout(s, s.rise ?? level.height), base: level.elevation });
+    for (const s of level.stairs)
+      stairs.push({ layout: stairLayout(s, s.rise ?? level.height), base: level.elevation });
     for (const it of level.items) {
       const def = getElement(it.type);
       if (!def || it.hidden || def.solid === false || def.snap === 'ceiling' || def.snap === 'wall') continue;
@@ -80,7 +89,14 @@ export function buildWalkWorld(project: Project): WalkWorld {
       if (it.size.h <= STEP_UP) surfaces.push({ poly: itemBox(it), y: it.z + it.size.h, holes: [] });
       continue;
     }
-    const fp = def.footprint ? def.footprint({ size: it.size, params: it.params }).map((p) => ({ x: it.x + p.x * Math.cos(it.rotation) - p.y * Math.sin(it.rotation), y: it.y + p.x * Math.sin(it.rotation) + p.y * Math.cos(it.rotation) })) : itemBox(it);
+    const fp = def.footprint
+      ? def
+          .footprint({ size: it.size, params: it.params })
+          .map((p) => ({
+            x: it.x + p.x * Math.cos(it.rotation) - p.y * Math.sin(it.rotation),
+            y: it.y + p.x * Math.sin(it.rotation) + p.y * Math.cos(it.rotation),
+          }))
+      : itemBox(it);
     add(fp, it.z, it.z + it.size.h);
   }
   return { obstacles, surfaces, stairs, doors, plot: project.site.plot };
@@ -114,7 +130,8 @@ export function collide(world: WalkWorld, p: Vec2, feet: number, height = 1.75, 
     let moved = false;
     for (const o of world.obstacles) {
       if (o.y1 <= lo || o.y0 >= hi) continue;
-      if (q.x < o.box.minX - r || q.x > o.box.maxX + r || q.y < o.box.minY - r || q.y > o.box.maxY + r) continue;
+      if (q.x < o.box.minX - r || q.x > o.box.maxX + r || q.y < o.box.minY - r || q.y > o.box.maxY + r)
+        continue;
       const inside = pointInPolygon(q, o.poly);
       let best: { point: Vec2; distance: number } | null = null;
       for (let i = 0; i < o.poly.length; i++) {
@@ -143,10 +160,12 @@ export function collide(world: WalkWorld, p: Vec2, feet: number, height = 1.75, 
 export function spawnPoint(project: Project): { p: Vec2; yaw: number } {
   const pts = project.building.levels.flatMap((l) => l.nodes.map((n) => ({ x: n.x, y: n.y })));
   const g = project.building.levels[0]!;
-  const c = pts.length ? (() => {
-    const b = bounds(pts);
-    return { x: (b.minX + b.maxX) / 2, y: (b.minY + b.maxY) / 2 };
-  })() : { x: 0, y: 0 };
+  const c = pts.length
+    ? (() => {
+        const b = bounds(pts);
+        return { x: (b.minX + b.maxX) / 2, y: (b.minY + b.maxY) / 2 };
+      })()
+    : { x: 0, y: 0 };
   const nodes = nodeMap(g);
   const rooms = g.rooms.map((r) => roomPolygon(g, r));
   for (const o of g.openings) {

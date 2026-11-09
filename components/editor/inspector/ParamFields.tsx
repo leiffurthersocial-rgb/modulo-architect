@@ -26,13 +26,22 @@ export function ParamFields({
         if (p.type === 'boolean')
           return (
             <LabeledRow key={p.key} label={p.label}>
-              <Switch label={p.label} checked={Boolean(v)} onChange={(on) => mutate(`Set ${p.label.toLowerCase()}`, (d) => write(d, p.key, on))} />
+              <Switch
+                label={p.label}
+                checked={Boolean(v)}
+                onChange={(on) => mutate(`Set ${p.label.toLowerCase()}`, (d) => write(d, p.key, on))}
+              />
             </LabeledRow>
           );
         if (p.type === 'select')
           return (
             <LabeledRow key={p.key} label={p.label}>
-              <Select label={p.label} value={String(v)} options={p.options ?? []} onChange={(val) => mutate(`Set ${p.label.toLowerCase()}`, (d) => write(d, p.key, val))} />
+              <Select
+                label={p.label}
+                value={String(v)}
+                options={p.options ?? []}
+                onChange={(val) => mutate(`Set ${p.label.toLowerCase()}`, (d) => write(d, p.key, val))}
+              />
             </LabeledRow>
           );
         return (
@@ -45,7 +54,9 @@ export function ParamFields({
             max={p.max}
             step={p.step}
             mergeKey={`param-${idKey}-${p.key}`}
-            apply={(d, val) => write(d, p.key, p.type === 'number' && (p.step ?? 1) >= 1 ? Math.round(val) : val)}
+            apply={(d, val) =>
+              write(d, p.key, p.type === 'number' && (p.step ?? 1) >= 1 ? Math.round(val) : val)
+            }
           />
         );
       })}

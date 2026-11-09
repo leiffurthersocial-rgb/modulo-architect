@@ -13,6 +13,12 @@ const config = [
     rules: {
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       'react/no-unknown-property': 'off',
+      // React Compiler purity rules: we deliberately mutate three.js objects and use refs for
+      // gesture state. Keep them visible as warnings rather than blocking CI (see DECISIONS.md).
+      'react-hooks/set-state-in-effect': 'warn',
+      'react-hooks/refs': 'warn',
+      'react-hooks/immutability': 'warn',
+      'react-hooks/purity': 'warn',
     },
   },
 ];

@@ -14,8 +14,16 @@ export const box = (
 ): Part => ({ geom: { kind: 'box', size: [w, h, d], radius }, position: [x, y, z], material, rotation });
 
 /** Box resting on y0 (bottom face) rather than centred. */
-export const slab = (w: number, h: number, d: number, x: number, y0: number, z: number, material: string, radius?: number) =>
-  box(w, h, d, x, y0 + h / 2, z, material, radius);
+export const slab = (
+  w: number,
+  h: number,
+  d: number,
+  x: number,
+  y0: number,
+  z: number,
+  material: string,
+  radius?: number,
+) => box(w, h, d, x, y0 + h / 2, z, material, radius);
 
 export const cyl = (
   r: number,
@@ -34,18 +42,34 @@ export const cyl = (
   rotation,
 });
 
-export const sphere = (r: number, x: number, y: number, z: number, material: string, scale?: [number, number, number]): Part => ({
+export const sphere = (
+  r: number,
+  x: number,
+  y: number,
+  z: number,
+  material: string,
+  scale?: [number, number, number],
+): Part => ({
   geom: { kind: 'sphere', radius: r, scale },
   position: [x, y, z],
   material,
 });
 
 /** Four legs inset from the corners of a w×d footprint. */
-export function legs(w: number, d: number, h: number, inset: number, material: string, t = 0.04, round = false): Part[] {
+export function legs(
+  w: number,
+  d: number,
+  h: number,
+  inset: number,
+  material: string,
+  t = 0.04,
+  round = false,
+): Part[] {
   const xs = [-w / 2 + inset, w / 2 - inset];
   const zs = [-d / 2 + inset, d / 2 - inset];
   const out: Part[] = [];
   for (const x of xs)
-    for (const z of zs) out.push(round ? cyl(t / 2, h, x, 0, z, material, t / 2, 12) : slab(t, h, t, x, 0, z, material));
+    for (const z of zs)
+      out.push(round ? cyl(t / 2, h, x, 0, z, material, t / 2, 12) : slab(t, h, t, x, 0, z, material));
   return out;
 }

@@ -36,7 +36,11 @@ export const openingTool: Tool = {
     const level = activeLevel();
     editor().setCursor(e.point);
     const width = preview?.type === def.id ? preview.width : def.defaults.width;
-    const pl = placeOpening(e.point, width, level, { step: stepFor(e), disabled: e.alt, radius: snapRadius(e) * 3 });
+    const pl = placeOpening(e.point, width, level, {
+      step: stepFor(e),
+      disabled: e.alt,
+      radius: snapRadius(e) * 3,
+    });
     if (!pl) {
       clear();
       toolUI().set({ cursor: 'not-allowed', tip: { text: 'Move over a wall', p: e.point } });
@@ -58,10 +62,27 @@ export const openingTool: Tool = {
     const e1 = add(pl.a, scale(pl.dir, pl.offset + width / 2));
     const end = add(pl.a, scale(pl.dir, pl.length));
     const o: Overlay[] = [
-      { kind: 'dim', a: pl.a, b: e0, offset: pl.thickness / 2 + 0.35, text: formatLength(pl.offset - width / 2, u) },
-      { kind: 'dim', a: e1, b: end, offset: pl.thickness / 2 + 0.35, text: formatLength(pl.length - pl.offset - width / 2, u) },
+      {
+        kind: 'dim',
+        a: pl.a,
+        b: e0,
+        offset: pl.thickness / 2 + 0.35,
+        text: formatLength(pl.offset - width / 2, u),
+      },
+      {
+        kind: 'dim',
+        a: e1,
+        b: end,
+        offset: pl.thickness / 2 + 0.35,
+        text: formatLength(pl.length - pl.offset - width / 2, u),
+      },
     ];
-    toolUI().set({ ghost: { kind: 'opening', opening: { ...preview, id: 'preview' }, levelId: level.id }, overlay: o, cursor: 'copy', tip: null });
+    toolUI().set({
+      ghost: { kind: 'opening', opening: { ...preview, id: 'preview' }, levelId: level.id },
+      overlay: o,
+      cursor: 'copy',
+      tip: null,
+    });
   },
   onPointerDown(e) {
     if (e.button !== 0) return false;

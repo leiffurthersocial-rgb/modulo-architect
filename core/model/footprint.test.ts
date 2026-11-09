@@ -42,7 +42,17 @@ describe('footprints and placement checks', () => {
         const b = l.nodes.find((n) => n.id === w.b)!;
         return a.y === 0 && b.y === 0;
       })!;
-      ops.addOpening(d, lid, { type: 'door-single', wallId: wall.id, offset: 2, width: 0.9, height: 2.1, sill: 0, flip: false, mirror: false, params: {} });
+      ops.addOpening(d, lid, {
+        type: 'door-single',
+        wallId: wall.id,
+        offset: 2,
+        width: 0.9,
+        height: 2.1,
+        sill: 0,
+        flip: false,
+        mirror: false,
+        params: {},
+      });
     });
     const l = p.building.levels[0]!;
     const zone = doorClearance(l, l.openings[0]!)!;

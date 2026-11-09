@@ -10,8 +10,18 @@ export function NodeInspector({ node, level }: { node: Node; level: Level }) {
     <>
       <Section title="Corner position">
         <Row>
-          <ModelNumber label="X" value={node.x} mergeKey={`nx-${node.id}`} apply={(d, v) => ops.moveNode(d as Project, level.id, node.id, { x: v, y: node.y })} />
-          <ModelNumber label="Y" value={node.y} mergeKey={`ny-${node.id}`} apply={(d, v) => ops.moveNode(d as Project, level.id, node.id, { x: node.x, y: v })} />
+          <ModelNumber
+            label="X"
+            value={node.x}
+            mergeKey={`nx-${node.id}`}
+            apply={(d, v) => ops.moveNode(d as Project, level.id, node.id, { x: v, y: node.y })}
+          />
+          <ModelNumber
+            label="Y"
+            value={node.y}
+            mergeKey={`ny-${node.id}`}
+            apply={(d, v) => ops.moveNode(d as Project, level.id, node.id, { x: node.x, y: v })}
+          />
         </Row>
       </Section>
       <EntityActions />

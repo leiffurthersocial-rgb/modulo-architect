@@ -86,7 +86,18 @@ describe('wall graph', () => {
     const l = createLevel(0, 0);
     addWall(l, { x: 0, y: 0 }, { x: 10, y: 0 }, props);
     const w = l.walls[0]!;
-    l.openings.push({ id: 'o1', type: 'door', wallId: w.id, offset: 8, width: 0.9, height: 2, sill: 0, flip: false, mirror: false, params: {} });
+    l.openings.push({
+      id: 'o1',
+      type: 'door',
+      wallId: w.id,
+      offset: 8,
+      width: 0.9,
+      height: 2,
+      sill: 0,
+      flip: false,
+      mirror: false,
+      params: {},
+    });
     splitWall(l, w.id, { x: 5, y: 0 });
     const o = l.openings[0]!;
     expect(o.wallId).not.toBe(w.id);

@@ -58,7 +58,9 @@ export function installKeyboard() {
     // Arrow keys nudge the selection.
     if (e.key.startsWith('Arrow') && ed.selection.length && !(e.metaKey || e.ctrlKey)) {
       const step = e.shiftKey ? 1 : e.altKey ? 0.01 : 0.1;
-      const d = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key] as [number, number] | undefined;
+      const d = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[
+        e.key
+      ] as [number, number] | undefined;
       if (d && A.nudgeSelection(d[0], d[1])) {
         e.preventDefault();
         return;

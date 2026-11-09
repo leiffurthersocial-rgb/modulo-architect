@@ -19,13 +19,27 @@ function color(style: OverlayStyle | undefined, t: SceneTheme) {
   }
 }
 
-export function Label({ p, y, text, tone = 'tip' }: { p: Vec2; y: number; text: string; tone?: 'tip' | 'dim' | 'accent' }) {
+export function Label({
+  p,
+  y,
+  text,
+  tone = 'tip',
+}: {
+  p: Vec2;
+  y: number;
+  text: string;
+  tone?: 'tip' | 'dim' | 'accent';
+}) {
   return (
     <Html position={[p.x, y, p.y]} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
       <div
         className={
           'tnum whitespace-nowrap rounded-md px-1.5 py-0.5 text-[11px] font-medium shadow-sm ' +
-          (tone === 'accent' ? 'bg-accent text-accent-fg' : tone === 'dim' ? 'bg-panel-solid/90 text-fg ring-1 ring-line' : 'bg-fg text-bg')
+          (tone === 'accent'
+            ? 'bg-accent text-accent-fg'
+            : tone === 'dim'
+              ? 'bg-panel-solid/90 text-fg ring-1 ring-line'
+              : 'bg-fg text-bg')
         }
       >
         {text}
@@ -47,12 +61,20 @@ export function Overlay3D({ y, theme }: { y: number; theme: SceneTheme }) {
       ))}
       {tip && <Label p={tip.p} y={Y} text={tip.text} tone="tip" />}
       {snapChip && (
-        <Html position={[snapChip.p.x, Y, snapChip.p.y]} style={{ pointerEvents: 'none', transform: 'translate(10px, 10px)' }}>
-          <div className="whitespace-nowrap rounded-md bg-accent px-1.5 py-0.5 text-[10px] font-medium text-accent-fg">{snapChip.label}</div>
+        <Html
+          position={[snapChip.p.x, Y, snapChip.p.y]}
+          style={{ pointerEvents: 'none', transform: 'translate(10px, 10px)' }}
+        >
+          <div className="whitespace-nowrap rounded-md bg-accent px-1.5 py-0.5 text-[10px] font-medium text-accent-fg">
+            {snapChip.label}
+          </div>
         </Html>
       )}
       {input && (
-        <Html position={[input.p.x, Y, input.p.y]} style={{ pointerEvents: 'none', transform: 'translate(14px, -34px)' }}>
+        <Html
+          position={[input.p.x, Y, input.p.y]}
+          style={{ pointerEvents: 'none', transform: 'translate(14px, -34px)' }}
+        >
           <div className="tnum flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-panel-solid px-2 py-1 text-xs shadow-pop ring-1 ring-accent">
             <span className="text-fg-subtle">{input.label}</span>
             <span className="font-medium text-fg">{input.text}</span>
@@ -84,7 +106,9 @@ function OverlayItem({ o, y, theme }: { o: Overlay; y: number; theme: SceneTheme
       );
     case 'poly': {
       if (o.pts.length < 2) return null;
-      const pts = (o.closed ? [...o.pts, o.pts[0]!] : o.pts).map((p) => [p.x, y, p.y] as [number, number, number]);
+      const pts = (o.closed ? [...o.pts, o.pts[0]!] : o.pts).map(
+        (p) => [p.x, y, p.y] as [number, number, number],
+      );
       return <Line points={pts} color={color(o.style, theme)} lineWidth={2} depthTest={false} transparent />;
     }
     case 'point':
@@ -105,20 +129,64 @@ function OverlayItem({ o, y, theme }: { o: Overlay; y: number; theme: SceneTheme
       const c = color(o.style ?? 'accent', theme);
       return (
         <group>
-          <Line points={[[a.x, y, a.y], [b.x, y, b.y]]} color={c} lineWidth={1.25} depthTest={false} transparent />
-          <Line points={[[a.x - tick.x, y, a.y - tick.y], [a.x + tick.x, y, a.y + tick.y]]} color={c} lineWidth={1.25} depthTest={false} transparent />
-          <Line points={[[b.x - tick.x, y, b.y - tick.y], [b.x + tick.x, y, b.y + tick.y]]} color={c} lineWidth={1.25} depthTest={false} transparent />
+          <Line
+            points={[
+              [a.x, y, a.y],
+              [b.x, y, b.y],
+            ]}
+            color={c}
+            lineWidth={1.25}
+            depthTest={false}
+            transparent
+          />
+          <Line
+            points={[
+              [a.x - tick.x, y, a.y - tick.y],
+              [a.x + tick.x, y, a.y + tick.y],
+            ]}
+            color={c}
+            lineWidth={1.25}
+            depthTest={false}
+            transparent
+          />
+          <Line
+            points={[
+              [b.x - tick.x, y, b.y - tick.y],
+              [b.x + tick.x, y, b.y + tick.y],
+            ]}
+            color={c}
+            lineWidth={1.25}
+            depthTest={false}
+            transparent
+          />
           <Label p={mid(a, b)} y={y} text={o.text} tone="dim" />
         </group>
       );
     }
     case 'handle':
       return (
-        <mesh position={[o.p.x, y + 0.01, o.p.y]} rotation={[-Math.PI / 2, 0, 0]} userData={{ handle: o.id }} renderOrder={40}>
-          {o.shape === 'square' ? <planeGeometry args={[0.2, 0.2]} /> : <circleGeometry args={[o.shape === 'rotate' ? 0.14 : 0.11, 24]} />}
-          <meshBasicMaterial color={o.shape === 'rotate' ? theme.accent : '#ffffff'} depthTest={false} transparent />
+        <mesh
+          position={[o.p.x, y + 0.01, o.p.y]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          userData={{ handle: o.id }}
+          renderOrder={40}
+        >
+          {o.shape === 'square' ? (
+            <planeGeometry args={[0.2, 0.2]} />
+          ) : (
+            <circleGeometry args={[o.shape === 'rotate' ? 0.14 : 0.11, 24]} />
+          )}
+          <meshBasicMaterial
+            color={o.shape === 'rotate' ? theme.accent : '#ffffff'}
+            depthTest={false}
+            transparent
+          />
           <mesh renderOrder={39}>
-            {o.shape === 'square' ? <planeGeometry args={[0.26, 0.26]} /> : <circleGeometry args={[o.shape === 'rotate' ? 0.17 : 0.15, 24]} />}
+            {o.shape === 'square' ? (
+              <planeGeometry args={[0.26, 0.26]} />
+            ) : (
+              <circleGeometry args={[o.shape === 'rotate' ? 0.17 : 0.15, 24]} />
+            )}
             <meshBasicMaterial color={theme.accent} depthTest={false} transparent />
           </mesh>
         </mesh>

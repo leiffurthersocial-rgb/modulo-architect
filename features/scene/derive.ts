@@ -1,5 +1,11 @@
 import type { Level, Project } from '@/core/model/schema';
-import { computeWallShapes, wallPieces, type JunctionShape, type WallPiece, type WallShape } from '@/core/geometry/walls';
+import {
+  computeWallShapes,
+  wallPieces,
+  type JunctionShape,
+  type WallPiece,
+  type WallShape,
+} from '@/core/geometry/walls';
 import { nodeMap, roomArea, roomPolygon } from '@/core/geometry/graph';
 import { centroid, pointInPolygon } from '@/core/geometry/polygon';
 import { add, scale, type Vec2 } from '@/core/geometry/vec2';
@@ -86,7 +92,9 @@ export function deriveLevel(level: Level): DerivedLevel {
     wallById: new Map(walls.map((w) => [w.id, w])),
     junctions: junctions.map((j) => ({
       ...j,
-      height: Math.max(...j.wallIds.map((id) => level.walls.find((w) => w.id === id)?.height ?? level.height)),
+      height: Math.max(
+        ...j.wallIds.map((id) => level.walls.find((w) => w.id === id)?.height ?? level.height),
+      ),
     })),
     rooms,
     stairs,

@@ -2,7 +2,12 @@ import { slab } from '../parts';
 import type { Part } from '../types';
 
 /** Jambs + head (+ optional sill) around an opening, flush with both wall faces. */
-export function frame(width: number, height: number, thickness: number, opts: { sill?: boolean; profile?: number } = {}): Part[] {
+export function frame(
+  width: number,
+  height: number,
+  thickness: number,
+  opts: { sill?: boolean; profile?: number } = {},
+): Part[] {
   const f = opts.profile ?? 0.05;
   const t = thickness + 0.01;
   const parts = [

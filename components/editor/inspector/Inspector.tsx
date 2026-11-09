@@ -69,7 +69,12 @@ export function Inspector() {
     >
       <header className="flex h-11 shrink-0 items-center justify-between border-b border-line pl-4 pr-1.5">
         <h2 className="truncate text-sm font-semibold">{title}</h2>
-        <IconButton label="Close inspector" shortcut="esc" size="sm" onClick={() => useEditor.getState().clearSelection()}>
+        <IconButton
+          label="Close inspector"
+          shortcut="esc"
+          size="sm"
+          onClick={() => useEditor.getState().clearSelection()}
+        >
           <X />
         </IconButton>
       </header>

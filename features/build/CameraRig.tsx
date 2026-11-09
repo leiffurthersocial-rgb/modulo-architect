@@ -14,7 +14,12 @@ function buildingBounds() {
   const top = p.building.levels[p.building.levels.length - 1]!;
   if (pts.length < 2) return { cx: 0, cz: 0, r: 8, h: 1.5 };
   const b = bounds(pts);
-  return { cx: (b.minX + b.maxX) / 2, cz: (b.minY + b.maxY) / 2, r: Math.max(4, Math.hypot(b.width, b.height) / 2), h: (top.elevation + top.height) / 2 };
+  return {
+    cx: (b.minX + b.maxX) / 2,
+    cz: (b.minY + b.maxY) / 2,
+    r: Math.max(4, Math.hypot(b.width, b.height) / 2),
+    h: (top.elevation + top.height) / 2,
+  };
 }
 
 /** Smooth orbit/pan/zoom with damping, zoom-to-cursor, presets and focus requests. */

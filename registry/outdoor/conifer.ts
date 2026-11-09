@@ -15,7 +15,11 @@ export default defineElement({
     leaves: { label: 'Needles', default: 'foliage-dark', category: 'terrain' },
   },
   snap: 'ground',
-  footprint: () => Array.from({ length: 8 }, (_, i) => ({ x: Math.cos((i / 8) * Math.PI * 2) * 0.2, y: Math.sin((i / 8) * Math.PI * 2) * 0.2 })),
+  footprint: () =>
+    Array.from({ length: 8 }, (_, i) => ({
+      x: Math.cos((i / 8) * Math.PI * 2) * 0.2,
+      y: Math.sin((i / 8) * Math.PI * 2) * 0.2,
+    })),
   build: ({ size: { w, h } }) => [
     cyl(0.12, h * 0.25, 0, 0, 0, 'bark', 0.1, 10),
     cyl(w / 2, h * 0.45, 0, h * 0.15, 0, 'leaves', w * 0.18, 16),

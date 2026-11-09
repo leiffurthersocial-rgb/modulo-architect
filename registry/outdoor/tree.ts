@@ -15,7 +15,11 @@ export default defineElement({
     leaves: { label: 'Crown', default: 'foliage', category: 'terrain' },
   },
   snap: 'ground',
-  footprint: () => Array.from({ length: 8 }, (_, i) => ({ x: Math.cos((i / 8) * Math.PI * 2) * 0.25, y: Math.sin((i / 8) * Math.PI * 2) * 0.25 })),
+  footprint: () =>
+    Array.from({ length: 8 }, (_, i) => ({
+      x: Math.cos((i / 8) * Math.PI * 2) * 0.25,
+      y: Math.sin((i / 8) * Math.PI * 2) * 0.25,
+    })),
   build: ({ size: { w, h } }) => [
     cyl(0.16, h * 0.5, 0, 0, 0, 'bark', 0.11, 12),
     sphere(w * 0.42, 0, h * 0.62, 0, 'leaves', [1, 0.85, 1]),

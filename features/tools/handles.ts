@@ -14,7 +14,13 @@ export function selectionHandles(project: Project, selection: string[], mode: st
   if (ref.kind === 'item') {
     const it = ref.entity;
     const def = getElement(it.type);
-    out.push({ kind: 'handle', id: `rot:${it.id}`, p: itemToPlan(it, { x: 0, y: it.size.d / 2 + 0.4 }), shape: 'rotate', cursor: 'grab' });
+    out.push({
+      kind: 'handle',
+      id: `rot:${it.id}`,
+      p: itemToPlan(it, { x: 0, y: it.size.d / 2 + 0.4 }),
+      shape: 'rotate',
+      cursor: 'grab',
+    });
     const rs = def?.resizable ?? {};
     const canW = rs.w !== false;
     const canD = rs.d !== false;
@@ -32,16 +38,36 @@ export function selectionHandles(project: Project, selection: string[], mode: st
   } else if (ref.kind === 'wall' && (mode === 'build' || mode === 'plan')) {
     for (const nid of [ref.entity.a, ref.entity.b]) {
       const n = ref.level.nodes.find((x) => x.id === nid);
-      if (n) out.push({ kind: 'handle', id: `node:${nid}`, p: { x: n.x, y: n.y }, shape: 'circle', cursor: 'move' });
+      if (n)
+        out.push({
+          kind: 'handle',
+          id: `node:${nid}`,
+          p: { x: n.x, y: n.y },
+          shape: 'circle',
+          cursor: 'move',
+        });
     }
   } else if (ref.kind === 'room' && (mode === 'build' || mode === 'plan')) {
     for (const nid of ref.entity.nodes) {
       const n = ref.level.nodes.find((x) => x.id === nid);
-      if (n) out.push({ kind: 'handle', id: `node:${nid}`, p: { x: n.x, y: n.y }, shape: 'circle', cursor: 'move' });
+      if (n)
+        out.push({
+          kind: 'handle',
+          id: `node:${nid}`,
+          p: { x: n.x, y: n.y },
+          shape: 'circle',
+          cursor: 'move',
+        });
     }
   } else if (ref.kind === 'stair') {
     const s = ref.entity;
-    out.push({ kind: 'handle', id: `srot:${s.id}`, p: itemToPlan(s, { x: 0, y: s.length / 2 + 0.4 }), shape: 'rotate', cursor: 'grab' });
+    out.push({
+      kind: 'handle',
+      id: `srot:${s.id}`,
+      p: itemToPlan(s, { x: 0, y: s.length / 2 + 0.4 }),
+      shape: 'rotate',
+      cursor: 'grab',
+    });
   }
   return out;
 }

@@ -31,7 +31,11 @@ export function Select<T extends string>({
         </S.Icon>
       </S.Trigger>
       <S.Portal>
-        <S.Content position="popper" sideOffset={4} className="panel animate-in z-50 min-w-[var(--radix-select-trigger-width)] overflow-hidden p-1">
+        <S.Content
+          position="popper"
+          sideOffset={4}
+          className="panel animate-in z-50 min-w-[var(--radix-select-trigger-width)] overflow-hidden p-1"
+        >
           <S.Viewport>
             {options.map((o) => (
               <S.Item

@@ -60,7 +60,9 @@ export function findEntity(project: Project, id: string): EntityRef | null {
     case 'room':
     case 'opening':
     case 'stair': {
-      const key = ({ node: 'nodes', wall: 'walls', room: 'rooms', opening: 'openings', stair: 'stairs' } as const)[kind];
+      const key = (
+        { node: 'nodes', wall: 'walls', room: 'rooms', opening: 'openings', stair: 'stairs' } as const
+      )[kind];
       for (const l of levels) {
         const list = l[key] as { id: string }[];
         const e = list.find((x) => x.id === id);

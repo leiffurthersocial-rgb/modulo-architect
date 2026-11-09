@@ -13,7 +13,15 @@ export default defineElement({
   size: { w: 1.0, d: 1.0, h: 2.3 },
   params: [
     { key: 'screen', label: 'Privacy screen', type: 'boolean', default: true },
-    { key: 'head', label: 'Head diameter', type: 'length', default: 0.3, min: 0.15, max: 0.5, advanced: true },
+    {
+      key: 'head',
+      label: 'Head diameter',
+      type: 'length',
+      default: 0.3,
+      min: 0.15,
+      max: 0.5,
+      advanced: true,
+    },
   ],
   slots: {
     base: { label: 'Base', default: 'timber-cladding', category: 'facade' },
@@ -26,7 +34,8 @@ export default defineElement({
     const parts = [];
     // Slatted floor
     const n = Math.max(3, Math.floor(w / 0.11));
-    for (let i = 0; i < n; i++) parts.push(slab(w / n - 0.015, 0.04, d, -w / 2 + (w / n) * (i + 0.5), 0, 0, 'base'));
+    for (let i = 0; i < n; i++)
+      parts.push(slab(w / n - 0.015, 0.04, d, -w / 2 + (w / n) * (i + 0.5), 0, 0, 'base'));
     // Post, arm, head and mixer
     parts.push(cyl(0.025, h, 0, 0.04, -d / 2 + 0.1, 'metal', 0.025, 16));
     parts.push(slab(0.03, 0.03, d * 0.45, 0, h - 0.05, -d / 2 + 0.1 + d * 0.22, 'metal'));

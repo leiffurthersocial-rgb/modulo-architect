@@ -16,7 +16,8 @@ export function itemToPlan(it: Pick<Item, 'x' | 'y' | 'rotation'>, p: Vec2): Vec
 
 export function itemFootprint(it: Item): Vec2[] {
   const def = getElement(it.type);
-  if (def?.footprint) return def.footprint({ size: it.size, params: it.params }).map((p) => itemToPlan(it, p));
+  if (def?.footprint)
+    return def.footprint({ size: it.size, params: it.params }).map((p) => itemToPlan(it, p));
   return rectPolygon(it.x, it.y, it.size.w, it.size.d, it.rotation);
 }
 
@@ -67,7 +68,8 @@ export function itemIssues(level: Level | null, items: Item[], it: Item): Placem
   const box = itemBox(it);
   for (const other of items) {
     if (other.id === it.id || other.hidden || !solid(other)) continue;
-    if (convexOverlap(shrink(box), shrink(itemBox(other)))) issues.push({ kind: 'collision', with: other.id });
+    if (convexOverlap(shrink(box), shrink(itemBox(other))))
+      issues.push({ kind: 'collision', with: other.id });
   }
   if (level) {
     for (const o of level.openings) {
@@ -90,13 +92,17 @@ function shrink(poly: Vec2[], d = 0.01): Vec2[] {
 }
 
 /** A plan-space outline + height range for any entity, used for highlights and marquee picks. */
-export function entityOutline(project: Project, id: string): { polygons: Vec2[][]; y0: number; y1: number } | null {
+export function entityOutline(
+  project: Project,
+  id: string,
+): { polygons: Vec2[][]; y0: number; y1: number } | null {
   const kind = kindOf(id);
   const levels = project.building.levels;
   if (kind === 'item') {
     for (const l of levels) {
       const it = l.items.find((x) => x.id === id);
-      if (it) return { polygons: [itemFootprint(it)], y0: l.elevation + it.z, y1: l.elevation + it.z + it.size.h };
+      if (it)
+        return { polygons: [itemFootprint(it)], y0: l.elevation + it.z, y1: l.elevation + it.z + it.size.h };
     }
     const it = project.exterior.items.find((x) => x.id === id);
     if (it) return { polygons: [itemFootprint(it)], y0: it.z, y1: it.z + it.size.h };
@@ -110,7 +116,11 @@ export function entityOutline(project: Project, id: string): { polygons: Vec2[][
       const b = nodePos(l, w.b)!;
       const d = normalize(sub(b, a));
       const n = scale(perp(d), w.thickness / 2);
-      return { polygons: [[add(a, n), add(b, n), sub(b, n), sub(a, n)]], y0: l.elevation, y1: l.elevation + (w.height ?? l.height) };
+      return {
+        polygons: [[add(a, n), add(b, n), sub(b, n), sub(a, n)]],
+        y0: l.elevation,
+        y1: l.elevation + (w.height ?? l.height),
+      };
     }
     if (kind === 'room') {
       const r = l.rooms.find((x) => x.id === id);
@@ -124,15 +134,29 @@ export function entityOutline(project: Project, id: string): { polygons: Vec2[][
       const t = scale(g.normal, g.thickness / 2 + 0.02);
       const e0 = add(g.center, scale(g.dir, -o.width / 2));
       const e1 = add(g.center, scale(g.dir, o.width / 2));
-      return { polygons: [[add(e0, t), add(e1, t), sub(e1, t), sub(e0, t)]], y0: l.elevation + o.sill, y1: l.elevation + o.sill + o.height };
+      return {
+        polygons: [[add(e0, t), add(e1, t), sub(e1, t), sub(e0, t)]],
+        y0: l.elevation + o.sill,
+        y1: l.elevation + o.sill + o.height,
+      };
     }
     if (kind === 'stair') {
       const s = l.stairs.find((x) => x.id === id);
-      if (s) return { polygons: stairLayout(s, s.rise ?? l.height).footprint, y0: l.elevation, y1: l.elevation + (s.rise ?? l.height) };
+      if (s)
+        return {
+          polygons: stairLayout(s, s.rise ?? l.height).footprint,
+          y0: l.elevation,
+          y1: l.elevation + (s.rise ?? l.height),
+        };
     }
     if (kind === 'node') {
       const n = l.nodes.find((x) => x.id === id);
-      if (n) return { polygons: [rectPolygon(n.x, n.y, 0.3, 0.3, 0)], y0: l.elevation, y1: l.elevation + l.height };
+      if (n)
+        return {
+          polygons: [rectPolygon(n.x, n.y, 0.3, 0.3, 0)],
+          y0: l.elevation,
+          y1: l.elevation + l.height,
+        };
     }
   }
   if (kind === 'roof') {
@@ -140,7 +164,11 @@ export function entityOutline(project: Project, id: string): { polygons: Vec2[][
     const l = r && levels.find((x) => x.id === r.levelId);
     if (r && l) {
       const o = r.overhang;
-      return { polygons: [rectPolygon(r.x, r.y, r.width + 2 * o, r.depth + 2 * o, r.rotation)], y0: l.elevation + l.height, y1: l.elevation + l.height + 0.3 };
+      return {
+        polygons: [rectPolygon(r.x, r.y, r.width + 2 * o, r.depth + 2 * o, r.rotation)],
+        y0: l.elevation + l.height,
+        y1: l.elevation + l.height + 0.3,
+      };
     }
   }
   return null;

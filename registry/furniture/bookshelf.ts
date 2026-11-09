@@ -28,10 +28,13 @@ export default defineElement({
       slab(w - 2 * t, h - 0.06, 0.01, 0, 0.06, -d / 2 + 0.005, 'body'),
     ];
     const gap = (h - 0.06) / n;
-    for (let i = 1; i < n; i++) parts.push(slab(w - 2 * t, t, d - 0.01, 0, 0.06 + gap * i - t / 2, 0.005, 'body'));
+    for (let i = 1; i < n; i++)
+      parts.push(slab(w - 2 * t, t, d - 0.01, 0, 0.06 + gap * i - t / 2, 0.005, 'body'));
     for (let i = 0; i < n; i += 2) {
       const bw = (w - 2 * t) * (0.45 + 0.08 * (i % 3));
-      parts.push(slab(bw, gap * 0.62, d * 0.7, -w / 2 + t + bw / 2 + 0.01, 0.06 + gap * i + t / 2, -0.02, 'books'));
+      parts.push(
+        slab(bw, gap * 0.62, d * 0.7, -w / 2 + t + bw / 2 + 0.01, 0.06 + gap * i + t / 2, -0.02, 'books'),
+      );
     }
     return parts;
   },

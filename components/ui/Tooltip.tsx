@@ -32,7 +32,12 @@ export function Tooltip({
           className="animate-in z-50 flex items-center gap-2 rounded-md bg-fg px-2 py-1 text-xs font-medium text-bg shadow-pop"
         >
           {label}
-          {shortcut && <Kbd shortcut={shortcut} className="[&_kbd]:border-transparent [&_kbd]:bg-bg/15 [&_kbd]:text-bg" />}
+          {shortcut && (
+            <Kbd
+              shortcut={shortcut}
+              className="[&_kbd]:border-transparent [&_kbd]:bg-bg/15 [&_kbd]:text-bg"
+            />
+          )}
         </T.Content>
       </T.Portal>
     </T.Root>

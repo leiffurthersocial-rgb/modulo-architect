@@ -77,7 +77,10 @@ export const MATERIALS: MaterialDef[] = [
   M('foliage-dark', 'Dark foliage', ['furniture', 'terrain'], '#3f6a3b', 0.9),
   M('bark', 'Bark', ['furniture', 'terrain'], '#6b5141', 0.95),
   M('terracotta-pot', 'Terracotta', ['furniture'], '#b8704f', 0.85),
-  M('lamp-glow', 'Lamp shade', ['fixture'], '#fff4dc', 0.6, 0, { emissive: '#ffe6b0', emissiveIntensity: 0.35 }),
+  M('lamp-glow', 'Lamp shade', ['fixture'], '#fff4dc', 0.6, 0, {
+    emissive: '#ffe6b0',
+    emissiveIntensity: 0.35,
+  }),
   M('car-paint', 'Car paint', ['fixture'], '#8a9aa8', 0.3, 0.5),
   M('rubber', 'Rubber', ['fixture'], '#1f1f21', 0.9),
 ];

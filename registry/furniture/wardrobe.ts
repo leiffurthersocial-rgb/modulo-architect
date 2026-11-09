@@ -20,7 +20,10 @@ export default defineElement({
   build: ({ size: { w, d, h }, params }) => {
     const n = Math.max(1, Math.round(Number(params.doors) || 3));
     const dw = w / n;
-    const parts = [slab(w, h - 0.06, d - 0.02, 0, 0.06, -0.01, 'body'), slab(w - 0.04, 0.06, d - 0.06, 0, 0, -0.03, 'handles')];
+    const parts = [
+      slab(w, h - 0.06, d - 0.02, 0, 0.06, -0.01, 'body'),
+      slab(w - 0.04, 0.06, d - 0.06, 0, 0, -0.03, 'handles'),
+    ];
     for (let i = 0; i < n; i++) {
       const x = -w / 2 + dw * (i + 0.5);
       parts.push(slab(dw - 0.006, h - 0.07, 0.02, x, 0.065, d / 2 - 0.01, 'body', 0.003));

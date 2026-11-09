@@ -57,30 +57,96 @@ export function RoofInspector({ roof }: { roof: Roof }) {
       </Section>
       <Section title="Shape">
         <Row>
-          {roof.type !== 'flat' && <ModelNumber label="Pitch" short="Pitch" kind="angle" value={(roof.pitch * Math.PI) / 180} min={0} max={(75 * Math.PI) / 180} mergeKey={`rf-p-${roof.id}`} testId="roof-pitch" apply={(d, v) => set((r) => void (r.pitch = (v * 180) / Math.PI))(d as Project)} />}
-          <ModelNumber label="Overhang" short="Over" value={roof.overhang} min={0} max={2} mergeKey={`rf-o-${roof.id}`} apply={(d, v) => set((r) => void (r.overhang = v))(d as Project)} />
+          {roof.type !== 'flat' && (
+            <ModelNumber
+              label="Pitch"
+              short="Pitch"
+              kind="angle"
+              value={(roof.pitch * Math.PI) / 180}
+              min={0}
+              max={(75 * Math.PI) / 180}
+              mergeKey={`rf-p-${roof.id}`}
+              testId="roof-pitch"
+              apply={(d, v) => set((r) => void (r.pitch = (v * 180) / Math.PI))(d as Project)}
+            />
+          )}
+          <ModelNumber
+            label="Overhang"
+            short="Over"
+            value={roof.overhang}
+            min={0}
+            max={2}
+            mergeKey={`rf-o-${roof.id}`}
+            apply={(d, v) => set((r) => void (r.overhang = v))(d as Project)}
+          />
         </Row>
-        <ModelNumber label="Thickness" value={roof.thickness} min={0.05} max={1} mergeKey={`rf-t-${roof.id}`} apply={(d, v) => set((r) => void (r.thickness = v))(d as Project)} />
+        <ModelNumber
+          label="Thickness"
+          value={roof.thickness}
+          min={0.05}
+          max={1}
+          mergeKey={`rf-t-${roof.id}`}
+          apply={(d, v) => set((r) => void (r.thickness = v))(d as Project)}
+        />
         <Readout label="Height above walls" value={formatLength(ridgeHeight(roof), u)} />
       </Section>
       <Section title="Finish">
-        <MaterialPicker label="Roofing" category="roof" value={roof.material} onChange={(id) => mutate('Roof finish', (d) => set((r) => void (r.material = id))(d as Project))} />
+        <MaterialPicker
+          label="Roofing"
+          category="roof"
+          value={roof.material}
+          onChange={(id) => mutate('Roof finish', (d) => set((r) => void (r.material = id))(d as Project))}
+        />
       </Section>
       <Section>
         <LabeledRow label="Fit to walls">
-          <Switch label="Fit roof to walls automatically" checked={roof.auto} onChange={(on) => mutate('Roof auto-fit', (d) => set((r) => void (r.auto = on))(d as Project))} />
+          <Switch
+            label="Fit roof to walls automatically"
+            checked={roof.auto}
+            onChange={(on) => mutate('Roof auto-fit', (d) => set((r) => void (r.auto = on))(d as Project))}
+          />
         </LabeledRow>
         {!roof.auto && (
           <More label="Footprint">
             <Row>
-              <ModelNumber label="X" value={roof.x} mergeKey={`rf-x-${roof.id}`} apply={(d, v) => set((r) => void (r.x = v))(d as Project)} />
-              <ModelNumber label="Y" value={roof.y} mergeKey={`rf-y-${roof.id}`} apply={(d, v) => set((r) => void (r.y = v))(d as Project)} />
+              <ModelNumber
+                label="X"
+                value={roof.x}
+                mergeKey={`rf-x-${roof.id}`}
+                apply={(d, v) => set((r) => void (r.x = v))(d as Project)}
+              />
+              <ModelNumber
+                label="Y"
+                value={roof.y}
+                mergeKey={`rf-y-${roof.id}`}
+                apply={(d, v) => set((r) => void (r.y = v))(d as Project)}
+              />
             </Row>
             <Row>
-              <ModelNumber label="Width" short="W" value={roof.width} min={1} mergeKey={`rf-w-${roof.id}`} apply={(d, v) => set((r) => void (r.width = v))(d as Project)} />
-              <ModelNumber label="Depth" short="D" value={roof.depth} min={1} mergeKey={`rf-d-${roof.id}`} apply={(d, v) => set((r) => void (r.depth = v))(d as Project)} />
+              <ModelNumber
+                label="Width"
+                short="W"
+                value={roof.width}
+                min={1}
+                mergeKey={`rf-w-${roof.id}`}
+                apply={(d, v) => set((r) => void (r.width = v))(d as Project)}
+              />
+              <ModelNumber
+                label="Depth"
+                short="D"
+                value={roof.depth}
+                min={1}
+                mergeKey={`rf-d-${roof.id}`}
+                apply={(d, v) => set((r) => void (r.depth = v))(d as Project)}
+              />
             </Row>
-            <ModelNumber label="Rotation" kind="angle" value={-roof.rotation} mergeKey={`rf-r-${roof.id}`} apply={(d, v) => set((r) => void (r.rotation = -v))(d as Project)} />
+            <ModelNumber
+              label="Rotation"
+              kind="angle"
+              value={-roof.rotation}
+              mergeKey={`rf-r-${roof.id}`}
+              apply={(d, v) => set((r) => void (r.rotation = -v))(d as Project)}
+            />
           </More>
         )}
       </Section>

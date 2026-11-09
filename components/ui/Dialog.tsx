@@ -37,9 +37,14 @@ export function Dialog({
             <header className="flex items-start justify-between gap-4 border-b border-line px-5 py-4">
               <div>
                 <D.Title className="text-[15px] font-semibold">{title}</D.Title>
-                {description && <D.Description className="mt-0.5 text-[13px] text-fg-muted">{description}</D.Description>}
+                {description && (
+                  <D.Description className="mt-0.5 text-[13px] text-fg-muted">{description}</D.Description>
+                )}
               </div>
-              <D.Close aria-label="Close" className="rounded-md p-1 text-fg-subtle hover:bg-hover hover:text-fg">
+              <D.Close
+                aria-label="Close"
+                className="rounded-md p-1 text-fg-subtle hover:bg-hover hover:text-fg"
+              >
                 <X className="h-4 w-4" />
               </D.Close>
             </header>

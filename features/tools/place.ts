@@ -45,17 +45,30 @@ export const placeTool: Tool = {
     const base = newItem(def.id, e.point.x, e.point.y, rotation)!;
     const ground = isOut ? project().building.levels[0]! : level;
     const others = isOut ? project().exterior.items : level.items;
-    const pl = placeItem(e.point, def, base.size, rotation, ground, { step: stepFor(e), disabled: e.alt, others });
+    const pl = placeItem(e.point, def, base.size, rotation, ground, {
+      step: stepFor(e),
+      disabled: e.alt,
+      others,
+    });
     preview = { ...base, x: pl.x, y: pl.y, rotation: pl.rotation };
     editor().setCursor({ x: pl.x, y: pl.y });
     const ghostItem = { ...preview, id: 'preview' };
     const issues = itemIssues(isOut ? null : level, others, ghostItem);
-    const o: Overlay[] = [{ kind: 'poly', pts: itemFootprint(ghostItem), style: issues.length ? 'danger' : 'accent', closed: true }];
+    const o: Overlay[] = [
+      {
+        kind: 'poly',
+        pts: itemFootprint(ghostItem),
+        style: issues.length ? 'danger' : 'accent',
+        closed: true,
+      },
+    ];
     toolUI().set({
       ghost: { kind: 'item', item: ghostItem, levelId: isOut ? null : level.id, invalid: issues.length > 0 },
       overlay: o,
       snap: pl.label ? { label: pl.label, p: { x: pl.x, y: pl.y } } : null,
-      tip: issues.length ? { text: issues[0]!.kind === 'blocks-door' ? 'Blocks a door' : 'Overlaps another item', p: e.point } : null,
+      tip: issues.length
+        ? { text: issues[0]!.kind === 'blocks-door' ? 'Blocks a door' : 'Overlaps another item', p: e.point }
+        : null,
       cursor: 'copy',
     });
   },

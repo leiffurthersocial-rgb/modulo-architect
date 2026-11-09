@@ -68,7 +68,12 @@ export function LevelView({
               shadows={variant === 'normal'}
             />
             {showCeilings && (
-              <Ceiling polygon={dr.polygon} holes={roomHoles.length ? [] : []} y={ceilingY} material={getThreeMaterial(room.ceilingMaterial)} />
+              <Ceiling
+                polygon={dr.polygon}
+                holes={roomHoles.length ? [] : []}
+                y={ceilingY}
+                material={getThreeMaterial(room.ceilingMaterial)}
+              />
             )}
           </group>
         );
@@ -79,12 +84,25 @@ export function LevelView({
         const wall = level.walls.find((w) => w.id === o.wallId);
         if (!dw || !wall || wall.hidden) return null;
         return (
-          <OpeningView key={o.id} opening={o} shape={dw.shape} elevation={level.elevation} variant={variant} open={openDoors?.[o.id] ?? 0} />
+          <OpeningView
+            key={o.id}
+            opening={o}
+            shape={dw.shape}
+            elevation={level.elevation}
+            variant={variant}
+            open={openDoors?.[o.id] ?? 0}
+          />
         );
       })}
       {level.stairs.map((s) =>
         s.hidden ? null : (
-          <StairView key={s.id} stair={s} layout={derived.stairs.get(s.id)} elevation={level.elevation} variant={variant} />
+          <StairView
+            key={s.id}
+            stair={s}
+            layout={derived.stairs.get(s.id)}
+            elevation={level.elevation}
+            variant={variant}
+          />
         ),
       )}
       <ItemsLayer items={level.items} baseY={level.elevation} variant={variant} ceilingY={ceilingY} />
@@ -118,10 +136,27 @@ function FloorSlab({
     return g;
   }, [polygon, holes, top, thickness]);
   useEffect(() => () => geometry.dispose(), [geometry]);
-  return <mesh geometry={geometry} material={material} receiveShadow castShadow={shadows} userData={{ pick: true, id }} />;
+  return (
+    <mesh
+      geometry={geometry}
+      material={material}
+      receiveShadow
+      castShadow={shadows}
+      userData={{ pick: true, id }}
+    />
+  );
 }
 
-function Ceiling({ polygon, y, material }: { polygon: { x: number; y: number }[]; holes: unknown[]; y: number; material: THREE.Material }) {
+function Ceiling({
+  polygon,
+  y,
+  material,
+}: {
+  polygon: { x: number; y: number }[];
+  holes: unknown[];
+  y: number;
+  material: THREE.Material;
+}) {
   const geometry = useMemo(() => {
     const shape = new THREE.Shape(polygon.map((p) => new THREE.Vector2(p.x, p.y)));
     const g = new THREE.ShapeGeometry(shape);

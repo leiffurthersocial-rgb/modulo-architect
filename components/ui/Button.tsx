@@ -58,7 +58,12 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(functio
   { label, shortcut, active, tooltipSide, size = 'md', className, children, ...rest },
   ref,
 ) {
-  const dim = size === 'sm' ? 'h-7 w-7 rounded-[8px]' : size === 'lg' ? 'h-11 w-11 rounded-[12px]' : 'h-9 w-9 rounded-[10px]';
+  const dim =
+    size === 'sm'
+      ? 'h-7 w-7 rounded-[8px]'
+      : size === 'lg'
+        ? 'h-11 w-11 rounded-[12px]'
+        : 'h-9 w-9 rounded-[10px]';
   return (
     <Tooltip label={label} shortcut={shortcut} side={tooltipSide}>
       <button

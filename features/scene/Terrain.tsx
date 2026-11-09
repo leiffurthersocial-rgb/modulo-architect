@@ -5,7 +5,15 @@ import type { Site } from '@/core/model/schema';
 import { getThreeMaterial } from './materials';
 
 /** Ground: a large neutral disc plus the plot surface with its boundary. */
-export function Terrain({ site, showSurroundings, accent }: { site: Site; showSurroundings: boolean; accent: string }) {
+export function Terrain({
+  site,
+  showSurroundings,
+  accent,
+}: {
+  site: Site;
+  showSurroundings: boolean;
+  accent: string;
+}) {
   const plotGeo = useMemo(() => {
     // Build in (x, -y) and rotate -90° about X so plan (x, y) lands on world (x, 0, y) facing up.
     const shape = new THREE.Shape(site.plot.map((p) => new THREE.Vector2(p.x, -p.y)));
@@ -27,7 +35,12 @@ export function Terrain({ site, showSurroundings, accent }: { site: Site; showSu
   );
   return (
     <group>
-      <mesh geometry={plotGeo} material={getThreeMaterial(site.terrainMaterial)} receiveShadow userData={{ pick: true, id: 'site' }} />
+      <mesh
+        geometry={plotGeo}
+        material={getThreeMaterial(site.terrainMaterial)}
+        receiveShadow
+        userData={{ pick: true, id: 'site' }}
+      />
       {showSurroundings && (
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]} receiveShadow>
           <circleGeometry args={[220, 64]} />

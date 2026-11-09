@@ -29,7 +29,13 @@ function item(type: string, x: number, y: number, rotation = 0, extra: Partial<I
 }
 
 /** Place an opening on whichever wall passes closest to (x, y). */
-function opening(level: Level, type: string, x: number, y: number, extra: { width?: number; height?: number; sill?: number; flip?: boolean; mirror?: boolean } = {}) {
+function opening(
+  level: Level,
+  type: string,
+  x: number,
+  y: number,
+  extra: { width?: number; height?: number; sill?: number; flip?: boolean; mirror?: boolean } = {},
+) {
   const def = getOpening(type)!;
   let best: { id: string; offset: number; d: number } | null = null;
   for (const w of level.walls) {
@@ -113,16 +119,16 @@ function twoBedroom(p: P) {
   }
   add(item('pendant-lamp', ox + 2.9, oy + 5.0));
   // Bedroom
-  add(item('bed-double', ox + 9.6, oy + 1.4, Math.PI / 2, { size: { w: 1.6, d: 2.05, h: 1 } }));
-  add(item('nightstand', ox + 10.75, oy + 0.35, Math.PI / 2));
-  add(item('nightstand', ox + 10.75, oy + 2.45, Math.PI / 2));
+  add(item('bed-double', ox + 9.85, oy + 1.4, Math.PI / 2, { size: { w: 1.6, d: 2.05, h: 1 } }));
+  add(item('nightstand', ox + 10.68, oy + 0.3, Math.PI / 2));
+  add(item('nightstand', ox + 10.68, oy + 2.5, Math.PI / 2));
   add(item('wardrobe', ox + 7.0, oy + 0.4, 0, { size: { w: 1.6, d: 0.6, h: 2.2 } }));
   // Bathroom
   add(item('toilet', ox + 6.35, oy + 6.4, -Math.PI / 2));
   add(item('bathroom-sink', ox + 6.36, oy + 4.6, -Math.PI / 2));
   add(item('shower', ox + 8.0, oy + 6.45, Math.PI));
   // Bedroom 2
-  add(item('bed-single', ox + 10.4, oy + 5.6, Math.PI / 2));
+  add(item('bed-single', ox + 9.85, oy + 5.75, Math.PI / 2));
   add(item('desk', ox + 9.4, oy + 3.95, 0, { size: { w: 1.2, d: 0.6, h: 0.74 } }));
   ops.addRoof(p, l.id, 'gable');
   // Exterior

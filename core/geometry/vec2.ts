@@ -14,9 +14,13 @@ export const dot = (a: Vec2, b: Vec2): number => a.x * b.x + a.y * b.y;
 export const cross = (a: Vec2, b: Vec2): number => a.x * b.y - a.y * b.x;
 export const len = (a: Vec2): number => Math.hypot(a.x, a.y);
 export const dist = (a: Vec2, b: Vec2): number => Math.hypot(a.x - b.x, a.y - b.y);
-export const lerp = (a: Vec2, b: Vec2, t: number): Vec2 => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
+export const lerp = (a: Vec2, b: Vec2, t: number): Vec2 => ({
+  x: a.x + (b.x - a.x) * t,
+  y: a.y + (b.y - a.y) * t,
+});
 export const mid = (a: Vec2, b: Vec2): Vec2 => lerp(a, b, 0.5);
-export const equals = (a: Vec2, b: Vec2, eps = 1e-6): boolean => Math.abs(a.x - b.x) < eps && Math.abs(a.y - b.y) < eps;
+export const equals = (a: Vec2, b: Vec2, eps = 1e-6): boolean =>
+  Math.abs(a.x - b.x) < eps && Math.abs(a.y - b.y) < eps;
 
 export function normalize(a: Vec2): Vec2 {
   const l = len(a);
@@ -55,7 +59,12 @@ export function closestOnSegment(p: Vec2, a: Vec2, b: Vec2): { point: Vec2; t: n
 }
 
 /** Intersection of infinite lines p + t*r and q + u*s. Returns null when parallel. */
-export function lineIntersection(p: Vec2, r: Vec2, q: Vec2, s: Vec2): { point: Vec2; t: number; u: number } | null {
+export function lineIntersection(
+  p: Vec2,
+  r: Vec2,
+  q: Vec2,
+  s: Vec2,
+): { point: Vec2; t: number; u: number } | null {
   const rxs = cross(r, s);
   if (Math.abs(rxs) < 1e-9) return null;
   const qp = sub(q, p);

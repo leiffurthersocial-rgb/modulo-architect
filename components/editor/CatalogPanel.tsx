@@ -70,10 +70,19 @@ function Card({
       }}
       className={cn(
         'group flex touch-none select-none flex-col items-center gap-1.5 rounded-[12px] border px-1.5 pb-2 pt-2.5 text-center transition-all duration-150',
-        active ? 'border-accent bg-accent-soft' : 'border-transparent bg-bg-elevated hover:border-line-strong hover:bg-panel-solid',
+        active
+          ? 'border-accent bg-accent-soft'
+          : 'border-transparent bg-bg-elevated hover:border-line-strong hover:bg-panel-solid',
       )}
     >
-      <span className={cn('flex h-9 w-9 items-center justify-center rounded-[10px] [&_svg]:h-5 [&_svg]:w-5 [&_svg]:stroke-[1.5]', active ? 'text-accent' : 'text-fg-muted group-hover:text-fg')}>{icon}</span>
+      <span
+        className={cn(
+          'flex h-9 w-9 items-center justify-center rounded-[10px] [&_svg]:h-5 [&_svg]:w-5 [&_svg]:stroke-[1.5]',
+          active ? 'text-accent' : 'text-fg-muted group-hover:text-fg',
+        )}
+      >
+        {icon}
+      </span>
       <span className="line-clamp-2 text-[11.5px] font-medium leading-tight text-fg">{label}</span>
       {sub && <span className="tnum text-[10.5px] leading-none text-fg-subtle">{sub}</span>}
     </button>
@@ -83,7 +92,12 @@ function Card({
 function ElementGrid({ list }: { list: ElementDef[] }) {
   const place = useEditor((s) => s.place);
   const units = useDocument((s) => s.project.settings.units);
-  if (!list.length) return <p className="px-1 py-6 text-center text-[13px] text-fg-subtle">Nothing matches. Try “chair” or “plant”.</p>;
+  if (!list.length)
+    return (
+      <p className="px-1 py-6 text-center text-[13px] text-fg-subtle">
+        Nothing matches. Try “chair” or “plant”.
+      </p>
+    );
   return (
     <div className="grid grid-cols-3 gap-1.5">
       {list.map((def) => {
@@ -129,14 +143,21 @@ function Catalog({ kind }: { kind: 'furniture' | 'outdoor' }) {
             className="min-w-0 flex-1 bg-transparent text-[13px] outline-none placeholder:text-fg-subtle"
           />
         </label>
-        <div className="scrollbar-thin -mx-3 mt-2 flex gap-1 overflow-x-auto px-3 pb-1" role="tablist" aria-label="Categories">
+        <div
+          className="scrollbar-thin -mx-3 mt-2 flex gap-1 overflow-x-auto px-3 pb-1"
+          role="tablist"
+          aria-label="Categories"
+        >
           {cats.map((c) => (
             <button
               key={c}
               role="tab"
               aria-selected={cat === c}
               onClick={() => setCat(c)}
-              className={cn('h-6 shrink-0 rounded-full px-2.5 text-xs font-medium transition-colors', cat === c ? 'bg-fg text-bg' : 'bg-active/60 text-fg-muted hover:text-fg')}
+              className={cn(
+                'h-6 shrink-0 rounded-full px-2.5 text-xs font-medium transition-colors',
+                cat === c ? 'bg-fg text-bg' : 'bg-active/60 text-fg-muted hover:text-fg',
+              )}
             >
               {c}
             </button>
@@ -145,7 +166,9 @@ function Catalog({ kind }: { kind: 'furniture' | 'outdoor' }) {
       </div>
       <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto p-3 pt-2">
         <ElementGrid list={list} />
-        <p className="mt-3 text-center text-[11px] text-fg-subtle">Drag onto the canvas, or click then place. R rotates.</p>
+        <p className="mt-3 text-center text-[11px] text-fg-subtle">
+          Drag onto the canvas, or click then place. R rotates.
+        </p>
       </div>
     </div>
   );
@@ -155,7 +178,9 @@ function BuildLibrary() {
   const place = useEditor((s) => s.place);
   const tool = useEditor((s) => s.tool);
   const units = useDocument((s) => s.project.settings.units);
-  const [thick, setThick] = useState(getWallThickness() === DEFAULTS.interiorWallThickness ? 'interior' : 'exterior');
+  const [thick, setThick] = useState(
+    getWallThickness() === DEFAULTS.interiorWallThickness ? 'interior' : 'exterior',
+  );
   return (
     <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto">
       <Section title="Quick rooms">
@@ -208,9 +233,25 @@ function BuildLibrary() {
       </Section>
       <Section title="Stairs & roof">
         <div className="grid grid-cols-3 gap-1.5">
-          <Card label="Straight stairs" icon={<StairGlyph />} active={tool === 'stair' && !place} onPick={(e) => startPlacing('stair', { kind: 'element', id: 'straight' }, e)} testId="stair-straight" />
-          <Card label="L-shaped stairs" icon={<StairGlyph l />} active={tool === 'stair' && place?.id === 'l-shaped'} onPick={(e) => startPlacing('stair', { kind: 'element', id: 'l-shaped' }, e)} />
-          <Card label="Gable roof" icon={<RoofGlyph type="gable" />} onPick={() => A.addRoof('gable')} testId="roof-gable" />
+          <Card
+            label="Straight stairs"
+            icon={<StairGlyph />}
+            active={tool === 'stair' && !place}
+            onPick={(e) => startPlacing('stair', { kind: 'element', id: 'straight' }, e)}
+            testId="stair-straight"
+          />
+          <Card
+            label="L-shaped stairs"
+            icon={<StairGlyph l />}
+            active={tool === 'stair' && place?.id === 'l-shaped'}
+            onPick={(e) => startPlacing('stair', { kind: 'element', id: 'l-shaped' }, e)}
+          />
+          <Card
+            label="Gable roof"
+            icon={<RoofGlyph type="gable" />}
+            onPick={() => A.addRoof('gable')}
+            testId="roof-gable"
+          />
           <Card label="Hip roof" icon={<RoofGlyph type="hip" />} onPick={() => A.addRoof('hip')} />
           <Card label="Shed roof" icon={<RoofGlyph type="shed" />} onPick={() => A.addRoof('shed')} />
           <Card label="Flat roof" icon={<RoofGlyph type="flat" />} onPick={() => A.addRoof('flat')} />
@@ -260,7 +301,12 @@ function ExteriorLibrary() {
           <Section title="Roof">
             <div className="grid grid-cols-4 gap-1.5">
               {(['gable', 'hip', 'shed', 'flat'] as const).map((t) => (
-                <Card key={t} label={t[0]!.toUpperCase() + t.slice(1)} icon={<RoofGlyph type={t} />} onPick={() => A.addRoof(t)} />
+                <Card
+                  key={t}
+                  label={t[0]!.toUpperCase() + t.slice(1)}
+                  icon={<RoofGlyph type={t} />}
+                  onPick={() => A.addRoof(t)}
+                />
               ))}
             </div>
           </Section>
@@ -280,32 +326,73 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 export function SunControls({ hour, month }: { hour: number; month: number }) {
   const set = (patch: Partial<{ hour: number; month: number }>, label: string) =>
-    useDocument.getState().mutate(label, (d) => void Object.assign(d.exterior.sun, patch), { mergeKey: label });
+    useDocument
+      .getState()
+      .mutate(label, (d) => void Object.assign(d.exterior.sun, patch), { mergeKey: label });
   const h = Math.floor(hour);
   const m = Math.round((hour - h) * 60);
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-3">
         <Sun className="h-4 w-4 text-fg-subtle" />
-        <SliderRow label="Time of day" min={5} max={21} step={0.25} value={hour} onChange={(v) => set({ hour: v }, 'Time of day')} />
+        <SliderRow
+          label="Time of day"
+          min={5}
+          max={21}
+          step={0.25}
+          value={hour}
+          onChange={(v) => set({ hour: v }, 'Time of day')}
+        />
         <span className="tnum w-11 text-right text-[13px]">{`${h}:${String(m).padStart(2, '0')}`}</span>
       </div>
       <div className="flex items-center gap-3">
         <span className="w-4 text-center text-[11px] text-fg-subtle">M</span>
-        <SliderRow label="Month" min={1} max={12} step={1} value={month} onChange={(v) => set({ month: v }, 'Month')} />
+        <SliderRow
+          label="Month"
+          min={1}
+          max={12}
+          step={1}
+          value={month}
+          onChange={(v) => set({ month: v }, 'Month')}
+        />
         <span className="w-11 text-right text-[13px]">{MONTHS[month - 1]}</span>
       </div>
     </div>
   );
 }
 
-function SliderRow({ label, min, max, step, value, onChange }: { label: string; min: number; max: number; step: number; value: number; onChange: (v: number) => void }) {
+function SliderRow({
+  label,
+  min,
+  max,
+  step,
+  value,
+  onChange,
+}: {
+  label: string;
+  min: number;
+  max: number;
+  step: number;
+  value: number;
+  onChange: (v: number) => void;
+}) {
   return (
-    <Slider.Root className="relative flex h-5 flex-1 touch-none select-none items-center" min={min} max={max} step={step} value={[value]} onValueChange={([v]) => onChange(v!)} aria-label={label}>
+    <Slider.Root
+      className="relative flex h-5 flex-1 touch-none select-none items-center"
+      min={min}
+      max={max}
+      step={step}
+      value={[value]}
+      onValueChange={([v]) => onChange(v!)}
+      aria-label={label}
+    >
       <Slider.Track className="relative h-1 grow rounded-full bg-active">
         <Slider.Range className="absolute h-full rounded-full bg-accent" />
       </Slider.Track>
-      <Slider.Thumb className="block h-4 w-4 rounded-full border border-line-strong bg-panel-solid shadow-sm focus-visible:outline-2 focus-visible:outline-accent" aria-label={label} />
+      <Slider.Thumb
+        className="block h-4 w-4 rounded-full border border-line-strong bg-panel-solid shadow-sm focus-visible:outline-2 focus-visible:outline-accent"
+        aria-label={label}
+      />
     </Slider.Root>
   );
 }
@@ -314,23 +401,52 @@ function RoomGlyph({ w, h }: { w: number; h: number }) {
   const s = 18 / Math.max(w, h);
   return (
     <svg viewBox="0 0 22 22" aria-hidden className="!h-6 !w-6">
-      <rect x={11 - (w * s) / 2} y={11 - (h * s) / 2} width={w * s} height={h * s} rx={1} fill="none" stroke="currentColor" strokeWidth={1.6} />
+      <rect
+        x={11 - (w * s) / 2}
+        y={11 - (h * s) / 2}
+        width={w * s}
+        height={h * s}
+        rx={1}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.6}
+      />
     </svg>
   );
 }
 
 function StairGlyph({ l }: { l?: boolean }) {
   return (
-    <svg viewBox="0 0 22 22" aria-hidden className="!h-6 !w-6" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <svg
+      viewBox="0 0 22 22"
+      aria-hidden
+      className="!h-6 !w-6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+    >
       {l ? <path d="M4 18h5v-4h4v-4h5V4" /> : <path d="M3 19h4v-4h4v-4h4V7h4V3" />}
     </svg>
   );
 }
 
 function RoofGlyph({ type }: { type: 'gable' | 'hip' | 'shed' | 'flat' }) {
-  const d = { gable: 'M3 15 11 6l8 9M5 15v4h12v-4', hip: 'M2 15l5-7h8l5 7M5 15v4h12v-4', shed: 'M3 10l16-4v13H3z', flat: 'M3 9h16v2H3zM5 11v8h12v-8' }[type];
+  const d = {
+    gable: 'M3 15 11 6l8 9M5 15v4h12v-4',
+    hip: 'M2 15l5-7h8l5 7M5 15v4h12v-4',
+    shed: 'M3 10l16-4v13H3z',
+    flat: 'M3 9h16v2H3zM5 11v8h12v-8',
+  }[type];
   return (
-    <svg viewBox="0 0 22 22" aria-hidden className="!h-6 !w-6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinejoin="round">
+    <svg
+      viewBox="0 0 22 22"
+      aria-hidden
+      className="!h-6 !w-6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinejoin="round"
+    >
       <path d={d} />
     </svg>
   );
@@ -353,14 +469,28 @@ export function CatalogPanel() {
       </button>
     );
   return (
-    <aside aria-label={`${title} library`} className="panel animate-in pointer-events-auto flex max-h-full w-[268px] flex-col overflow-hidden" data-testid="catalog">
+    <aside
+      aria-label={`${title} library`}
+      className="panel animate-in pointer-events-auto flex max-h-full w-[268px] flex-col overflow-hidden"
+      data-testid="catalog"
+    >
       <header className="flex h-11 shrink-0 items-center justify-between border-b border-line pl-4 pr-1.5">
         <h2 className="text-sm font-semibold">{title}</h2>
-        <IconButton label="Collapse panel" size="sm" onClick={() => useEditor.getState().set({ catalogOpen: false })}>
+        <IconButton
+          label="Collapse panel"
+          size="sm"
+          onClick={() => useEditor.getState().set({ catalogOpen: false })}
+        >
           <ChevronLeft />
         </IconButton>
       </header>
-      {mode === 'furnish' ? <Catalog kind="furniture" /> : mode === 'exterior' ? <ExteriorLibrary /> : <BuildLibrary />}
+      {mode === 'furnish' ? (
+        <Catalog kind="furniture" />
+      ) : mode === 'exterior' ? (
+        <ExteriorLibrary />
+      ) : (
+        <BuildLibrary />
+      )}
     </aside>
   );
 }

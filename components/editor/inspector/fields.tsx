@@ -47,7 +47,11 @@ export function ModelNumber({
       disabled={disabled || readOnly}
       testId={testId}
       onChange={(v, source) =>
-        doc().mutate(`Set ${label.toLowerCase()}`, (d) => apply(d, v), source === 'nudge' ? { mergeKey } : undefined)
+        doc().mutate(
+          `Set ${label.toLowerCase()}`,
+          (d) => apply(d, v),
+          source === 'nudge' ? { mergeKey } : undefined,
+        )
       }
       onScrubStart={() => doc().begin(`Set ${label.toLowerCase()}`)}
       onScrubEnd={() => doc().commit()}

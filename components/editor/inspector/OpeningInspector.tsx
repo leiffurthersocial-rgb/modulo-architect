@@ -60,11 +60,27 @@ export function OpeningInspector({ opening, level }: { opening: Opening; level: 
               })(d as Project)
             }
           />
-          <ModelNumber label="Height" short="H" value={opening.height} min={0.3} max={(wall?.height ?? level.height) - opening.sill} mergeKey={`op-h-${opening.id}`} apply={(d, v) => set((o) => void (o.height = v))(d as Project)} />
+          <ModelNumber
+            label="Height"
+            short="H"
+            value={opening.height}
+            min={0.3}
+            max={(wall?.height ?? level.height) - opening.sill}
+            mergeKey={`op-h-${opening.id}`}
+            apply={(d, v) => set((o) => void (o.height = v))(d as Project)}
+          />
         </Row>
         <Row>
           {!isDoor && (
-            <ModelNumber label="Sill height" short="Sill" value={opening.sill} min={0} max={(wall?.height ?? level.height) - opening.height} mergeKey={`op-s-${opening.id}`} apply={(d, v) => set((o) => void (o.sill = v))(d as Project)} />
+            <ModelNumber
+              label="Sill height"
+              short="Sill"
+              value={opening.sill}
+              min={0}
+              max={(wall?.height ?? level.height) - opening.height}
+              mergeKey={`op-s-${opening.id}`}
+              apply={(d, v) => set((o) => void (o.sill = v))(d as Project)}
+            />
           )}
           <ModelNumber
             label="From wall start"
@@ -80,10 +96,22 @@ export function OpeningInspector({ opening, level }: { opening: Opening; level: 
       {isDoor && (
         <Section title="Swing">
           <div className="flex gap-1.5">
-            <Button size="sm" variant="secondary" icon={<FlipVertical2 className="h-3.5 w-3.5" />} onClick={() => mutate('Flip door', (d) => set((o) => void (o.flip = !o.flip))(d as Project))}>
+            <Button
+              size="sm"
+              variant="secondary"
+              icon={<FlipVertical2 className="h-3.5 w-3.5" />}
+              onClick={() => mutate('Flip door', (d) => set((o) => void (o.flip = !o.flip))(d as Project))}
+            >
               Flip side
             </Button>
-            <Button size="sm" variant="secondary" icon={<FlipHorizontal2 className="h-3.5 w-3.5" />} onClick={() => mutate('Mirror hinge', (d) => set((o) => void (o.mirror = !o.mirror))(d as Project))}>
+            <Button
+              size="sm"
+              variant="secondary"
+              icon={<FlipHorizontal2 className="h-3.5 w-3.5" />}
+              onClick={() =>
+                mutate('Mirror hinge', (d) => set((o) => void (o.mirror = !o.mirror))(d as Project))
+              }
+            >
               Swap hinge
             </Button>
           </div>
@@ -91,7 +119,12 @@ export function OpeningInspector({ opening, level }: { opening: Opening; level: 
       )}
       <Section>
         <More>
-          <MaterialPicker label="Frame" category="fixture" value={opening.material ?? OPENING_SLOTS.frame!} onChange={(id) => mutate('Frame finish', (d) => set((o) => void (o.material = id))(d as Project))} />
+          <MaterialPicker
+            label="Frame"
+            category="fixture"
+            value={opening.material ?? OPENING_SLOTS.frame!}
+            onChange={(id) => mutate('Frame finish', (d) => set((o) => void (o.material = id))(d as Project))}
+          />
           {(def?.params ?? []).map((p) =>
             p.type === 'number' ? (
               <ModelNumber

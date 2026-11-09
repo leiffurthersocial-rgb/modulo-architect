@@ -34,13 +34,16 @@ export const stairTool: Tool = {
       y: p.y,
       rotation,
       width: DEFAULTS.stairWidth,
-      length: type === 'straight' ? Math.round(((level.height / 0.18) * 0.26) * 10) / 10 : 2.2,
+      length: type === 'straight' ? Math.round((level.height / 0.18) * 0.26 * 10) / 10 : 2.2,
       length2: 1.6,
       turn: 'left',
       rise: null,
       material: DEFAULT_MATERIALS.stair,
     };
-    toolUI().set({ ghost: { kind: 'stair', stair: { ...preview, id: 'preview' }, levelId: level.id }, cursor: 'copy' });
+    toolUI().set({
+      ghost: { kind: 'stair', stair: { ...preview, id: 'preview' }, levelId: level.id },
+      cursor: 'copy',
+    });
   },
   onPointerDown(e) {
     if (e.button !== 0 || !preview) return false;
@@ -52,7 +55,8 @@ export const stairTool: Tool = {
     });
     editor().select([id]);
     const levels = doc().project.building.levels;
-    if (levels[levels.length - 1]!.id === lid) editor().notify('Stairs added · add a level above to climb to');
+    if (levels[levels.length - 1]!.id === lid)
+      editor().notify('Stairs added · add a level above to climb to');
     editor().setTool('select');
     return true;
   },
@@ -61,7 +65,9 @@ export const stairTool: Tool = {
       rotation += e.shiftKey ? -Math.PI / 2 : Math.PI / 2;
       if (preview) {
         preview.rotation = rotation;
-        toolUI().set({ ghost: { kind: 'stair', stair: { ...preview, id: 'preview' }, levelId: activeLevel().id } });
+        toolUI().set({
+          ghost: { kind: 'stair', stair: { ...preview, id: 'preview' }, levelId: activeLevel().id },
+        });
       }
       return true;
     }

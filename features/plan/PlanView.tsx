@@ -21,7 +21,9 @@ function fitBuilding(w: number, h: number) {
   const b = bounds(src);
   const pad = pts.length >= 2 ? 3 : 1;
   const scale = Math.min(w / (b.width + pad * 2), h / (b.height + pad * 2));
-  usePlanView.getState().set({ cx: (b.minX + b.maxX) / 2, cy: (b.minY + b.maxY) / 2, scale: Math.max(8, Math.min(220, scale)) });
+  usePlanView
+    .getState()
+    .set({ cx: (b.minX + b.maxX) / 2, cy: (b.minY + b.maxY) / 2, scale: Math.max(8, Math.min(220, scale)) });
 }
 
 export default function PlanView() {
@@ -68,7 +70,10 @@ export default function PlanView() {
   const toPlan = useCallback(
     (clientX: number, clientY: number) => {
       const r = ref.current!.getBoundingClientRect();
-      return { x: (clientX - r.left - size.w / 2) / scale + cx, y: (clientY - r.top - size.h / 2) / scale + cy };
+      return {
+        x: (clientX - r.left - size.w / 2) / scale + cx,
+        y: (clientY - r.top - size.h / 2) / scale + cy,
+      };
     },
     [cx, cy, scale, size],
   );
@@ -79,8 +84,15 @@ export default function PlanView() {
         const a = toPlan(Math.min(rect.x0, rect.x1), Math.min(rect.y0, rect.y1));
         const b = toPlan(Math.max(rect.x0, rect.x1), Math.max(rect.y0, rect.y1));
         const p = useDocument.getState().project;
-        const level = p.building.levels.find((l) => l.id === useEditor.getState().activeLevelId) ?? p.building.levels[0]!;
-        const ids = [...level.walls, ...level.openings, ...level.stairs, ...level.items, ...(useEditor.getState().mode === 'exterior' ? p.exterior.items : [])]
+        const level =
+          p.building.levels.find((l) => l.id === useEditor.getState().activeLevelId) ?? p.building.levels[0]!;
+        const ids = [
+          ...level.walls,
+          ...level.openings,
+          ...level.stairs,
+          ...level.items,
+          ...(useEditor.getState().mode === 'exterior' ? p.exterior.items : []),
+        ]
           .map((e) => e.id)
           .filter(filter);
         return ids.filter((id) => {
@@ -152,7 +164,11 @@ export default function PlanView() {
     (e.currentTarget as Element).setPointerCapture(e.pointerId);
     if (pointers.current.size === 2) {
       const [a, b] = [...pointers.current.values()];
-      pinch.current = { d: Math.hypot(a!.x - b!.x, a!.y - b!.y), scale, mid: { x: (a!.x + b!.x) / 2, y: (a!.y + b!.y) / 2 } };
+      pinch.current = {
+        d: Math.hypot(a!.x - b!.x, a!.y - b!.y),
+        scale,
+        mid: { x: (a!.x + b!.x) / 2, y: (a!.y + b!.y) / 2 },
+      };
       panRef.current = { x: pinch.current.mid.x, y: pinch.current.mid.y, cx, cy };
       return;
     }
@@ -177,7 +193,9 @@ export default function PlanView() {
     }
     if (panRef.current) {
       const p = panRef.current;
-      usePlanView.getState().set({ cx: p.cx - (e.clientX - p.x) / scale, cy: p.cy - (e.clientY - p.y) / scale });
+      usePlanView
+        .getState()
+        .set({ cx: p.cx - (e.clientX - p.x) / scale, cy: p.cy - (e.clientY - p.y) / scale });
       return;
     }
     dispatch.move(toEvent(e));
@@ -193,7 +211,10 @@ export default function PlanView() {
   };
 
   const levels = project.building.levels;
-  const activeIdx = Math.max(0, levels.findIndex((l) => l.id === activeId));
+  const activeIdx = Math.max(
+    0,
+    levels.findIndex((l) => l.id === activeId),
+  );
   const active = levels[activeIdx]!;
   const below = activeIdx > 0 ? levels[activeIdx - 1] : undefined;
   const outlines = useMemo(() => {
@@ -205,7 +226,12 @@ export default function PlanView() {
   // Adaptive grid.
   const minor = smartStep(1 / scale, 14);
   const major = minor * (minor >= 1 ? 5 : minor === 0.25 ? 4 : 10);
-  const view = { x: cx - size.w / 2 / scale, y: cy - size.h / 2 / scale, w: size.w / scale, h: size.h / scale };
+  const view = {
+    x: cx - size.w / 2 / scale,
+    y: cy - size.h / 2 / scale,
+    w: size.w / scale,
+    h: size.h / scale,
+  };
 
   return (
     <div
@@ -222,37 +248,87 @@ export default function PlanView() {
       onDoubleClick={(e) => dispatch.dbl(toEvent(e))}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <svg width={size.w} height={size.h} viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`} className="block" role="img" aria-label="Floor plan">
+      <svg
+        width={size.w}
+        height={size.h}
+        viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
+        className="block"
+        role="img"
+        aria-label="Floor plan"
+      >
         <defs>
           <pattern id="grid-minor" width={minor} height={minor} patternUnits="userSpaceOnUse">
-            <path d={`M ${minor} 0 L 0 0 0 ${minor}`} fill="none" stroke="var(--grid-minor)" strokeWidth={k} />
+            <path
+              d={`M ${minor} 0 L 0 0 0 ${minor}`}
+              fill="none"
+              stroke="var(--grid-minor)"
+              strokeWidth={k}
+            />
           </pattern>
           <pattern id="grid-major" width={major} height={major} patternUnits="userSpaceOnUse">
             <rect width={major} height={major} fill="url(#grid-minor)" />
-            <path d={`M ${major} 0 L 0 0 0 ${major}`} fill="none" stroke="var(--grid-major)" strokeWidth={k} />
+            <path
+              d={`M ${major} 0 L 0 0 0 ${major}`}
+              fill="none"
+              stroke="var(--grid-major)"
+              strokeWidth={k}
+            />
           </pattern>
         </defs>
         <rect x={view.x} y={view.y} width={view.w} height={view.h} fill="url(#grid-major)" />
         <PlotOutline project={project} k={k} />
-        {mode === 'exterior' && project.exterior.items.map((it) => (it.hidden ? null : <ItemPlan key={it.id} item={it} k={k} />))}
-        {below && <LevelPlan level={below} k={k} ghost units={project.settings.units} showDims={false} facade={project.exterior.facadeMaterial} />}
-        <LevelPlan level={active} k={k} units={project.settings.units} showDims={project.settings.showDimensions} facade={project.exterior.facadeMaterial} />
+        {mode === 'exterior' &&
+          project.exterior.items.map((it) => (it.hidden ? null : <ItemPlan key={it.id} item={it} k={k} />))}
+        {below && (
+          <LevelPlan
+            level={below}
+            k={k}
+            ghost
+            units={project.settings.units}
+            showDims={false}
+            facade={project.exterior.facadeMaterial}
+          />
+        )}
+        <LevelPlan
+          level={active}
+          k={k}
+          units={project.settings.units}
+          showDims={project.settings.showDimensions}
+          facade={project.exterior.facadeMaterial}
+        />
         {mode !== 'exterior' && project.exterior.items.length > 0 && (
           <g opacity={0.45} pointerEvents="none">
-            {project.exterior.items.map((it) => (it.hidden ? null : <ItemPlan key={it.id} item={it} k={k} />))}
+            {project.exterior.items.map((it) =>
+              it.hidden ? null : <ItemPlan key={it.id} item={it} k={k} />,
+            )}
           </g>
         )}
         {outlines.hov && (
           <g pointerEvents="none">
             {outlines.hov.polygons.map((poly, i) => (
-              <polygon key={i} points={poly.map((p) => `${p.x},${p.y}`).join(' ')} fill="var(--accent)" fillOpacity={0.06} stroke="var(--accent)" strokeOpacity={0.5} strokeWidth={1.5 * k} />
+              <polygon
+                key={i}
+                points={poly.map((p) => `${p.x},${p.y}`).join(' ')}
+                fill="var(--accent)"
+                fillOpacity={0.06}
+                stroke="var(--accent)"
+                strokeOpacity={0.5}
+                strokeWidth={1.5 * k}
+              />
             ))}
           </g>
         )}
         <g pointerEvents="none">
           {outlines.sel.map((o, j) =>
             o!.polygons.map((poly, i) => (
-              <polygon key={`${j}-${i}`} points={poly.map((p) => `${p.x},${p.y}`).join(' ')} fill="var(--accent)" fillOpacity={0.1} stroke="var(--accent)" strokeWidth={2 * k} />
+              <polygon
+                key={`${j}-${i}`}
+                points={poly.map((p) => `${p.x},${p.y}`).join(' ')}
+                fill="var(--accent)"
+                fillOpacity={0.1}
+                stroke="var(--accent)"
+                strokeWidth={2 * k}
+              />
             )),
           )}
         </g>
@@ -263,9 +339,17 @@ export default function PlanView() {
   );
 }
 
-function Compass({ view, k, north }: { view: { x: number; y: number; w: number; h: number }; k: number; north: number }) {
-  const x = view.x + view.w - 36 * k;
-  const y = view.y + 40 * k;
+function Compass({
+  view,
+  k,
+  north,
+}: {
+  view: { x: number; y: number; w: number; h: number };
+  k: number;
+  north: number;
+}) {
+  const x = view.x + view.w - 40 * k;
+  const y = view.y + view.h - 110 * k;
   const deg = (north * 180) / Math.PI;
   return (
     <g transform={`translate(${x} ${y}) rotate(${deg})`} pointerEvents="none" aria-hidden>

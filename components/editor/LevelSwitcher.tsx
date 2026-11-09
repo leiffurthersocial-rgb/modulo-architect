@@ -24,7 +24,11 @@ export function LevelSwitcher() {
   const active = levels.find((l) => l.id === activeId) ?? levels[0]!;
   if (mode === 'walk') return null;
   return (
-    <div className="panel pointer-events-auto flex w-[268px] flex-col gap-2 p-2" aria-label="Levels" data-testid="levels">
+    <div
+      className="panel pointer-events-auto flex w-[268px] flex-col gap-2 p-2"
+      aria-label="Levels"
+      data-testid="levels"
+    >
       <div className="flex items-center gap-1">
         <Layers className="ml-1 h-4 w-4 text-fg-subtle" />
         <div className="flex min-w-0 flex-1 flex-wrap gap-0.5" role="tablist" aria-label="Level">
@@ -48,16 +52,33 @@ export function LevelSwitcher() {
         {!readOnly && (
           <DropdownMenu.Root>
             <DropdownMenu.Trigger asChild>
-              <button aria-label="Add level" data-testid="add-level" className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-fg-muted hover:bg-hover hover:text-fg">
+              <button
+                aria-label="Add level"
+                data-testid="add-level"
+                className="inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-fg-muted hover:bg-hover hover:text-fg"
+              >
                 <Plus className="h-4 w-4" />
               </button>
             </DropdownMenu.Trigger>
             <DropdownMenu.Portal>
-              <DropdownMenu.Content side="top" align="end" sideOffset={6} className="panel animate-in z-50 min-w-[220px] p-1">
-                <DropdownMenu.Item onSelect={() => A.addLevel(true)} className="flex h-8 items-center rounded-md px-2 text-[13px] outline-none data-[highlighted]:bg-hover" data-testid="add-level-copy">
+              <DropdownMenu.Content
+                side="top"
+                align="end"
+                sideOffset={6}
+                className="panel animate-in z-50 min-w-[220px] p-1"
+              >
+                <DropdownMenu.Item
+                  onSelect={() => A.addLevel(true)}
+                  className="flex h-8 items-center rounded-md px-2 text-[13px] outline-none data-[highlighted]:bg-hover"
+                  data-testid="add-level-copy"
+                >
                   New level with the same walls
                 </DropdownMenu.Item>
-                <DropdownMenu.Item onSelect={() => A.addLevel(false)} className="flex h-8 items-center rounded-md px-2 text-[13px] outline-none data-[highlighted]:bg-hover" data-testid="add-level-empty">
+                <DropdownMenu.Item
+                  onSelect={() => A.addLevel(false)}
+                  className="flex h-8 items-center rounded-md px-2 text-[13px] outline-none data-[highlighted]:bg-hover"
+                  data-testid="add-level-empty"
+                >
                   Empty level
                 </DropdownMenu.Item>
               </DropdownMenu.Content>
@@ -70,7 +91,14 @@ export function LevelSwitcher() {
           label="Level name"
           value={active.name}
           className="h-7 flex-1 text-xs"
-          onChange={(v) => useDocument.getState().mutate('Rename level', (d) => void (d.building.levels.find((l) => l.id === active.id)!.name = v))}
+          onChange={(v) =>
+            useDocument
+              .getState()
+              .mutate(
+                'Rename level',
+                (d) => void (d.building.levels.find((l) => l.id === active.id)!.name = v),
+              )
+          }
         />
         {!readOnly && levels.length > 1 && (
           <IconButton label="Remove this level" size="sm" onClick={() => A.removeLevel(active.id)}>

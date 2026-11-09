@@ -21,7 +21,8 @@ describe('element registry', () => {
         const matId = slot ? slot.default : p.material;
         expect(getMaterial(matId).id, `${def.id}:${p.material}`).not.toBe('fallback');
       }
-      for (const slot of Object.values(def.slots)) expect(MATERIALS.some((m) => m.id === slot.default)).toBe(true);
+      for (const slot of Object.values(def.slots))
+        expect(MATERIALS.some((m) => m.id === slot.default)).toBe(true);
     }
   });
 

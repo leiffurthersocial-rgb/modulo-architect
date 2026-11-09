@@ -21,8 +21,16 @@ export function Ghost() {
     const base = level ? level.elevation : 0;
     const parts = def.build({ size: ghost.item.size, params: ghost.item.params });
     return (
-      <group position={[ghost.item.x, base + ghost.item.z, ghost.item.y]} rotation={[0, -ghost.item.rotation, 0]}>
-        <PartsGroup parts={parts} resolve={(s) => resolveSlot(def, ghost.item, s)} variant={ghost.invalid ? 'danger' : 'preview'} shadows={false} />
+      <group
+        position={[ghost.item.x, base + ghost.item.z, ghost.item.y]}
+        rotation={[0, -ghost.item.rotation, 0]}
+      >
+        <PartsGroup
+          parts={parts}
+          resolve={(s) => resolveSlot(def, ghost.item, s)}
+          variant={ghost.invalid ? 'danger' : 'preview'}
+          shadows={false}
+        />
       </group>
     );
   }
@@ -31,9 +39,22 @@ export function Ghost() {
   if (ghost.kind === 'opening') {
     const dw = deriveLevel(level).wallById.get(ghost.opening.wallId);
     if (!dw) return null;
-    return <OpeningView opening={ghost.opening} shape={dw.shape} elevation={level.elevation} variant="preview" preview />;
+    return (
+      <OpeningView
+        opening={ghost.opening}
+        shape={dw.shape}
+        elevation={level.elevation}
+        variant="preview"
+        preview
+      />
+    );
   }
   return (
-    <StairView stair={ghost.stair} layout={stairLayout(ghost.stair, ghost.stair.rise ?? level.height)} elevation={level.elevation} variant="preview" />
+    <StairView
+      stair={ghost.stair}
+      layout={stairLayout(ghost.stair, ghost.stair.rise ?? level.height)}
+      elevation={level.elevation}
+      variant="preview"
+    />
   );
 }

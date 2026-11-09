@@ -37,7 +37,12 @@ export function StairView({
               receiveShadow
               userData={{ pick: true, id: stair.id }}
             />
-            <mesh geometry={unitBox} material={nosing} position={[0, s.y1 - 0.01, -s.d / 2 + 0.01]} scale={[s.w + 0.002, 0.022, 0.02]} />
+            <mesh
+              geometry={unitBox}
+              material={nosing}
+              position={[0, s.y1 - 0.01, -s.d / 2 + 0.01]}
+              scale={[s.w + 0.002, 0.022, 0.02]}
+            />
           </group>
         );
       })}

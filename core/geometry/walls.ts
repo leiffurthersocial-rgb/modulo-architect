@@ -204,7 +204,12 @@ export function wallPieces(shape: WallShape, height: number, openings: OpeningCu
 
   const pieces: WallPiece[] = [];
   for (const [u0, u1] of intervals) {
-    const midU = Number.isFinite(u0) && Number.isFinite(u1) ? (u0 + u1) / 2 : Number.isFinite(u0) ? u0 + 1e-3 : u1 - 1e-3;
+    const midU =
+      Number.isFinite(u0) && Number.isFinite(u1)
+        ? (u0 + u1) / 2
+        : Number.isFinite(u0)
+          ? u0 + 1e-3
+          : u1 - 1e-3;
     const voids = cuts
       .filter((c) => c.u0 <= midU && c.u1 >= midU)
       .map((c) => [c.y0, c.y1] as [number, number])
@@ -227,4 +232,5 @@ export function wallPieces(shape: WallShape, height: number, openings: OpeningCu
 }
 
 /** World position along a wall's centre line. */
-export const pointOnWall = (shape: { a: Vec2; dir: Vec2 }, offset: number): Vec2 => add(shape.a, scale(shape.dir, offset));
+export const pointOnWall = (shape: { a: Vec2; dir: Vec2 }, offset: number): Vec2 =>
+  add(shape.a, scale(shape.dir, offset));

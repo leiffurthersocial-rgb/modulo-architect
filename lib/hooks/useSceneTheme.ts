@@ -27,7 +27,9 @@ function read(): SceneTheme {
 
 /** Theme colours for WebGL (which can't read CSS variables). */
 export function useSceneTheme(): SceneTheme {
-  const [theme, setTheme] = useState<SceneTheme>(() => (typeof window === 'undefined' ? readFallback() : read()));
+  const [theme, setTheme] = useState<SceneTheme>(() =>
+    typeof window === 'undefined' ? readFallback() : read(),
+  );
   useEffect(() => {
     const update = () => setTheme(read());
     const mq = window.matchMedia('(prefers-color-scheme: dark)');

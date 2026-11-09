@@ -25,7 +25,9 @@ export async function openProjectInEditor(project: Project) {
   const url = new URL(window.location.href);
   url.search = `?project=${encodeURIComponent(project.id)}`;
   window.history.replaceState(null, '', url);
-  useEditor.getState().set({ activeLevelId: project.building.levels[0]!.id, selection: [], projectsOpen: false });
+  useEditor
+    .getState()
+    .set({ activeLevelId: project.building.levels[0]!.id, selection: [], projectsOpen: false });
   useEditor.getState().requestCamera({ preset: 'iso' });
   useEditor.getState().set({ planFit: Date.now() });
 }
@@ -34,7 +36,9 @@ export async function importFromFile(file: File): Promise<string | null> {
   const res = parseProject(await file.text());
   if (!res.ok) return res.error;
   await openProjectInEditor(res.project);
-  useEditor.getState().notify(`Opened ${res.project.name}${res.migrated ? ' (upgraded from an older version)' : ''}`);
+  useEditor
+    .getState()
+    .notify(`Opened ${res.project.name}${res.migrated ? ' (upgraded from an older version)' : ''}`);
   return null;
 }
 

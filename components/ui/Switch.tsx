@@ -1,7 +1,15 @@
 'use client';
 import { Switch as S } from 'radix-ui';
 
-export function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
+export function Switch({
+  checked,
+  onChange,
+  label,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  label: string;
+}) {
   return (
     <S.Root
       checked={checked}

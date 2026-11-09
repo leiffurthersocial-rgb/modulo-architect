@@ -5,7 +5,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Modulo: Architect',
-  description: 'Sketch a floor plan, extrude it into a house, furnish it and walk through it. In your browser.',
+  description:
+    'Sketch a floor plan, extrude it into a house, furnish it and walk through it. In your browser.',
   applicationName: 'Modulo: Architect',
   icons: { icon: '/icon.svg' },
 };

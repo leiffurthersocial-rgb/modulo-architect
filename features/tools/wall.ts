@@ -22,7 +22,8 @@ export const getWallThickness = () => thickness;
 function render() {
   const o: Overlay[] = [];
   const u = units();
-  for (let i = 0; i < points.length - 1; i++) o.push({ kind: 'line', a: points[i]!, b: points[i + 1]!, style: 'accent' });
+  for (let i = 0; i < points.length - 1; i++)
+    o.push({ kind: 'line', a: points[i]!, b: points[i + 1]!, style: 'accent' });
   const last = points[points.length - 1];
   if (last && cursor) {
     o.push({ kind: 'line', a: last, b: cursor, style: 'draft' });
@@ -30,14 +31,28 @@ function render() {
     if (L > 0.01) {
       o.push({ kind: 'dim', a: last, b: cursor, offset: 0.45, text: formatLength(L, u) });
       const ang = -angleOf(sub(cursor, last));
-      o.push({ kind: 'label', p: add(last, { x: 0.35, y: -0.35 }), text: formatAngle(((ang % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)), style: 'dim' });
+      o.push({
+        kind: 'label',
+        p: add(last, { x: 0.35, y: -0.35 }),
+        text: formatAngle(((ang % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)),
+        style: 'dim',
+      });
     }
   }
   for (const p of points) o.push({ kind: 'point', p, style: 'accent' });
   if (cursor) o.push({ kind: 'point', p: cursor, style: 'draft' });
   const s = toolUI().snap;
   toolUI().set({
-    overlay: [...o, ...(lastGuides ?? []).map((g) => ({ kind: 'line' as const, a: g.a, b: g.b, style: 'guide' as const, dashed: true }))],
+    overlay: [
+      ...o,
+      ...(lastGuides ?? []).map((g) => ({
+        kind: 'line' as const,
+        a: g.a,
+        b: g.b,
+        style: 'guide' as const,
+        dashed: true,
+      })),
+    ],
     input: text && cursor ? { label: 'Length', text, p: cursor } : null,
     snap: s,
     cursor: 'crosshair',
@@ -107,7 +122,10 @@ export const wallTool: Tool = {
     const anchor = points[points.length - 1];
     const r = snap(e, { anchor, target: snapTargets(activeLevel()) });
     cursor = r.point;
-    lastGuides = r.guides.length && anchor ? r.guides.filter((g) => !(equals(g.a, anchor) && equals(g.b, r.point))) : r.guides;
+    lastGuides =
+      r.guides.length && anchor
+        ? r.guides.filter((g) => !(equals(g.a, anchor) && equals(g.b, r.point)))
+        : r.guides;
     if (!anchor) lastGuides = r.guides;
     editor().setCursor(cursor);
     render();
@@ -163,8 +181,10 @@ export const wallTool: Tool = {
   },
   hint() {
     if (text) return 'Enter to apply the typed length · Esc to clear';
-    if (points.length === 0) return 'Click to start a wall · type a length after the first point · Alt disables snapping';
-    if (points.length === 1) return 'Click the next point, or type a length and press Enter · Shift locks the axis · Esc to stop';
+    if (points.length === 0)
+      return 'Click to start a wall · type a length after the first point · Alt disables snapping';
+    if (points.length === 1)
+      return 'Click the next point, or type a length and press Enter · Shift locks the axis · Esc to stop';
     return 'Keep clicking · close the loop to create a room · double-click or Esc to finish';
   },
 };

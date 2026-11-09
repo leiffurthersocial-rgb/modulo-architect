@@ -32,7 +32,12 @@ export function partGeometry(g: PartGeom): THREE.BufferGeometry {
       break;
     }
     case 'cylinder':
-      geo = new THREE.CylinderGeometry(Math.max(g.radiusTop, 0), Math.max(g.radiusBottom, 0.001), Math.max(g.height, 0.001), g.segments ?? 24);
+      geo = new THREE.CylinderGeometry(
+        Math.max(g.radiusTop, 0),
+        Math.max(g.radiusBottom, 0.001),
+        Math.max(g.height, 0.001),
+        g.segments ?? 24,
+      );
       break;
     case 'sphere': {
       geo = new THREE.SphereGeometry(g.radius, 20, 14);

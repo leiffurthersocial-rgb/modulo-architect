@@ -28,7 +28,16 @@ export function placeItem(
   if (opts.disabled) return { x: raw.x, y: raw.y, rotation, wallId: null, label: null };
   if (level && def.snap !== 'ceiling') {
     const reach = def.snap === 'wall' ? 1.2 : 0.45;
-    let best: { d: number; wallId: string; p: Vec2; n: Vec2; t: number; a: Vec2; dir: Vec2; len: number } | null = null;
+    let best: {
+      d: number;
+      wallId: string;
+      p: Vec2;
+      n: Vec2;
+      t: number;
+      a: Vec2;
+      dir: Vec2;
+      len: number;
+    } | null = null;
     for (const w of level.walls) {
       const a = nodePos(level, w.a);
       const b = nodePos(level, w.b);
@@ -91,7 +100,7 @@ export function placeOpening(
   level: Level,
   opts: { step: number; disabled: boolean; radius: number; excludeId?: string },
 ): OpeningPlacement | null {
-  let best: OpeningPlacement & { d: number } | null = null;
+  let best: (OpeningPlacement & { d: number }) | null = null;
   for (const w of level.walls) {
     const a = nodePos(level, w.a);
     const b = nodePos(level, w.b);
@@ -109,7 +118,16 @@ export function placeOpening(
     }
     offset = Math.min(Math.max(offset, width / 2 + 0.05), L - width / 2 - 0.05);
     const flip = cross(dir, sub(raw, a)) < 0;
-    best = { wallId: w.id, offset: clean(offset), flip, length: L, a, dir, thickness: w.thickness, d: c.distance };
+    best = {
+      wallId: w.id,
+      offset: clean(offset),
+      flip,
+      length: L,
+      a,
+      dir,
+      thickness: w.thickness,
+      d: c.distance,
+    };
   }
   if (!best) return null;
   const { d: _d, ...rest } = best;

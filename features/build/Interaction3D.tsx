@@ -26,13 +26,21 @@ function resolve(intersections: THREE.Intersection[]): Pick {
   for (const hit of intersections) {
     const mat = (hit.object as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
     const m = Array.isArray(mat) ? mat[0] : mat;
-    if (m && m.transparent && m.opacity < 0.3 && !(hit.object.userData.handle || hit.object.parent?.userData.handle)) continue;
+    if (
+      m &&
+      m.transparent &&
+      m.opacity < 0.3 &&
+      !(hit.object.userData.handle || hit.object.parent?.userData.handle)
+    )
+      continue;
     let o: THREE.Object3D | null = hit.object;
     while (o) {
       const u = o.userData;
       if (u.handle) return { id: null, handle: u.handle, point: hit.point };
-      if (u.triIds && hit.faceIndex != null) return { id: u.triIds[hit.faceIndex] ?? null, handle: null, point: hit.point };
-      if (u.instanceIds && hit.instanceId != null) return { id: u.instanceIds[hit.instanceId] ?? null, handle: null, point: hit.point };
+      if (u.triIds && hit.faceIndex != null)
+        return { id: u.triIds[hit.faceIndex] ?? null, handle: null, point: hit.point };
+      if (u.instanceIds && hit.instanceId != null)
+        return { id: u.instanceIds[hit.instanceId] ?? null, handle: null, point: hit.point };
       if (u.id) return { id: u.id, handle: null, point: hit.point };
       o = o.parent;
     }
@@ -55,7 +63,10 @@ export function Interaction3D({ controls }: { controls: React.RefObject<CameraCo
 
     const toEvent = (e: PointerEvent | MouseEvent): ToolPointerEvent => {
       const rect = el.getBoundingClientRect();
-      ndc.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+      ndc.set(
+        ((e.clientX - rect.left) / rect.width) * 2 - 1,
+        -((e.clientY - rect.top) / rect.height) * 2 + 1,
+      );
       raycaster.setFromCamera(ndc, camera);
       const y = planeY();
       plane.constant = -y;
@@ -152,7 +163,9 @@ export function Interaction3D({ controls }: { controls: React.RefObject<CameraCo
         const y1 = Math.max(r.y0, r.y1);
         const p = useDocument.getState().project;
         const ids = [
-          ...p.building.levels.flatMap((l) => [...l.walls, ...l.openings, ...l.stairs, ...l.items].map((e) => e.id)),
+          ...p.building.levels.flatMap((l) =>
+            [...l.walls, ...l.openings, ...l.stairs, ...l.items].map((e) => e.id),
+          ),
           ...p.exterior.items.map((i) => i.id),
         ].filter(filter);
         const v = new THREE.Vector3();

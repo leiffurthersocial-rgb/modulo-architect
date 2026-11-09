@@ -70,14 +70,30 @@ const tmpE = new THREE.Euler();
 const tmpV = new THREE.Vector3();
 const one = new THREE.Vector3(1, 1, 1);
 
-export function itemMatrix(it: Item, baseY: number, def: ElementDef, ceilingY: number | undefined, out = new THREE.Matrix4()) {
+export function itemMatrix(
+  it: Item,
+  baseY: number,
+  def: ElementDef,
+  ceilingY: number | undefined,
+  out = new THREE.Matrix4(),
+) {
   let y = baseY + it.z;
   if (def.snap === 'ceiling' && ceilingY !== undefined) y = Math.max(baseY, ceilingY - it.size.h);
   tmpQ.setFromEuler(tmpE.set(0, -it.rotation, 0));
   return out.compose(tmpV.set(it.x, y, it.y), tmpQ, one);
 }
 
-function BatchMeshes({ batch, baseY, variant, ceilingY }: { batch: Batch; baseY: number; variant: 'normal' | 'ghost'; ceilingY?: number }) {
+function BatchMeshes({
+  batch,
+  baseY,
+  variant,
+  ceilingY,
+}: {
+  batch: Batch;
+  baseY: number;
+  variant: 'normal' | 'ghost';
+  ceilingY?: number;
+}) {
   const refs = useRef<(THREE.InstancedMesh | null)[]>([]);
   const invalidate = useThree((s) => s.invalidate);
   const ids = useMemo(() => batch.items.map((i) => i.id), [batch.items]);
@@ -109,7 +125,11 @@ function BatchMeshes({ batch, baseY, variant, ceilingY }: { batch: Batch; baseY:
           ref={(m) => {
             refs.current[pi] = m;
           }}
-          args={[partGeometry(p.geom), getThreeMaterial(resolveSlot(batch.def, first, p.material), variant), batch.items.length]}
+          args={[
+            partGeometry(p.geom),
+            getThreeMaterial(resolveSlot(batch.def, first, p.material), variant),
+            batch.items.length,
+          ]}
           castShadow={!p.noShadow && variant === 'normal'}
           receiveShadow={variant === 'normal'}
           userData={{ pick: true, instanceIds: ids }}

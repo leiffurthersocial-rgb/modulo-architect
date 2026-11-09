@@ -17,11 +17,25 @@ import { focusSelection } from '@/store/actions';
 
 type Drag =
   | { kind: 'pending'; start: Vec2; client: { x: number; y: number }; id: string; additive: boolean }
-  | { kind: 'move'; start: Vec2; ids: string[]; orig: Map<string, { x: number; y: number; rotation?: number }>; nodes: Map<string, Vec2>; levelId: string }
+  | {
+      kind: 'move';
+      start: Vec2;
+      ids: string[];
+      orig: Map<string, { x: number; y: number; rotation?: number }>;
+      nodes: Map<string, Vec2>;
+      levelId: string;
+    }
   | { kind: 'node'; nodeId: string; levelId: string }
   | { kind: 'rotate'; id: string; center: Vec2; startAngle: number; orig: number }
   | { kind: 'resize'; id: string; sx: number; sz: number; orig: Item }
-  | { kind: 'marquee'; startClient: { x: number; y: number }; start: Vec2; additive: boolean; current: Vec2; currentClient: { x: number; y: number } };
+  | {
+      kind: 'marquee';
+      startClient: { x: number; y: number };
+      start: Vec2;
+      additive: boolean;
+      current: Vec2;
+      currentClient: { x: number; y: number };
+    };
 
 let drag: Drag | null = null;
 let hoverHandle: string | null = null;
@@ -52,7 +66,13 @@ export function refreshSelectionOverlay() {
   if (drag?.kind === 'marquee') {
     const a = drag.start;
     const b = drag.current;
-    o.push({ kind: 'poly', pts: [a, { x: b.x, y: a.y }, b, { x: a.x, y: b.y }], style: 'accent', fill: true, closed: true });
+    o.push({
+      kind: 'poly',
+      pts: [a, { x: b.x, y: a.y }, b, { x: a.x, y: b.y }],
+      style: 'accent',
+      fill: true,
+      closed: true,
+    });
   }
   o.push(...selectionHandles(project(), editor().selection, editor().mode));
   toolUI().set({ overlay: o });
@@ -67,10 +87,13 @@ function beginMove(e: ToolPointerEvent, ids: string[]) {
     const ref = findEntity(p, id);
     if (!ref) continue;
     if (ref.level) levelId = ref.level.id;
-    if (ref.kind === 'item' || ref.kind === 'stair') orig.set(id, { x: ref.entity.x, y: ref.entity.y, rotation: ref.entity.rotation });
+    if (ref.kind === 'item' || ref.kind === 'stair')
+      orig.set(id, { x: ref.entity.x, y: ref.entity.y, rotation: ref.entity.rotation });
     else if (ref.kind === 'opening') orig.set(id, { x: ref.entity.offset, y: 0 });
-    else if (ref.kind === 'wall') for (const nid of [ref.entity.a, ref.entity.b]) nodes.set(nid, nodePos(ref.level, nid)!);
-    else if (ref.kind === 'room') for (const nid of ref.entity.nodes) nodes.set(nid, nodePos(ref.level, nid)!);
+    else if (ref.kind === 'wall')
+      for (const nid of [ref.entity.a, ref.entity.b]) nodes.set(nid, nodePos(ref.level, nid)!);
+    else if (ref.kind === 'room')
+      for (const nid of ref.entity.nodes) nodes.set(nid, nodePos(ref.level, nid)!);
     else if (ref.kind === 'node') nodes.set(id, { x: ref.entity.x, y: ref.entity.y });
   }
   doc().begin('Move');
@@ -111,8 +134,15 @@ function updateMove(e: ToolPointerEvent, d: Extract<Drag, { kind: 'move' }>) {
       if (pl.wallId && !e.shift) ref.entity.rotation = pl.rotation;
     });
     const moved = findEntity(project(), it.id);
-    const issues = moved?.kind === 'item' ? itemIssues(moved.level, moved.level ? moved.level.items : project().exterior.items, moved.entity) : [];
-    tip = issues.length ? (issues[0]!.kind === 'blocks-door' ? 'Blocks a door' : 'Overlaps another item') : `${formatLength(pos.x - o.x, u)}, ${formatLength(pos.y - o.y, u)}`;
+    const issues =
+      moved?.kind === 'item'
+        ? itemIssues(moved.level, moved.level ? moved.level.items : project().exterior.items, moved.entity)
+        : [];
+    tip = issues.length
+      ? issues[0]!.kind === 'blocks-door'
+        ? 'Blocks a door'
+        : 'Overlaps another item'
+      : `${formatLength(pos.x - o.x, u)}, ${formatLength(pos.y - o.y, u)}`;
     toolUI().set({ tip: { text: tip, p: e.point }, snap: pl.label ? { label: pl.label, p: pos } : null });
     return;
   }
@@ -127,7 +157,9 @@ function updateMove(e: ToolPointerEvent, d: Extract<Drag, { kind: 'move' }>) {
         ref.entity.wallId = pl.wallId;
         ref.entity.offset = pl.offset;
       });
-      toolUI().set({ tip: { text: `${formatLength(pl.offset - o.width / 2, u)} from wall end`, p: e.point } });
+      toolUI().set({
+        tip: { text: `${formatLength(pl.offset - o.width / 2, u)} from wall end`, p: e.point },
+      });
     }
     return;
   }
@@ -200,12 +232,24 @@ export const selectTool: Tool = {
       if ((kind === 'rot' || kind === 'srot') && ref && (ref.kind === 'item' || ref.kind === 'stair')) {
         doc().begin('Rotate');
         const c = { x: ref.entity.x, y: ref.entity.y };
-        drag = { kind: 'rotate', id: ref.entity.id, center: c, startAngle: angleOf(sub(e.point, c)), orig: ref.entity.rotation };
+        drag = {
+          kind: 'rotate',
+          id: ref.entity.id,
+          center: c,
+          startAngle: angleOf(sub(e.point, c)),
+          orig: ref.entity.rotation,
+        };
         return true;
       }
       if (kind === 'res' && ref?.kind === 'item') {
         doc().begin('Resize');
-        drag = { kind: 'resize', id: ref.entity.id, sx: Number(a), sz: Number(b), orig: structuredClone(ref.entity) };
+        drag = {
+          kind: 'resize',
+          id: ref.entity.id,
+          sx: Number(a),
+          sz: Number(b),
+          orig: structuredClone(ref.entity),
+        };
         return true;
       }
     }
@@ -243,7 +287,13 @@ export const selectTool: Tool = {
       const h = e.handle;
       if (h !== hoverHandle) {
         hoverHandle = h;
-        const cur = h ? (selectionHandles(project(), editor().selection, editor().mode).find((x) => x.kind === 'handle' && x.id === h) as { cursor?: string } | undefined)?.cursor : undefined;
+        const cur = h
+          ? (
+              selectionHandles(project(), editor().selection, editor().mode).find(
+                (x) => x.kind === 'handle' && x.id === h,
+              ) as { cursor?: string } | undefined
+            )?.cursor
+          : undefined;
         toolUI().set({ cursor: cur ?? 'default' });
       }
       const hit = hitSelectable(e);
@@ -264,12 +314,15 @@ export const selectTool: Tool = {
     if (drag.kind === 'move') {
       updateMove(e, drag);
     } else if (drag.kind === 'node') {
-      const level = project().building.levels.find((l) => l.id === drag!.levelId)!;
+      const nd = drag;
+      const level = project().building.levels.find((l) => l.id === nd.levelId)!;
       const r = snap(e, { target: snapTargets(level, [drag.nodeId]) });
       const nid = drag.nodeId;
       const lid = drag.levelId;
       doc().mutate('Move corner', (d) => ops.moveNode(d as Project, lid, nid, r.point));
-      toolUI().set({ tip: { text: `${formatLength(r.point.x, units())}, ${formatLength(r.point.y, units())}`, p: e.point } });
+      toolUI().set({
+        tip: { text: `${formatLength(r.point.x, units())}, ${formatLength(r.point.y, units())}`, p: e.point },
+      });
     } else if (drag.kind === 'rotate') {
       const a = angleOf(sub(e.point, drag.center));
       const raw = drag.orig + (a - drag.startAngle);
@@ -287,7 +340,10 @@ export const selectTool: Tool = {
       // Opposite corner stays fixed.
       const c = Math.cos(it.rotation);
       const s = Math.sin(it.rotation);
-      const fixed = { x: it.x - (drag.sx * it.size.w * c) / 2 + (drag.sz * it.size.d * s) / 2, y: it.y - (drag.sx * it.size.w * s) / 2 - (drag.sz * it.size.d * c) / 2 };
+      const fixed = {
+        x: it.x - (drag.sx * it.size.w * c) / 2 + (drag.sz * it.size.d * s) / 2,
+        y: it.y - (drag.sx * it.size.w * s) / 2 - (drag.sz * it.size.d * c) / 2,
+      };
       const v = sub(e.point, fixed);
       const lx = v.x * c + v.y * s;
       const lz = -v.x * s + v.y * c;
@@ -316,7 +372,9 @@ export const selectTool: Tool = {
         ref.entity.x = cx;
         ref.entity.y = cy;
       });
-      toolUI().set({ tip: { text: `${formatLength(w, units())} × ${formatLength(dd, units())}`, p: e.point } });
+      toolUI().set({
+        tip: { text: `${formatLength(w, units())} × ${formatLength(dd, units())}`, p: e.point },
+      });
     } else if (drag.kind === 'marquee') {
       drag.current = e.point;
       drag.currentClient = { x: e.clientX, y: e.clientY };
@@ -327,7 +385,8 @@ export const selectTool: Tool = {
     const d = drag;
     drag = null;
     if (!d) {
-      if (emptyDown && Math.hypot(e.clientX - emptyDown.x, e.clientY - emptyDown.y) < 4 && !e.shift) editor().clearSelection();
+      if (emptyDown && Math.hypot(e.clientX - emptyDown.x, e.clientY - emptyDown.y) < 4 && !e.shift)
+        editor().clearSelection();
       emptyDown = null;
       refreshSelectionOverlay();
       return;
@@ -378,13 +437,16 @@ export const selectTool: Tool = {
   },
   hint() {
     const sel = editor().selection;
-    if (drag?.kind === 'move') return 'Drag to move · Shift locks the axis · Alt disables snapping · Esc cancels';
+    if (drag?.kind === 'move')
+      return 'Drag to move · Shift locks the axis · Alt disables snapping · Esc cancels';
     if (drag?.kind === 'rotate') return 'Rotating in 15° steps · Alt for free rotation';
     if (drag?.kind === 'resize') return 'Resizing · Shift keeps proportions · Alt disables snapping';
     if (sel.length === 0) {
       const mode = editor().mode;
-      if (mode === 'furnish') return 'Pick furniture from the catalog, or click an item to edit it · Shift-drag to box-select';
-      if (mode === 'exterior') return 'Click a wall to change its facade, or add outdoor elements from the catalog';
+      if (mode === 'furnish')
+        return 'Pick furniture from the catalog, or click an item to edit it · Shift-drag to box-select';
+      if (mode === 'exterior')
+        return 'Click a wall to change its facade, or add outdoor elements from the catalog';
       return 'Click to select · drag to move · Shift-drag for box select · double-click to focus';
     }
     return `${sel.length} selected · drag to move · Del deletes · ⌘D duplicates · double-click to focus`;

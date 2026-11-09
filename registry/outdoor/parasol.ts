@@ -15,7 +15,11 @@ export default defineElement({
     pole: { label: 'Pole', default: 'wood-oak', category: 'furniture' },
   },
   snap: 'ground',
-  footprint: () => Array.from({ length: 8 }, (_, i) => ({ x: Math.cos((i / 8) * Math.PI * 2) * 0.25, y: Math.sin((i / 8) * Math.PI * 2) * 0.25 })),
+  footprint: () =>
+    Array.from({ length: 8 }, (_, i) => ({
+      x: Math.cos((i / 8) * Math.PI * 2) * 0.25,
+      y: Math.sin((i / 8) * Math.PI * 2) * 0.25,
+    })),
   build: ({ size: { w, h } }) => [
     cyl(0.25, 0.08, 0, 0, 0, 'pole', 0.25, 24),
     cyl(0.025, h, 0, 0, 0, 'pole', 0.025, 12),

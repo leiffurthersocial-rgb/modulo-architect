@@ -51,7 +51,12 @@ export function snapTargets(level: Level, excludeNodes: string[] = []): SnapTarg
     targetCache.set(level.nodes, { walls: level.walls, t });
   }
   if (excludeNodes.length === 0) return t;
-  const ex = new Set(excludeNodes.map((id) => level.nodes.find((n) => n.id === id)).filter(Boolean).map((n) => `${n!.x},${n!.y}`));
+  const ex = new Set(
+    excludeNodes
+      .map((id) => level.nodes.find((n) => n.id === id))
+      .filter(Boolean)
+      .map((n) => `${n!.x},${n!.y}`),
+  );
   return {
     points: t.points.filter((p) => !ex.has(`${p.x},${p.y}`)),
     midpoints: t.midpoints,
@@ -69,7 +74,9 @@ export function snap(e: ToolPointerEvent, opts: { anchor?: Vec2; target?: SnapTa
     axisLock: e.shift,
     disabled: e.alt || !settings.snapping,
   });
-  toolUI().set({ snap: res.kind === 'free' || res.kind === 'grid' ? null : { label: SNAP_LABEL[res.kind], p: res.point } });
+  toolUI().set({
+    snap: res.kind === 'free' || res.kind === 'grid' ? null : { label: SNAP_LABEL[res.kind], p: res.point },
+  });
   return res;
 }
 

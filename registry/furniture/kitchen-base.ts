@@ -29,7 +29,10 @@ export default defineElement({
     ];
     const n = Math.max(1, Math.round(w / 0.6));
     const fw = w / n;
-    for (let i = 0; i < n; i++) parts.push(slab(fw - 0.004, h - 0.15, 0.018, -w / 2 + fw * (i + 0.5), 0.105, d / 2 - 0.03, 'fronts', 0.002));
+    for (let i = 0; i < n; i++)
+      parts.push(
+        slab(fw - 0.004, h - 0.15, 0.018, -w / 2 + fw * (i + 0.5), 0.105, d / 2 - 0.03, 'fronts', 0.002),
+      );
     if (params.sink !== false) {
       parts.push(slab(0.5, 0.012, 0.4, -w / 4, h - 0.005, 0.02, 'metal', 0.02));
       parts.push(cyl(0.012, 0.25, -w / 4, h, -d / 2 + 0.08, 'metal', 0.012, 12));

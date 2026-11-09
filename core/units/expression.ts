@@ -26,7 +26,12 @@ type Token =
 function tokenize(input: string): Token[] | null {
   const out: Token[] = [];
   let i = 0;
-  const s = input.replace(/,/g, '.').replace(/×/g, '*').replace(/÷/g, '/').replace(/′/g, "'").replace(/″/g, '"');
+  const s = input
+    .replace(/,/g, '.')
+    .replace(/×/g, '*')
+    .replace(/÷/g, '/')
+    .replace(/′/g, "'")
+    .replace(/″/g, '"');
   while (i < s.length) {
     const c = s[i]!;
     if (c === ' ' || c === '\t') {
@@ -86,7 +91,8 @@ export function evaluate(input: string, opts: EvalOptions): number | null {
   let pos = 0;
   const peek = () => tokens[pos];
 
-  const toDim1 = (q: Quantity): Quantity => (q.dim === 0 ? { value: q.value * opts.defaultFactor, dim: 1 } : q);
+  const toDim1 = (q: Quantity): Quantity =>
+    q.dim === 0 ? { value: q.value * opts.defaultFactor, dim: 1 } : q;
 
   function parseExpr(): Quantity | null {
     let left = parseTerm();
@@ -161,7 +167,7 @@ export function evaluate(input: string, opts: EvalOptions): number | null {
       let q = readUnit({ value: tk.v, dim: 0 });
       if (!q) return null;
       // Compound quantities: 10' 6"  or  1m 20cm
-      while (q.dim === 1 && peek()?.t === 'num' && tokens[pos + 1]?.t === 'unit') {
+      while (q.dim === 1 && peek()?.t === 'num' && tokens![pos + 1]?.t === 'unit') {
         const n = peek() as { t: 'num'; v: number };
         pos++;
         const next = readUnit({ value: n.v, dim: 0 });

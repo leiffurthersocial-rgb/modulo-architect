@@ -34,7 +34,14 @@ export const LevelPlan = memo(function LevelPlan({
     return (
       <g opacity={0.35} pointerEvents="none">
         {d.walls.map((w) => (
-          <polygon key={w.id} points={pts(w.shape.polygon)} fill="none" stroke="var(--fg-subtle)" strokeWidth={k} strokeDasharray={`${4 * k} ${3 * k}`} />
+          <polygon
+            key={w.id}
+            points={pts(w.shape.polygon)}
+            fill="none"
+            stroke="var(--fg-subtle)"
+            strokeWidth={k}
+            strokeDasharray={`${4 * k} ${3 * k}`}
+          />
         ))}
       </g>
     );
@@ -64,7 +71,14 @@ export const LevelPlan = memo(function LevelPlan({
         return (
           <g key={s.id} data-id={s.id}>
             {lay.steps.map((st, i) => (
-              <polygon key={i} data-id={s.id} points={pts(rectPolygon(st.x, st.y, st.w, st.d, st.rotation))} fill="var(--panel-solid)" stroke="var(--fg-muted)" strokeWidth={k} />
+              <polygon
+                key={i}
+                data-id={s.id}
+                points={pts(rectPolygon(st.x, st.y, st.w, st.d, st.rotation))}
+                fill="var(--panel-solid)"
+                stroke="var(--fg-muted)"
+                strokeWidth={k}
+              />
             ))}
             <StairArrow s={s} k={k} />
           </g>
@@ -79,13 +93,28 @@ export const LevelPlan = memo(function LevelPlan({
           return (
             <g key={w.id} data-id={w.id}>
               {atFloor.map((p, i) => (
-                <polygon key={i} data-id={w.id} points={pts(p.polygon)} fill="var(--fg)" stroke="var(--fg)" strokeWidth={k * 0.5} strokeLinejoin="miter" />
+                <polygon
+                  key={i}
+                  data-id={w.id}
+                  points={pts(p.polygon)}
+                  fill="var(--fg)"
+                  stroke="var(--fg)"
+                  strokeWidth={k * 0.5}
+                  strokeLinejoin="miter"
+                />
               ))}
             </g>
           );
         })}
         {d.junctions.map((j) => (
-          <polygon key={j.nodeId} data-id={j.wallIds[0]} points={pts(j.polygon)} fill="var(--fg)" stroke="var(--fg)" strokeWidth={k * 0.5} />
+          <polygon
+            key={j.nodeId}
+            data-id={j.wallIds[0]}
+            points={pts(j.polygon)}
+            fill="var(--fg)"
+            stroke="var(--fg)"
+            strokeWidth={k * 0.5}
+          />
         ))}
       </g>
       {/* Openings */}
@@ -101,11 +130,24 @@ export const LevelPlan = memo(function LevelPlan({
         const frame = [add(e0, t), add(e1, t), sub(e1, t), sub(e0, t)];
         return (
           <g key={o.id} data-id={o.id}>
-            <polygon data-id={o.id} points={pts(frame)} fill="var(--bg-elevated)" stroke="var(--fg-muted)" strokeWidth={k} />
+            <polygon
+              data-id={o.id}
+              points={pts(frame)}
+              fill="var(--bg-elevated)"
+              stroke="var(--fg-muted)"
+              strokeWidth={k}
+            />
             {def.kind === 'window' && (
               <>
                 <line x1={e0.x} y1={e0.y} x2={e1.x} y2={e1.y} stroke="var(--fg-muted)" strokeWidth={k} />
-                <line x1={add(e0, scale(t, 0.4)).x} y1={add(e0, scale(t, 0.4)).y} x2={add(e1, scale(t, 0.4)).x} y2={add(e1, scale(t, 0.4)).y} stroke="var(--fg-muted)" strokeWidth={k * 0.75} />
+                <line
+                  x1={add(e0, scale(t, 0.4)).x}
+                  y1={add(e0, scale(t, 0.4)).y}
+                  x2={add(e1, scale(t, 0.4)).x}
+                  y2={add(e1, scale(t, 0.4)).y}
+                  stroke="var(--fg-muted)"
+                  strokeWidth={k * 0.75}
+                />
               </>
             )}
             {def.kind === 'door' && <DoorSymbol o={o} g={g} swing={def.swing ?? 'single'} k={k} />}
@@ -122,10 +164,25 @@ export const LevelPlan = memo(function LevelPlan({
           if (!dr) return null;
           return (
             <g key={r.id}>
-              <text x={dr.center.x} y={dr.center.y} textAnchor="middle" fontSize={12 * k} fontWeight={600} fill="var(--fg)" className="tnum">
+              <text
+                x={dr.center.x}
+                y={dr.center.y}
+                textAnchor="middle"
+                fontSize={12 * k}
+                fontWeight={600}
+                fill="var(--fg)"
+                className="tnum"
+              >
                 {r.name}
               </text>
-              <text x={dr.center.x} y={dr.center.y + 15 * k} textAnchor="middle" fontSize={10.5 * k} fill="var(--fg-muted)" className="tnum">
+              <text
+                x={dr.center.x}
+                y={dr.center.y + 15 * k}
+                textAnchor="middle"
+                fontSize={10.5 * k}
+                fill="var(--fg-muted)"
+                className="tnum"
+              >
                 {formatArea(dr.area, units)}
               </text>
             </g>
@@ -179,8 +236,24 @@ function DoorSymbol({
     const h = scale(g.dir, o.width / 2);
     return (
       <g pointerEvents="none">
-        <line x1={sub(g.center, h).x} y1={sub(g.center, h).y} x2={add(g.center, scale(h, 0.1)).x} y2={add(g.center, scale(h, 0.1)).y} stroke="var(--fg-muted)" strokeWidth={2 * k} transform={`translate(${n.x * 0.03} ${n.y * 0.03})`} />
-        <line x1={sub(g.center, scale(h, 0.1)).x} y1={sub(g.center, scale(h, 0.1)).y} x2={add(g.center, h).x} y2={add(g.center, h).y} stroke="var(--fg-muted)" strokeWidth={2 * k} transform={`translate(${-n.x * 0.03} ${-n.y * 0.03})`} />
+        <line
+          x1={sub(g.center, h).x}
+          y1={sub(g.center, h).y}
+          x2={add(g.center, scale(h, 0.1)).x}
+          y2={add(g.center, scale(h, 0.1)).y}
+          stroke="var(--fg-muted)"
+          strokeWidth={2 * k}
+          transform={`translate(${n.x * 0.03} ${n.y * 0.03})`}
+        />
+        <line
+          x1={sub(g.center, scale(h, 0.1)).x}
+          y1={sub(g.center, scale(h, 0.1)).y}
+          x2={add(g.center, h).x}
+          y2={add(g.center, h).y}
+          stroke="var(--fg-muted)"
+          strokeWidth={2 * k}
+          transform={`translate(${-n.x * 0.03} ${-n.y * 0.03})`}
+        />
       </g>
     );
   }
@@ -192,12 +265,25 @@ function DoorSymbol({
         const hinge = add(face, scale(g.dir, (s * o.width) / 2));
         const tip = add(hinge, scale(n, lw));
         const closed = add(hinge, scale(g.dir, -s * lw));
-        const sweep = (s > 0) !== (side > 0) ? 0 : 1;
+        const sweep = s > 0 !== side > 0 ? 0 : 1;
         const cr = crossSign(g.dir, g.normal);
         return (
           <g key={s}>
-            <line x1={hinge.x} y1={hinge.y} x2={tip.x} y2={tip.y} stroke="var(--fg-muted)" strokeWidth={1.5 * k} />
-            <path d={`M ${tip.x} ${tip.y} A ${lw} ${lw} 0 0 ${cr > 0 ? sweep : 1 - sweep} ${closed.x} ${closed.y}`} fill="none" stroke="var(--fg-subtle)" strokeWidth={k} strokeDasharray={`${3 * k} ${2 * k}`} />
+            <line
+              x1={hinge.x}
+              y1={hinge.y}
+              x2={tip.x}
+              y2={tip.y}
+              stroke="var(--fg-muted)"
+              strokeWidth={1.5 * k}
+            />
+            <path
+              d={`M ${tip.x} ${tip.y} A ${lw} ${lw} 0 0 ${cr > 0 ? sweep : 1 - sweep} ${closed.x} ${closed.y}`}
+              fill="none"
+              stroke="var(--fg-subtle)"
+              strokeWidth={k}
+              strokeDasharray={`${3 * k} ${2 * k}`}
+            />
           </g>
         );
       })}
@@ -207,7 +293,13 @@ function DoorSymbol({
 
 const crossSign = (a: Vec2, b: Vec2) => Math.sign(a.x * b.y - a.y * b.x);
 
-function StairArrow({ s, k }: { s: { x: number; y: number; rotation: number; length: number; width: number }; k: number }) {
+function StairArrow({
+  s,
+  k,
+}: {
+  s: { x: number; y: number; rotation: number; length: number; width: number };
+  k: number;
+}) {
   const c = Math.cos(s.rotation);
   const sn = Math.sin(s.rotation);
   const P = (lx: number, lz: number) => ({ x: s.x + lx * c - lz * sn, y: s.y + lx * sn + lz * c });
@@ -224,11 +316,23 @@ function StairArrow({ s, k }: { s: { x: number; y: number; rotation: number; len
   );
 }
 
-export const ItemPlan = memo(function ItemPlan({ item, k }: { item: import('@/core/model/schema').Item; k: number }) {
+export const ItemPlan = memo(function ItemPlan({
+  item,
+  k,
+}: {
+  item: import('@/core/model/schema').Item;
+  k: number;
+}) {
   const def = getElement(item.type);
   const fp = useMemo(() => itemFootprint(item), [item]);
   if (!def) return null;
-  const front = add({ x: item.x, y: item.y }, scale(perp(normalize({ x: Math.cos(item.rotation), y: Math.sin(item.rotation) })), item.size.d / 2 - 0.06));
+  const front = add(
+    { x: item.x, y: item.y },
+    scale(
+      perp(normalize({ x: Math.cos(item.rotation), y: Math.sin(item.rotation) })),
+      item.size.d / 2 - 0.06,
+    ),
+  );
   const flat = !def.solid && def.solid !== undefined;
   const ceiling = def.snap === 'ceiling' || def.snap === 'wall';
   const big = Math.min(item.size.w, item.size.d) / k > 34;
@@ -245,7 +349,15 @@ export const ItemPlan = memo(function ItemPlan({ item, k }: { item: import('@/co
       />
       {!flat && <circle cx={front.x} cy={front.y} r={2 * k} fill="var(--fg-subtle)" pointerEvents="none" />}
       {big && (
-        <text x={item.x} y={item.y} textAnchor="middle" dominantBaseline="middle" fontSize={9.5 * k} fill="var(--fg-subtle)" pointerEvents="none">
+        <text
+          x={item.x}
+          y={item.y}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={9.5 * k}
+          fill="var(--fg-subtle)"
+          pointerEvents="none"
+        >
           {item.name ?? def.name}
         </text>
       )}

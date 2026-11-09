@@ -30,7 +30,10 @@ export function Highlights({ accent, danger }: { accent: string; danger: string 
     };
     const warn = selection.filter((id) => {
       const ref = findEntity(project, id);
-      return ref?.kind === 'item' && itemIssues(ref.level, ref.level ? ref.level.items : project.exterior.items, ref.entity).length > 0;
+      return (
+        ref?.kind === 'item' &&
+        itemIssues(ref.level, ref.level ? ref.level.items : project.exterior.items, ref.entity).length > 0
+      );
     });
     return {
       sel: build(selection.filter((id) => !warn.includes(id))),

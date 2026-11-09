@@ -21,7 +21,14 @@ export function MultiInspector({ ids }: { ids: string[] }) {
     m[k] = (m[k] ?? 0) + 1;
     return m;
   }, {});
-  const label: Record<string, string> = { item: 'items', wall: 'walls', opening: 'openings', stair: 'stairs', room: 'rooms', node: 'corners' };
+  const label: Record<string, string> = {
+    item: 'items',
+    wall: 'walls',
+    opening: 'openings',
+    stair: 'stairs',
+    room: 'rooms',
+    node: 'corners',
+  };
   return (
     <>
       <Section title="Selection">

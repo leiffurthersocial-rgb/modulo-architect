@@ -6,13 +6,25 @@ import type { Item, Level, Opening, Project, Roof, Stair, Wall } from './schema'
 import { createId } from './ids';
 import { createLevel, DEFAULTS, defaultWallProps } from './defaults';
 import { DEFAULT_MATERIALS } from '@/registry/materials';
-import { addWall, cleanupNode, nodePos, removeWall, roomPolygon, syncRooms, wallsAtNode, type WallProps } from '../geometry/graph';
+import {
+  addWall,
+  cleanupNode,
+  nodePos,
+  removeWall,
+  roomPolygon,
+  syncRooms,
+  wallsAtNode,
+  type WallProps,
+} from '../geometry/graph';
 import type { Vec2 } from '../geometry/vec2';
 import { add, dist, normalize, scale, sub } from '../geometry/vec2';
 import { bounds, centroid, pointInPolygon } from '../geometry/polygon';
 import { kindOf } from './entities';
 
-export const ROOM_DEFAULTS = { floorMaterial: DEFAULT_MATERIALS.floor, ceilingMaterial: DEFAULT_MATERIALS.ceiling };
+export const ROOM_DEFAULTS = {
+  floorMaterial: DEFAULT_MATERIALS.floor,
+  ceilingMaterial: DEFAULT_MATERIALS.ceiling,
+};
 
 export function getLevel(p: Project, levelId: string): Level {
   const l = p.building.levels.find((x) => x.id === levelId);
@@ -25,10 +37,16 @@ export function sync(level: Level) {
 }
 
 /** Add a polyline of walls; returns created wall ids. */
-export function addWallChain(p: Project, levelId: string, points: Vec2[], props: WallProps = defaultWallProps()) {
+export function addWallChain(
+  p: Project,
+  levelId: string,
+  points: Vec2[],
+  props: WallProps = defaultWallProps(),
+) {
   const level = getLevel(p, levelId);
   const created: string[] = [];
-  for (let i = 0; i < points.length - 1; i++) created.push(...addWall(level, points[i]!, points[i + 1]!, props));
+  for (let i = 0; i < points.length - 1; i++)
+    created.push(...addWall(level, points[i]!, points[i + 1]!, props));
   sync(level);
   return created;
 }
@@ -238,7 +256,13 @@ export function addLevel(p: Project, opts: { copyWalls?: boolean } = {}): string
       level.nodes.push({ id, x: n.x, y: n.y });
     }
     for (const w of top.walls)
-      level.walls.push({ ...w, materials: { ...w.materials }, id: createId('wall'), a: idMap.get(w.a)!, b: idMap.get(w.b)! });
+      level.walls.push({
+        ...w,
+        materials: { ...w.materials },
+        id: createId('wall'),
+        a: idMap.get(w.a)!,
+        b: idMap.get(w.b)!,
+      });
     syncRooms(level, ROOM_DEFAULTS);
     level.rooms.forEach((r, i) => {
       const src = top.rooms.find((t) => t.nodes.every((n) => r.nodes.includes(idMap.get(n)!)));

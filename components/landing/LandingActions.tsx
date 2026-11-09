@@ -24,11 +24,21 @@ export function LandingActions() {
   return (
     <div className="flex flex-col items-start gap-3">
       <div className="flex flex-wrap items-center gap-2.5">
-        <Button variant="primary" size="lg" onClick={() => router.push('/editor?template=empty')} data-testid="start-designing">
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => router.push('/editor?template=empty')}
+          data-testid="start-designing"
+        >
           Start designing
           <ArrowRight className="h-4 w-4" />
         </Button>
-        <Button size="lg" variant="secondary" icon={<FolderOpen className="h-4 w-4" />} onClick={() => input.current?.click()}>
+        <Button
+          size="lg"
+          variant="secondary"
+          icon={<FolderOpen className="h-4 w-4" />}
+          onClick={() => input.current?.click()}
+        >
           Open a project
         </Button>
         <input

@@ -15,5 +15,8 @@ export default defineElement({
     legs: { label: 'Legs', default: 'wood-oak', category: 'furniture' },
   },
   snap: 'floor',
-  build: ({ size: { w, d, h } }) => [slab(w, 0.035, d, 0, h - 0.035, 0, 'top', 0.008), ...legs(w, d, h - 0.035, 0.08, 'legs', 0.05)],
+  build: ({ size: { w, d, h } }) => [
+    slab(w, 0.035, d, 0, h - 0.035, 0, 'top', 0.008),
+    ...legs(w, d, h - 0.035, 0.08, 'legs', 0.05),
+  ],
 });

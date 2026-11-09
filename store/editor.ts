@@ -7,15 +7,7 @@ export type ViewKind = '2d' | '3d' | 'split';
 export type LevelDisplay = 'all' | 'isolate' | 'ghost';
 export type CameraPreset = 'top' | 'front' | 'iso' | 'fit';
 
-export type ToolId =
-  | 'select'
-  | 'wall'
-  | 'room'
-  | 'opening'
-  | 'stair'
-  | 'place'
-  | 'measure'
-  | 'pan';
+export type ToolId = 'select' | 'wall' | 'room' | 'opening' | 'stair' | 'place' | 'measure' | 'pan';
 
 export interface PlaceSpec {
   kind: 'element' | 'opening' | 'room-template';
@@ -108,7 +100,12 @@ export const useEditor = create<EditorState>()((set) => ({
       const patch: Partial<EditorState> = { mode, tool: 'select', place: null };
       if (mode === 'walk') patch.modeBeforeWalk = s.mode;
       if (mode === 'plan') patch.view = '2d';
-      else if ((mode === 'furnish' || mode === 'exterior' || mode === 'build') && s.view === '2d' && s.mode === 'plan') patch.view = '3d';
+      else if (
+        (mode === 'furnish' || mode === 'exterior' || mode === 'build') &&
+        s.view === '2d' &&
+        s.mode === 'plan'
+      )
+        patch.view = '3d';
       // Keep selection when it still makes sense; furnish/exterior focus on items.
       return patch;
     }),
@@ -118,7 +115,9 @@ export const useEditor = create<EditorState>()((set) => ({
   setLevelDisplay: (levelDisplay) => set({ levelDisplay }),
   select: (selection) => set({ selection }),
   toggleSelect: (id) =>
-    set((s) => ({ selection: s.selection.includes(id) ? s.selection.filter((x) => x !== id) : [...s.selection, id] })),
+    set((s) => ({
+      selection: s.selection.includes(id) ? s.selection.filter((x) => x !== id) : [...s.selection, id],
+    })),
   clearSelection: () => set({ selection: [] }),
   setHover: (hover) => set((s) => (s.hover === hover ? {} : { hover })),
   requestCamera: (r) => set({ camera: { ...r, nonce: Date.now() + Math.random() } }),

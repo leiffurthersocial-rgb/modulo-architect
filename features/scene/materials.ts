@@ -68,7 +68,13 @@ export function accentMaterial(color: string, opacity = 0.18): THREE.Material {
   const key = `${color}|${opacity}`;
   let m = accentCache.get(key);
   if (!m) {
-    m = new THREE.MeshBasicMaterial({ color, transparent: true, opacity, depthWrite: false, side: THREE.DoubleSide });
+    m = new THREE.MeshBasicMaterial({
+      color,
+      transparent: true,
+      opacity,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
     accentCache.set(key, m);
   }
   return m;

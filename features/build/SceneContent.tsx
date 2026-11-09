@@ -12,21 +12,37 @@ import { Highlights } from '@/features/scene/Highlights';
 import { Overlay3D } from '@/features/scene/Overlay3D';
 import type { SceneTheme } from '@/lib/hooks/useSceneTheme';
 
-export function levelVariant(i: number, active: number, display: string, mode: string): 'normal' | 'ghost' | 'hidden' {
+export function levelVariant(
+  i: number,
+  active: number,
+  display: string,
+  mode: string,
+): 'normal' | 'ghost' | 'hidden' {
   if (mode === 'exterior' || mode === 'walk' || display === 'all') return 'normal';
   if (display === 'isolate') return i === active ? 'normal' : 'hidden';
   if (i <= active) return 'normal';
   return 'ghost';
 }
 
-export function SceneContent({ theme, walk = false, openDoors }: { theme: SceneTheme; walk?: boolean; openDoors?: Record<string, number> }) {
+export function SceneContent({
+  theme,
+  walk = false,
+  openDoors,
+}: {
+  theme: SceneTheme;
+  walk?: boolean;
+  openDoors?: Record<string, number>;
+}) {
   const project = useDocument((s) => s.project);
   const mode = useEditor((s) => s.mode);
   const display = useEditor((s) => s.levelDisplay);
   const activeId = useEditor((s) => s.activeLevelId);
   const selection = useEditor((s) => s.selection);
   const levels = project.building.levels;
-  const activeIdx = Math.max(0, levels.findIndex((l) => l.id === activeId));
+  const activeIdx = Math.max(
+    0,
+    levels.findIndex((l) => l.id === activeId),
+  );
   const active = levels[activeIdx]!;
   const effMode = walk ? 'walk' : mode;
   const outdoor = effMode === 'exterior' || effMode === 'walk';
@@ -55,14 +71,30 @@ export function SceneContent({ theme, walk = false, openDoors }: { theme: SceneT
       {levels.map((l, i) => {
         const v = levelVariant(i, activeIdx, display, effMode);
         if (v === 'hidden' || l.hidden) return null;
-        return <LevelView key={l.id} project={project} level={l} variant={v} showCeilings={effMode === 'walk'} openDoors={openDoors} />;
+        return (
+          <LevelView
+            key={l.id}
+            project={project}
+            level={l}
+            variant={v}
+            showCeilings={effMode === 'walk'}
+            openDoors={openDoors}
+          />
+        );
       })}
       {project.building.roofs.map((r) => {
         const li = levels.findIndex((l) => l.id === r.levelId);
         const v = levelVariant(li, activeIdx, display, effMode);
         const show = outdoor || display === 'all' || selection.includes(r.id);
         if (!show || v === 'hidden') return null;
-        return <RoofView key={r.id} roof={r} project={project} variant={v === 'ghost' && !outdoor ? 'ghost' : 'normal'} />;
+        return (
+          <RoofView
+            key={r.id}
+            roof={r}
+            project={project}
+            variant={v === 'ghost' && !outdoor ? 'ghost' : 'normal'}
+          />
+        );
       })}
       <ItemsLayer items={project.exterior.items} baseY={0} variant="normal" />
       {!walk && (

@@ -23,7 +23,15 @@ export default defineElement({
     ];
     for (const sx of [-1, 1])
       for (const sz of [-1, 1])
-        parts.push(cyl(0.33, 0.22, (sx * w) / 2 - sx * 0.11, 0.33 - 0.11, sz * d * 0.32, 'rubber', 0.33, 20, [0, 0, Math.PI / 2]));
-    return parts.map((p, i) => (i >= 2 ? { ...p, position: [p.position[0], 0.33, p.position[2]] as [number, number, number] } : p));
+        parts.push(
+          cyl(0.33, 0.22, (sx * w) / 2 - sx * 0.11, 0.33 - 0.11, sz * d * 0.32, 'rubber', 0.33, 20, [
+            0,
+            0,
+            Math.PI / 2,
+          ]),
+        );
+    return parts.map((p, i) =>
+      i >= 2 ? { ...p, position: [p.position[0], 0.33, p.position[2]] as [number, number, number] } : p,
+    );
   },
 });

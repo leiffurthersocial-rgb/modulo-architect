@@ -24,13 +24,50 @@ export function SiteFields() {
   return (
     <>
       <Row>
-        <ModelNumber label="Plot width" short="W" value={b.width} min={5} max={500} mergeKey="plot-w" testId="plot-width" apply={(d, v) => setPlotSize(d as Project, v, b.height)} />
-        <ModelNumber label="Plot depth" short="D" value={b.height} min={5} max={500} mergeKey="plot-d" apply={(d, v) => setPlotSize(d as Project, b.width, v)} />
+        <ModelNumber
+          label="Plot width"
+          short="W"
+          value={b.width}
+          min={5}
+          max={500}
+          mergeKey="plot-w"
+          testId="plot-width"
+          apply={(d, v) => setPlotSize(d as Project, v, b.height)}
+        />
+        <ModelNumber
+          label="Plot depth"
+          short="D"
+          value={b.height}
+          min={5}
+          max={500}
+          mergeKey="plot-d"
+          apply={(d, v) => setPlotSize(d as Project, b.width, v)}
+        />
       </Row>
-      <MaterialPicker label="Terrain" category="terrain" value={site.terrainMaterial} onChange={(id) => mutate('Terrain', (d) => void (d.site.terrainMaterial = id))} />
+      <MaterialPicker
+        label="Terrain"
+        category="terrain"
+        value={site.terrainMaterial}
+        onChange={(id) => mutate('Terrain', (d) => void (d.site.terrainMaterial = id))}
+      />
       <Row>
-        <ModelNumber label="North" kind="angle" value={site.northAngle} mergeKey="north" apply={(d, v) => void (d.site.northAngle = v)} />
-        <ModelNumber label="Latitude" kind="number" value={site.latitude} min={-66} max={66} step={1} mergeKey="lat" apply={(d, v) => void (d.site.latitude = v)} />
+        <ModelNumber
+          label="North"
+          kind="angle"
+          value={site.northAngle}
+          mergeKey="north"
+          apply={(d, v) => void (d.site.northAngle = v)}
+        />
+        <ModelNumber
+          label="Latitude"
+          kind="number"
+          value={site.latitude}
+          min={-66}
+          max={66}
+          step={1}
+          mergeKey="lat"
+          apply={(d, v) => void (d.site.latitude = v)}
+        />
       </Row>
     </>
   );

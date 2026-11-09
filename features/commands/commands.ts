@@ -31,7 +31,8 @@ function tool(id: ToolId, place: PlaceSpec | null = null) {
   return () => {
     const ed = E();
     if (ed.mode === 'walk') ed.setMode(ed.modeBeforeWalk);
-    if (ed.mode === 'furnish' && (id === 'wall' || id === 'room' || id === 'opening' || id === 'stair')) ed.setMode('build');
+    if (ed.mode === 'furnish' && (id === 'wall' || id === 'room' || id === 'opening' || id === 'stair'))
+      ed.setMode('build');
     E().setTool(id, place);
   };
 }
@@ -44,17 +45,67 @@ export const COMMANDS: Command[] = [
   { id: 'mode.build', title: 'Build mode', group: 'Modes', shortcut: '2', run: mode('build') },
   { id: 'mode.furnish', title: 'Furnish mode', group: 'Modes', shortcut: '3', run: mode('furnish') },
   { id: 'mode.exterior', title: 'Exterior mode', group: 'Modes', shortcut: '4', run: mode('exterior') },
-  { id: 'mode.walk', title: 'Walk through (first person)', group: 'Modes', shortcut: '5', keywords: 'guest visitor first person tour', run: mode('walk') },
+  {
+    id: 'mode.walk',
+    title: 'Walk through (first person)',
+    group: 'Modes',
+    shortcut: '5',
+    keywords: 'guest visitor first person tour',
+    run: mode('walk'),
+  },
 
   // Tools
   { id: 'tool.select', title: 'Select', group: 'Tools', shortcut: 'v', run: tool('select') },
   { id: 'tool.wall', title: 'Draw walls', group: 'Tools', shortcut: 'w', when: editable, run: tool('wall') },
-  { id: 'tool.room', title: 'Draw a room', group: 'Tools', shortcut: 'r', keywords: 'rectangle', when: editable, run: tool('room') },
-  { id: 'tool.door', title: 'Add a door', group: 'Tools', shortcut: 'd', when: editable, run: tool('opening', { kind: 'opening', id: 'door-single' }) },
-  { id: 'tool.window', title: 'Add a window', group: 'Tools', shortcut: 'n', when: editable, run: tool('opening', { kind: 'opening', id: 'window-casement' }) },
-  { id: 'tool.slider', title: 'Add a sliding door', group: 'Tools', keywords: 'patio glass', when: editable, run: tool('opening', { kind: 'opening', id: 'door-sliding' }) },
-  { id: 'tool.stair', title: 'Add stairs', group: 'Tools', shortcut: 's', keywords: 'staircase steps', when: editable, run: tool('stair') },
-  { id: 'tool.stair-l', title: 'Add L-shaped stairs', group: 'Tools', when: editable, run: tool('stair', { kind: 'element', id: 'l-shaped' }) },
+  {
+    id: 'tool.room',
+    title: 'Draw a room',
+    group: 'Tools',
+    shortcut: 'r',
+    keywords: 'rectangle',
+    when: editable,
+    run: tool('room'),
+  },
+  {
+    id: 'tool.door',
+    title: 'Add a door',
+    group: 'Tools',
+    shortcut: 'd',
+    when: editable,
+    run: tool('opening', { kind: 'opening', id: 'door-single' }),
+  },
+  {
+    id: 'tool.window',
+    title: 'Add a window',
+    group: 'Tools',
+    shortcut: 'n',
+    when: editable,
+    run: tool('opening', { kind: 'opening', id: 'window-casement' }),
+  },
+  {
+    id: 'tool.slider',
+    title: 'Add a sliding door',
+    group: 'Tools',
+    keywords: 'patio glass',
+    when: editable,
+    run: tool('opening', { kind: 'opening', id: 'door-sliding' }),
+  },
+  {
+    id: 'tool.stair',
+    title: 'Add stairs',
+    group: 'Tools',
+    shortcut: 's',
+    keywords: 'staircase steps',
+    when: editable,
+    run: tool('stair'),
+  },
+  {
+    id: 'tool.stair-l',
+    title: 'Add L-shaped stairs',
+    group: 'Tools',
+    when: editable,
+    run: tool('stair', { kind: 'element', id: 'l-shaped' }),
+  },
   {
     id: 'tool.furniture',
     title: 'Furniture catalog',
@@ -66,8 +117,15 @@ export const COMMANDS: Command[] = [
       setTimeout(() => document.querySelector<HTMLInputElement>('[data-catalog-search]')?.focus(), 30);
     },
   },
-  { id: 'tool.measure', title: 'Measure distance', group: 'Tools', shortcut: 'm', keywords: 'ruler tape', run: tool('measure') },
-  { id: 'tool.pan', title: 'Pan', group: 'Tools', shortcut: 'space', run: () => {} , when: () => false },
+  {
+    id: 'tool.measure',
+    title: 'Measure distance',
+    group: 'Tools',
+    shortcut: 'm',
+    keywords: 'ruler tape',
+    run: tool('measure'),
+  },
+  { id: 'tool.pan', title: 'Pan', group: 'Tools', shortcut: 'space', run: () => {}, when: () => false },
 
   // Build
   ...(['bedroom', 'bathroom', 'kitchen', 'living', 'office', 'hallway'] as const).map((t) => ({
@@ -78,62 +136,247 @@ export const COMMANDS: Command[] = [
     when: editable,
     run: tool('room', { kind: 'room-template', id: t }),
   })),
-  { id: 'roof.gable', title: 'Add gable roof', group: 'Build', when: editable, run: () => A.addRoof('gable') },
+  {
+    id: 'roof.gable',
+    title: 'Add gable roof',
+    group: 'Build',
+    when: editable,
+    run: () => A.addRoof('gable'),
+  },
   { id: 'roof.hip', title: 'Add hip roof', group: 'Build', when: editable, run: () => A.addRoof('hip') },
   { id: 'roof.shed', title: 'Add shed roof', group: 'Build', when: editable, run: () => A.addRoof('shed') },
   { id: 'roof.flat', title: 'Add flat roof', group: 'Build', when: editable, run: () => A.addRoof('flat') },
 
   // Levels
-  { id: 'level.add', title: 'Add level above', group: 'Levels', keywords: 'floor storey', when: editable, run: () => A.addLevel(false) },
-  { id: 'level.add-copy', title: 'Add level with the same walls', group: 'Levels', keywords: 'floor storey duplicate', when: editable, run: () => A.addLevel(true) },
+  {
+    id: 'level.add',
+    title: 'Add level above',
+    group: 'Levels',
+    keywords: 'floor storey',
+    when: editable,
+    run: () => A.addLevel(false),
+  },
+  {
+    id: 'level.add-copy',
+    title: 'Add level with the same walls',
+    group: 'Levels',
+    keywords: 'floor storey duplicate',
+    when: editable,
+    run: () => A.addLevel(true),
+  },
   { id: 'level.up', title: 'Go up a level', group: 'Levels', shortcut: 'pageup', run: () => stepLevel(1) },
-  { id: 'level.down', title: 'Go down a level', group: 'Levels', shortcut: 'pagedown', run: () => stepLevel(-1) },
+  {
+    id: 'level.down',
+    title: 'Go down a level',
+    group: 'Levels',
+    shortcut: 'pagedown',
+    run: () => stepLevel(-1),
+  },
   { id: 'level.show-all', title: 'Levels: show all', group: 'Levels', run: () => E().setLevelDisplay('all') },
-  { id: 'level.ghost', title: 'Levels: ghost others', group: 'Levels', run: () => E().setLevelDisplay('ghost') },
-  { id: 'level.isolate', title: 'Levels: isolate current', group: 'Levels', run: () => E().setLevelDisplay('isolate') },
+  {
+    id: 'level.ghost',
+    title: 'Levels: ghost others',
+    group: 'Levels',
+    run: () => E().setLevelDisplay('ghost'),
+  },
+  {
+    id: 'level.isolate',
+    title: 'Levels: isolate current',
+    group: 'Levels',
+    run: () => E().setLevelDisplay('isolate'),
+  },
 
   // Edit
   { id: 'edit.undo', title: 'Undo', group: 'Edit', shortcut: 'mod+z', run: A.undo },
   { id: 'edit.redo', title: 'Redo', group: 'Edit', shortcut: 'mod+shift+z', alt: ['mod+y'], run: A.redo },
-  { id: 'edit.delete', title: 'Delete selection', group: 'Edit', shortcut: 'delete', alt: ['backspace'], when: editable, run: A.deleteSelection },
+  {
+    id: 'edit.delete',
+    title: 'Delete selection',
+    group: 'Edit',
+    shortcut: 'delete',
+    alt: ['backspace'],
+    when: editable,
+    run: A.deleteSelection,
+  },
   { id: 'edit.copy', title: 'Copy', group: 'Edit', shortcut: 'mod+c', run: () => void A.copySelection() },
   { id: 'edit.cut', title: 'Cut', group: 'Edit', shortcut: 'mod+x', when: editable, run: A.cutSelection },
-  { id: 'edit.paste', title: 'Paste', group: 'Edit', shortcut: 'mod+v', when: editable, run: () => A.paste() },
-  { id: 'edit.duplicate', title: 'Duplicate', group: 'Edit', shortcut: 'mod+d', when: editable, run: A.duplicateSelection },
-  { id: 'edit.rotate-cw', title: 'Rotate selection 15°', group: 'Edit', shortcut: ']', when: editable, run: () => void A.rotateSelection(Math.PI / 12) },
-  { id: 'edit.rotate-ccw', title: 'Rotate selection −15°', group: 'Edit', shortcut: '[', when: editable, run: () => void A.rotateSelection(-Math.PI / 12) },
-  { id: 'edit.lock', title: 'Lock / unlock selection', group: 'Edit', shortcut: 'mod+shift+l', when: editable, run: () => A.toggleFlag('locked') },
-  { id: 'edit.hide', title: 'Hide selection', group: 'Edit', shortcut: 'h', when: editable, run: () => A.toggleFlag('hidden') },
-  { id: 'edit.show-all', title: 'Show all hidden objects', group: 'Edit', shortcut: 'shift+h', when: editable, run: A.showAllHidden },
+  {
+    id: 'edit.paste',
+    title: 'Paste',
+    group: 'Edit',
+    shortcut: 'mod+v',
+    when: editable,
+    run: () => A.paste(),
+  },
+  {
+    id: 'edit.duplicate',
+    title: 'Duplicate',
+    group: 'Edit',
+    shortcut: 'mod+d',
+    when: editable,
+    run: A.duplicateSelection,
+  },
+  {
+    id: 'edit.rotate-cw',
+    title: 'Rotate selection 15°',
+    group: 'Edit',
+    shortcut: ']',
+    when: editable,
+    run: () => void A.rotateSelection(Math.PI / 12),
+  },
+  {
+    id: 'edit.rotate-ccw',
+    title: 'Rotate selection −15°',
+    group: 'Edit',
+    shortcut: '[',
+    when: editable,
+    run: () => void A.rotateSelection(-Math.PI / 12),
+  },
+  {
+    id: 'edit.lock',
+    title: 'Lock / unlock selection',
+    group: 'Edit',
+    shortcut: 'mod+shift+l',
+    when: editable,
+    run: () => A.toggleFlag('locked'),
+  },
+  {
+    id: 'edit.hide',
+    title: 'Hide selection',
+    group: 'Edit',
+    shortcut: 'h',
+    when: editable,
+    run: () => A.toggleFlag('hidden'),
+  },
+  {
+    id: 'edit.show-all',
+    title: 'Show all hidden objects',
+    group: 'Edit',
+    shortcut: 'shift+h',
+    when: editable,
+    run: A.showAllHidden,
+  },
 
   // Selection
   { id: 'sel.all', title: 'Select all', group: 'Selection', shortcut: 'mod+a', run: A.selectAll },
   { id: 'sel.none', title: 'Deselect', group: 'Selection', shortcut: 'esc', run: () => E().clearSelection() },
-  { id: 'sel.in-room', title: 'Select everything in room', group: 'Selection', keywords: 'contents', run: () => A.selectAllInRoom() },
-  { id: 'sel.align-left', title: 'Align left', group: 'Selection', when: editable, run: () => A.alignSelection('left') },
-  { id: 'sel.align-right', title: 'Align right', group: 'Selection', when: editable, run: () => A.alignSelection('right') },
-  { id: 'sel.align-top', title: 'Align top', group: 'Selection', when: editable, run: () => A.alignSelection('top') },
-  { id: 'sel.align-bottom', title: 'Align bottom', group: 'Selection', when: editable, run: () => A.alignSelection('bottom') },
-  { id: 'sel.align-cx', title: 'Align centres horizontally', group: 'Selection', when: editable, run: () => A.alignSelection('center-x') },
-  { id: 'sel.align-cy', title: 'Align centres vertically', group: 'Selection', when: editable, run: () => A.alignSelection('center-y') },
-  { id: 'sel.dist-x', title: 'Distribute horizontally', group: 'Selection', when: editable, run: () => A.alignSelection('distribute-x') },
-  { id: 'sel.dist-y', title: 'Distribute vertically', group: 'Selection', when: editable, run: () => A.alignSelection('distribute-y') },
+  {
+    id: 'sel.in-room',
+    title: 'Select everything in room',
+    group: 'Selection',
+    keywords: 'contents',
+    run: () => A.selectAllInRoom(),
+  },
+  {
+    id: 'sel.align-left',
+    title: 'Align left',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('left'),
+  },
+  {
+    id: 'sel.align-right',
+    title: 'Align right',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('right'),
+  },
+  {
+    id: 'sel.align-top',
+    title: 'Align top',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('top'),
+  },
+  {
+    id: 'sel.align-bottom',
+    title: 'Align bottom',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('bottom'),
+  },
+  {
+    id: 'sel.align-cx',
+    title: 'Align centres horizontally',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('center-x'),
+  },
+  {
+    id: 'sel.align-cy',
+    title: 'Align centres vertically',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('center-y'),
+  },
+  {
+    id: 'sel.dist-x',
+    title: 'Distribute horizontally',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('distribute-x'),
+  },
+  {
+    id: 'sel.dist-y',
+    title: 'Distribute vertically',
+    group: 'Selection',
+    when: editable,
+    run: () => A.alignSelection('distribute-y'),
+  },
 
   // View
-  { id: 'view.2d', title: 'View: 2D plan', group: 'View', shortcut: 'shift+digit1', run: () => E().setView('2d') },
+  {
+    id: 'view.2d',
+    title: 'View: 2D plan',
+    group: 'View',
+    shortcut: 'shift+digit1',
+    run: () => E().setView('2d'),
+  },
   { id: 'view.3d', title: 'View: 3D', group: 'View', shortcut: 'shift+digit2', run: () => E().setView('3d') },
-  { id: 'view.split', title: 'View: split 2D / 3D', group: 'View', shortcut: 'shift+digit3', run: () => E().setView('split') },
-  { id: 'view.focus', title: 'Zoom to selection / fit', group: 'View', shortcut: 'z', run: () => { A.focusSelection(); E().set({ planFit: Date.now() }); } },
+  {
+    id: 'view.split',
+    title: 'View: split 2D / 3D',
+    group: 'View',
+    shortcut: 'shift+digit3',
+    run: () => E().setView('split'),
+  },
+  {
+    id: 'view.focus',
+    title: 'Zoom to selection / fit',
+    group: 'View',
+    shortcut: 'z',
+    run: () => {
+      A.focusSelection();
+      E().set({ planFit: Date.now() });
+    },
+  },
   { id: 'view.top', title: 'Camera: top', group: 'View', run: () => E().requestCamera({ preset: 'top' }) },
-  { id: 'view.front', title: 'Camera: front', group: 'View', run: () => E().requestCamera({ preset: 'front' }) },
-  { id: 'view.iso', title: 'Camera: isometric', group: 'View', run: () => E().requestCamera({ preset: 'iso' }) },
-  { id: 'view.ui', title: 'Hide / show interface', group: 'View', shortcut: 'tab', run: () => E().set({ uiHidden: !E().uiHidden }) },
+  {
+    id: 'view.front',
+    title: 'Camera: front',
+    group: 'View',
+    run: () => E().requestCamera({ preset: 'front' }),
+  },
+  {
+    id: 'view.iso',
+    title: 'Camera: isometric',
+    group: 'View',
+    run: () => E().requestCamera({ preset: 'iso' }),
+  },
+  {
+    id: 'view.ui',
+    title: 'Hide / show interface',
+    group: 'View',
+    shortcut: 'tab',
+    run: () => E().set({ uiHidden: !E().uiHidden }),
+  },
   {
     id: 'view.dims',
     title: 'Toggle dimension overlay',
     group: 'View',
     keywords: 'measurements lengths',
-    run: () => D().mutate('Toggle dimensions', (d) => void (d.settings.showDimensions = !d.settings.showDimensions)),
+    run: () =>
+      D().mutate('Toggle dimensions', (d) => void (d.settings.showDimensions = !d.settings.showDimensions)),
   },
   {
     id: 'view.snap',
@@ -143,7 +386,9 @@ export const COMMANDS: Command[] = [
     keywords: 'grid magnet',
     run: () => {
       D().mutate('Toggle snapping', (d) => void (d.settings.snapping = !d.settings.snapping));
-      E().notify(D().project.settings.snapping ? 'Snapping on' : 'Snapping off (hold Alt to bypass temporarily)');
+      E().notify(
+        D().project.settings.snapping ? 'Snapping on' : 'Snapping off (hold Alt to bypass temporarily)',
+      );
     },
   },
   {
@@ -152,7 +397,11 @@ export const COMMANDS: Command[] = [
     group: 'View',
     shortcut: 'u',
     keywords: 'feet inches meters units',
-    run: () => D().mutate('Switch units', (d) => void (d.settings.units = d.settings.units === 'metric' ? 'imperial' : 'metric')),
+    run: () =>
+      D().mutate(
+        'Switch units',
+        (d) => void (d.settings.units = d.settings.units === 'metric' ? 'imperial' : 'metric'),
+      ),
   },
   {
     id: 'view.theme',
@@ -167,15 +416,59 @@ export const COMMANDS: Command[] = [
   },
 
   // Project
-  { id: 'project.list', title: 'Projects…', group: 'Project', shortcut: 'mod+o', keywords: 'open recent', run: () => E().set({ projectsOpen: true }) },
-  { id: 'project.new', title: 'New project', group: 'Project', keywords: 'blank empty', run: () => newProjectFromTemplate('empty') },
-  { id: 'project.export', title: 'Export .modulo.json', group: 'Project', shortcut: 'mod+s', keywords: 'save download', run: () => downloadProject(D().project) },
-  { id: 'project.import', title: 'Import .modulo.json…', group: 'Project', keywords: 'open upload file', run: importProjectFile },
-  { id: 'project.share', title: 'Share view-only link…', group: 'Project', keywords: 'guest walk link url', run: () => E().set({ shareOpen: true }) },
+  {
+    id: 'project.list',
+    title: 'Projects…',
+    group: 'Project',
+    shortcut: 'mod+o',
+    keywords: 'open recent',
+    run: () => E().set({ projectsOpen: true }),
+  },
+  {
+    id: 'project.new',
+    title: 'New project',
+    group: 'Project',
+    keywords: 'blank empty',
+    run: () => newProjectFromTemplate('empty'),
+  },
+  {
+    id: 'project.export',
+    title: 'Export .modulo.json',
+    group: 'Project',
+    shortcut: 'mod+s',
+    keywords: 'save download',
+    run: () => downloadProject(D().project),
+  },
+  {
+    id: 'project.import',
+    title: 'Import .modulo.json…',
+    group: 'Project',
+    keywords: 'open upload file',
+    run: importProjectFile,
+  },
+  {
+    id: 'project.share',
+    title: 'Share view-only link…',
+    group: 'Project',
+    keywords: 'guest walk link url',
+    run: () => E().set({ shareOpen: true }),
+  },
 
   // Help
-  { id: 'help.palette', title: 'Command palette', group: 'Help', shortcut: 'mod+k', run: () => E().set({ paletteOpen: true }) },
-  { id: 'help.shortcuts', title: 'Keyboard shortcuts', group: 'Help', shortcut: '?', run: () => E().set({ shortcutsOpen: true }) },
+  {
+    id: 'help.palette',
+    title: 'Command palette',
+    group: 'Help',
+    shortcut: 'mod+k',
+    run: () => E().set({ paletteOpen: true }),
+  },
+  {
+    id: 'help.shortcuts',
+    title: 'Keyboard shortcuts',
+    group: 'Help',
+    shortcut: '?',
+    run: () => E().set({ shortcutsOpen: true }),
+  },
   {
     id: 'help.tour',
     title: 'Show the quick tour again',

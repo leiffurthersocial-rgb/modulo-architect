@@ -9,14 +9,20 @@ export function sunPosition(latitudeDeg: number, month: number, hour: number) {
   const H = ((hour - 12) * 15 * Math.PI) / 180;
   const sinAlt = Math.sin(lat) * Math.sin(decl) + Math.cos(lat) * Math.cos(decl) * Math.cos(H);
   const altitude = Math.asin(Math.max(-1, Math.min(1, sinAlt)));
-  const cosAz = (Math.sin(decl) - Math.sin(altitude) * Math.sin(lat)) / (Math.cos(altitude) * Math.cos(lat) || 1e-9);
+  const cosAz =
+    (Math.sin(decl) - Math.sin(altitude) * Math.sin(lat)) / (Math.cos(altitude) * Math.cos(lat) || 1e-9);
   let azimuth = Math.acos(Math.max(-1, Math.min(1, cosAz)));
   if (H > 0) azimuth = 2 * Math.PI - azimuth;
   return { altitude, azimuth };
 }
 
 /** Unit vector pointing at the sun in world space (y up, north = -z rotated by northAngle). */
-export function sunDirection(latitudeDeg: number, month: number, hour: number, northAngle = 0): [number, number, number] {
+export function sunDirection(
+  latitudeDeg: number,
+  month: number,
+  hour: number,
+  northAngle = 0,
+): [number, number, number] {
   const { altitude, azimuth } = sunPosition(latitudeDeg, month, hour);
   const a = azimuth + northAngle;
   const c = Math.cos(altitude);

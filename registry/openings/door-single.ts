@@ -19,7 +19,12 @@ export default defineOpening({
     return [
       ...frame(width, height, thickness, { profile: f }),
       l,
-      ...(open === 0 ? [slab(0.12, 0.02, 0.06, handleX, 1.0, 0.03, 'handle'), slab(0.12, 0.02, 0.06, handleX, 1.0, -0.03, 'handle')] : []),
+      ...(open === 0
+        ? [
+            slab(0.12, 0.02, 0.06, handleX, 1.0, 0.03, 'handle'),
+            slab(0.12, 0.02, 0.06, handleX, 1.0, -0.03, 'handle'),
+          ]
+        : []),
     ];
   },
 });

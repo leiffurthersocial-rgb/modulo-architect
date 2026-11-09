@@ -18,7 +18,10 @@ export default defineElement({
   wallOffset: 0.02,
   build: ({ size: { w, d, h } }) => {
     const legH = 0.12;
-    const parts = [slab(w, h - legH, d, 0, legH, 0, 'body', 0.01), ...legs(w, d, legH, 0.04, 'body', 0.035, true)];
+    const parts = [
+      slab(w, h - legH, d, 0, legH, 0, 'body', 0.01),
+      ...legs(w, d, legH, 0.04, 'body', 0.035, true),
+    ];
     const rows = 3;
     const rh = (h - legH) / rows;
     for (let i = 0; i < rows; i++) {

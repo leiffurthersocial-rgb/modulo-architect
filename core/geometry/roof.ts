@@ -69,7 +69,12 @@ export function roofFaces(roof: Roof, base: number, wallThickness = 0.2): RoofFa
       // Side infill (trapezoids) on the two walls along z.
       for (const sx of [-1, 1]) {
         const x = sx * (hw - wallThickness / 2);
-        const tri: V3[] = [toWorld(x, base, -hd), toWorld(x, base, hd), toWorld(x, top0 - t, hd), toWorld(x, h(-hd) - t, -hd)];
+        const tri: V3[] = [
+          toWorld(x, base, -hd),
+          toWorld(x, base, hd),
+          toWorld(x, top0 - t, hd),
+          toWorld(x, h(-hd) - t, -hd),
+        ];
         faces.push({ verts: sx > 0 ? tri : [...tri].reverse(), kind: 'gable' });
       }
       break;

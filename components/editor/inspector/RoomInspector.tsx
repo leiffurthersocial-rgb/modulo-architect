@@ -35,30 +35,77 @@ export function RoomInspector({ room, level }: { room: Room; level: Level }) {
   };
   // Walls of the loop, for "paint all walls".
   const loopWalls = room.nodes
-    .map((id, i) => level.walls.find((w) => (w.a === id && w.b === room.nodes[(i + 1) % room.nodes.length]) || (w.b === id && w.a === room.nodes[(i + 1) % room.nodes.length])))
+    .map((id, i) =>
+      level.walls.find(
+        (w) =>
+          (w.a === id && w.b === room.nodes[(i + 1) % room.nodes.length]) ||
+          (w.b === id && w.a === room.nodes[(i + 1) % room.nodes.length]),
+      ),
+    )
     .filter(Boolean);
   return (
     <>
       <Section title="Name">
-        <TextField label="Room name" value={room.name} onChange={(v) => mutate('Rename room', (d) => set((r) => void (r.name = v))(d as Project))} />
+        <TextField
+          label="Room name"
+          value={room.name}
+          onChange={(v) => mutate('Rename room', (d) => set((r) => void (r.name = v))(d as Project))}
+        />
       </Section>
       <Section
         title="Size"
         action={
-          <IconButton label={linked ? 'Unlink proportions' : 'Keep proportions'} size="sm" active={linked} onClick={() => setLinked(!linked)}>
+          <IconButton
+            label={linked ? 'Unlink proportions' : 'Keep proportions'}
+            size="sm"
+            active={linked}
+            onClick={() => setLinked(!linked)}
+          >
             {linked ? <Link2 /> : <Link2Off />}
           </IconButton>
         }
       >
         <Row>
-          <ModelNumber label="Width" short="W" value={b.width} min={0.5} mergeKey={`room-w-${room.id}`} disabled={room.locked} testId="room-width" apply={(d, v) => resize(d as Project, 'x', v)} />
-          <ModelNumber label="Length" short="L" value={b.height} min={0.5} mergeKey={`room-l-${room.id}`} disabled={room.locked} testId="room-length" apply={(d, v) => resize(d as Project, 'y', v)} />
+          <ModelNumber
+            label="Width"
+            short="W"
+            value={b.width}
+            min={0.5}
+            mergeKey={`room-w-${room.id}`}
+            disabled={room.locked}
+            testId="room-width"
+            apply={(d, v) => resize(d as Project, 'x', v)}
+          />
+          <ModelNumber
+            label="Length"
+            short="L"
+            value={b.height}
+            min={0.5}
+            mergeKey={`room-l-${room.id}`}
+            disabled={room.locked}
+            testId="room-length"
+            apply={(d, v) => resize(d as Project, 'y', v)}
+          />
         </Row>
         <Readout label="Floor area" value={formatArea(roomArea(level, room), u)} />
       </Section>
       <Section title="Finishes">
-        <MaterialPicker label="Floor" category="floor" value={room.floorMaterial} onChange={(id) => mutate('Floor finish', (d) => set((r) => void (r.floorMaterial = id))(d as Project))} />
-        <MaterialPicker label="Ceiling" category="wall" value={room.ceilingMaterial} onChange={(id) => mutate('Ceiling finish', (d) => set((r) => void (r.ceilingMaterial = id))(d as Project))} />
+        <MaterialPicker
+          label="Floor"
+          category="floor"
+          value={room.floorMaterial}
+          onChange={(id) =>
+            mutate('Floor finish', (d) => set((r) => void (r.floorMaterial = id))(d as Project))
+          }
+        />
+        <MaterialPicker
+          label="Ceiling"
+          category="wall"
+          value={room.ceilingMaterial}
+          onChange={(id) =>
+            mutate('Ceiling finish', (d) => set((r) => void (r.ceilingMaterial = id))(d as Project))
+          }
+        />
         <MaterialPicker
           label="Paint all walls"
           category="wall"
@@ -67,11 +114,21 @@ export function RoomInspector({ room, level }: { room: Room; level: Level }) {
             mutate('Paint room', (d) => {
               const lvl = (d as Project).building.levels.find((l) => l.id === level.id)!;
               // Paint the face of each loop wall that faces into this room.
-              const poly2 = roomPolygon(lvl, lvl.rooms.find((r) => r.id === room.id)!);
-              const ccw = poly2.reduce((s, p, i) => s + (p.x * poly2[(i + 1) % poly2.length]!.y - poly2[(i + 1) % poly2.length]!.x * p.y), 0) > 0;
+              const poly2 = roomPolygon(
+                lvl,
+                lvl.rooms.find((r) => r.id === room.id)!,
+              );
+              const ccw =
+                poly2.reduce(
+                  (s, p, i) =>
+                    s + (p.x * poly2[(i + 1) % poly2.length]!.y - poly2[(i + 1) % poly2.length]!.x * p.y),
+                  0,
+                ) > 0;
               room.nodes.forEach((nid, i) => {
                 const next = room.nodes[(i + 1) % room.nodes.length]!;
-                const w = lvl.walls.find((x) => (x.a === nid && x.b === next) || (x.b === nid && x.a === next));
+                const w = lvl.walls.find(
+                  (x) => (x.a === nid && x.b === next) || (x.b === nid && x.a === next),
+                );
                 if (!w) return;
                 const forward = w.a === nid;
                 // For a CCW loop the interior is on the left of each edge.
@@ -84,13 +141,21 @@ export function RoomInspector({ room, level }: { room: Room; level: Level }) {
         />
       </Section>
       <Section>
-        <Button size="sm" variant="secondary" icon={<ScanSearch className="h-3.5 w-3.5" />} onClick={() => selectAllInRoom(room.id)}>
+        <Button
+          size="sm"
+          variant="secondary"
+          icon={<ScanSearch className="h-3.5 w-3.5" />}
+          onClick={() => selectAllInRoom(room.id)}
+        >
           Select everything in room
         </Button>
         <More>
           <Readout label="Perimeter" value={formatLength(perimeter(poly), u)} />
           <Readout label="Corners" value={String(room.nodes.length)} />
-          <Readout label="Gross area" value={formatArea(Math.abs(b.width * b.height) > 0 ? polyArea(poly) : 0, u)} />
+          <Readout
+            label="Gross area"
+            value={formatArea(Math.abs(b.width * b.height) > 0 ? polyArea(poly) : 0, u)}
+          />
         </More>
       </Section>
       <EntityActions locked={room.locked} />
@@ -100,6 +165,7 @@ export function RoomInspector({ room, level }: { room: Room; level: Level }) {
 
 function polyArea(p: { x: number; y: number }[]) {
   let a = 0;
-  for (let i = 0; i < p.length; i++) a += p[i]!.x * p[(i + 1) % p.length]!.y - p[(i + 1) % p.length]!.x * p[i]!.y;
+  for (let i = 0; i < p.length; i++)
+    a += p[i]!.x * p[(i + 1) % p.length]!.y - p[(i + 1) % p.length]!.x * p[i]!.y;
   return Math.abs(a / 2);
 }

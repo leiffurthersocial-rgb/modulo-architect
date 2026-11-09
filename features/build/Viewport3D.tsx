@@ -34,7 +34,7 @@ export default function Viewport3D() {
         <SceneContent theme={theme} />
         <CameraRig controls={controls} drawing={DRAWING.has(tool)} />
         <Interaction3D controls={controls} />
-        <GizmoHelper alignment="bottom-right" margin={[64, 92]}>
+        <GizmoHelper alignment="bottom-right" margin={[60, 140]}>
           <GizmoViewcube
             color={theme.dark ? '#2a2a2f' : '#fbfaf8'}
             hoverColor={theme.accent}

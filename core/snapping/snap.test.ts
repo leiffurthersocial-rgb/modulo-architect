@@ -28,7 +28,11 @@ describe('snapping', () => {
   });
 
   it('projects onto walls in round increments', () => {
-    const r = snapPoint({ x: 1.33, y: 0.08 }, { ...empty, segments: [{ a: { x: 0, y: 0 }, b: { x: 4, y: 0 } }] }, base);
+    const r = snapPoint(
+      { x: 1.33, y: 0.08 },
+      { ...empty, segments: [{ a: { x: 0, y: 0 }, b: { x: 4, y: 0 } }] },
+      base,
+    );
     expect(r.kind).toBe('edge');
     expect(r.point.y).toBeCloseTo(0);
     expect(r.point.x).toBeCloseTo(1.3);
@@ -43,12 +47,21 @@ describe('snapping', () => {
   });
 
   it('constrains to an axis with Shift even without snapping', () => {
-    const r = snapPoint({ x: 3.04, y: 1.2 }, empty, { ...base, anchor: { x: 0, y: 0 }, axisLock: true, disabled: true });
+    const r = snapPoint({ x: 3.04, y: 1.2 }, empty, {
+      ...base,
+      anchor: { x: 0, y: 0 },
+      axisLock: true,
+      disabled: true,
+    });
     expect(r.point).toEqual({ x: 3.04, y: 0 });
   });
 
   it('aligns with existing points', () => {
-    const r = snapPoint({ x: 5.02, y: 3.37 }, { ...empty, points: [{ x: 5, y: -2 }] }, { ...base, radius: 0.3 });
+    const r = snapPoint(
+      { x: 5.02, y: 3.37 },
+      { ...empty, points: [{ x: 5, y: -2 }] },
+      { ...base, radius: 0.3 },
+    );
     expect(r.kind).toBe('align');
     expect(r.point.x).toBe(5);
     expect(r.guides.length).toBe(1);
