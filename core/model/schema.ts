@@ -158,6 +158,8 @@ export const SiteSchema = z.object({
   /** Rotation of north from plan "up", radians. */
   northAngle: num,
   latitude: num.min(-90).max(90),
+  /** Outdoor setting around the plot (registry/environments). */
+  environment: z.string().default('plain'),
 });
 
 export const ExteriorSchema = z.object({
@@ -166,6 +168,27 @@ export const ExteriorSchema = z.object({
   items: z.array(ItemSchema),
   sun: z.object({ hour: num.min(0).max(24), month: num.min(1).max(12) }),
 });
+
+export const LightingSchema = z.object({
+  /** Sky / environment light. "auto" follows the time of day. */
+  sky: z
+    .enum(['auto', 'clear', 'partly-cloudy', 'overcast', 'golden-hour', 'sunset', 'night'])
+    .default('auto'),
+  /** Daylight colour temperature follows the sun when true. */
+  temperatureAuto: z.boolean().default(true),
+  /** Daylight colour temperature in Kelvin (used when temperatureAuto is off). */
+  temperature: num.min(1500).max(12000).default(5600),
+  sunIntensity: num.min(0).max(4).default(1),
+  /** Sky / ambient (image-based) light strength. */
+  ambient: num.min(0).max(4).default(1),
+  exposure: num.min(0.1).max(4).default(1),
+  /** Lamps (floor, table, pendant, garden lights) emit light. */
+  lamps: z.boolean().default(true),
+  lampTemperature: num.min(1500).max(8000).default(2700),
+  lampIntensity: num.min(0).max(5).default(1),
+});
+
+export const DEFAULT_LIGHTING = LightingSchema.parse({});
 
 export const SettingsSchema = z.object({
   units: z.enum(['metric', 'imperial']),
@@ -185,6 +208,7 @@ export const ProjectSchema = z.object({
   building: BuildingSchema,
   exterior: ExteriorSchema,
   settings: SettingsSchema,
+  lighting: LightingSchema.default(DEFAULT_LIGHTING),
 });
 
 export type Node = z.infer<typeof NodeSchema>;
@@ -200,6 +224,7 @@ export type Building = z.infer<typeof BuildingSchema>;
 export type Site = z.infer<typeof SiteSchema>;
 export type Exterior = z.infer<typeof ExteriorSchema>;
 export type Settings = z.infer<typeof SettingsSchema>;
+export type Lighting = z.infer<typeof LightingSchema>;
 export type Project = z.infer<typeof ProjectSchema>;
 
 export type EntityKind =

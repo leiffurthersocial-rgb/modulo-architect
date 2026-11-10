@@ -69,6 +69,8 @@ export interface ElementDef {
   /** Custom footprint in local coordinates (x right, y = local z / front). Defaults to the size rect. */
   footprint?: (ctx: BuildContext) => Vec2[];
   build: (ctx: BuildContext) => Part[];
+  /** Emits light when lamps are on. `y` is height above the base (negative = below the top). */
+  light?: { y: number; x?: number; z?: number; intensity?: number; distance?: number };
   /** Future: replace procedural geometry with a GLB model. */
   model?: { url: string; scale?: number };
 }

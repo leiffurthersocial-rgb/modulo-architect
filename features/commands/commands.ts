@@ -4,6 +4,8 @@ import { useDocument } from '@/store/document';
 import * as A from '@/store/actions';
 import { applyTheme, readTheme } from '@/lib/theme';
 import { toggleViewMode } from '@/store/viewMode';
+import { ENVIRONMENTS } from '@/registry/environments';
+import { applyEnvironment } from '@/components/editor/EnvironmentPicker';
 import { downloadProject, importProjectFile, newProjectFromTemplate } from '@/features/project/io';
 
 /**
@@ -436,6 +438,16 @@ export const COMMANDS: Command[] = [
       applyTheme(dark ? 'light' : 'dark');
     },
   },
+
+  // Surroundings
+  ...ENVIRONMENTS.map((e) => ({
+    id: `env.${e.id}`,
+    title: `Surroundings: ${e.name}`,
+    group: 'View' as const,
+    keywords: `environment preset outdoor landscape ${e.description}`,
+    when: editable,
+    run: () => applyEnvironment(e.id),
+  })),
 
   // Project
   {

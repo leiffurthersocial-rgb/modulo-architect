@@ -2,7 +2,7 @@
 import { useEffect, useMemo } from 'react';
 import type { Project, Roof } from '@/core/model/schema';
 import { roofFaces } from '@/core/geometry/roof';
-import { MeshBuilder } from './prism';
+import { MeshBuilder, planarUV } from './prism';
 import { getThreeMaterial } from './materials';
 
 export function RoofView({
@@ -22,7 +22,7 @@ export function RoofView({
     const mb = new MeshBuilder();
     for (const f of roofFaces(roof, base, wallT)) {
       const key = f.kind === 'gable' ? facade : f.kind === 'bottom' ? 'paint-white' : roof.material;
-      mb.polygon(key, roof.id, f.verts, (v) => [v[0]!, v[2]! + v[1]!]);
+      mb.polygon(key, roof.id, f.verts, planarUV(f.verts));
     }
     return mb.build();
   }, [roof, base, wallT, facade]);

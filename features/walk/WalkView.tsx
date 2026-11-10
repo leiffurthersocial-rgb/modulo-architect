@@ -2,7 +2,7 @@
 import { Canvas } from '@react-three/fiber';
 import { LogOut, Snail } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import * as THREE from 'three';
+import { TextureInvalidator } from '@/features/scene/TextureInvalidator';
 import { SceneContent } from '@/features/build/SceneContent';
 import { useSceneTheme } from '@/lib/hooks/useSceneTheme';
 import { WalkController } from './WalkController';
@@ -10,6 +10,7 @@ import { TouchControls } from './TouchControls';
 import { useWalk } from './walkStore';
 import { usePrefs } from '@/store/prefs';
 import { Kbd } from '@/components/ui/Kbd';
+import { LightButton } from '@/components/editor/LightPanel';
 import { NumberField } from '@/components/ui/NumberField';
 import { useDocument } from '@/store/document';
 import { cn } from '@/lib/cn';
@@ -51,11 +52,9 @@ export default function WalkView({
         dpr={[1, 1.75]}
         camera={{ fov: 70, near: 0.05, far: 1500 }}
         gl={{ antialias: true, preserveDrawingBuffer: true }}
-        onCreated={({ gl }) => {
-          gl.toneMapping = THREE.ACESFilmicToneMapping;
-        }}
       >
         <SceneContent theme={theme} walk openDoors={doors} />
+        <TextureInvalidator />
         <WalkController onDoors={setDoors} />
       </Canvas>
       <TouchControls />
@@ -81,6 +80,7 @@ export default function WalkView({
         )}
       </div>
       <div className="panel absolute right-3 top-3 z-20 flex items-center gap-2 p-1.5">
+        <LightButton side="bottom" />
         <div className="w-[150px]">
           <NumberField
             label="Eye height"

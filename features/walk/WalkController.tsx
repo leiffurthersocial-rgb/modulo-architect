@@ -6,6 +6,8 @@ import { useDocument } from '@/store/document';
 import { buildWalkWorld, collide, groundHeight, spawnPoint } from './physics';
 import { useWalk } from './walkStore';
 import { prefs } from '@/store/prefs';
+import { getEnvironment } from '@/registry/environments';
+import { isWalkable } from '@/core/environment';
 
 const keys = new Set<string>();
 
@@ -13,6 +15,7 @@ const keys = new Set<string>();
 export function WalkController({ onDoors }: { onDoors: (open: Record<string, number>) => void }) {
   const project = useDocument((s) => s.project);
   const world = useMemo(() => buildWalkWorld(project), [project]);
+  const env = getEnvironment(project.site.environment);
   const { camera, gl, invalidate } = useThree();
   const state = useRef({
     x: 0,
@@ -110,8 +113,10 @@ export function WalkController({ onDoors }: { onDoors: (open: Record<string, num
         y: s.y + (fz * fwd + rz * side) * speed * dt,
       };
       const q = collide(world, target, s.feet);
-      s.x = q.x;
-      s.y = q.y;
+      if (isWalkable(env, project.site, q)) {
+        s.x = q.x;
+        s.y = q.y;
+      }
     }
     // Ground & gravity
     const g = groundHeight(world, { x: s.x, y: s.y }, s.feet);

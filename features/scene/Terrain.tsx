@@ -9,10 +9,12 @@ export function Terrain({
   site,
   showSurroundings,
   accent,
+  showOutline = true,
 }: {
   site: Site;
   showSurroundings: boolean;
   accent: string;
+  showOutline?: boolean;
 }) {
   const plotGeo = useMemo(() => {
     // Build in (x, -y) and rotate -90° about X so plan (x, y) lands on world (x, 0, y) facing up.
@@ -47,9 +49,11 @@ export function Terrain({
           <meshStandardMaterial color="#a9b48f" roughness={1} />
         </mesh>
       )}
-      <lineSegments geometry={outline}>
-        <lineDashedMaterial color={accent} dashSize={0.4} gapSize={0.3} transparent opacity={0.6} />
-      </lineSegments>
+      {showOutline && (
+        <lineSegments geometry={outline}>
+          <lineDashedMaterial color={accent} dashSize={0.4} gapSize={0.3} transparent opacity={0.35} />
+        </lineSegments>
+      )}
     </group>
   );
 }

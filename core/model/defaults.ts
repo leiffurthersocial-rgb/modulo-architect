@@ -1,7 +1,7 @@
 import { DEFAULT_MATERIALS } from '@/registry/materials';
 import { createId } from './ids';
 import type { Level, Project, Settings, WallProps } from './types';
-import { SCHEMA_VERSION } from './schema';
+import { DEFAULT_LIGHTING, SCHEMA_VERSION } from './schema';
 
 export const DEFAULTS = {
   wallThickness: 0.2,
@@ -68,12 +68,14 @@ export function createProject(name = 'Untitled house'): Project {
         { x: hw, y: hd },
         { x: -hw, y: hd },
       ],
-      terrainMaterial: DEFAULT_MATERIALS.terrain,
+      terrainMaterial: 'meadow',
       northAngle: 0,
       latitude: 48,
+      environment: 'countryside',
     },
     building: { levels: [createLevel(0, 0)], roofs: [] },
     exterior: { facadeMaterial: DEFAULT_MATERIALS.facade, items: [], sun: { hour: 15, month: 6 } },
     settings: { ...DEFAULT_SETTINGS },
+    lighting: { ...DEFAULT_LIGHTING },
   };
 }

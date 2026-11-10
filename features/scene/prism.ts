@@ -126,6 +126,26 @@ export class MeshBuilder {
   }
 }
 
+/**
+ * UVs in meters on the polygon's own plane: u runs horizontally along the face, v up the slope.
+ * Used for roofs so tiles and slates keep their real size on any pitch.
+ */
+export function planarUV(verts: number[][]): (v: number[]) => number[] {
+  const n = newell(verts) ?? [0, 1, 0];
+  let t = cross3([0, 1, 0], n);
+  let tl = Math.hypot(t[0]!, t[1]!, t[2]!);
+  if (tl < 1e-6) {
+    t = [1, 0, 0];
+    tl = 1;
+  }
+  t = t.map((x) => x / tl);
+  const b = cross3(n, t);
+  return (v) => [
+    v[0]! * t[0]! + v[1]! * t[1]! + v[2]! * t[2]!,
+    v[0]! * b[0]! + v[1]! * b[1]! + v[2]! * b[2]!,
+  ];
+}
+
 function sub3(a: number[], b: number[]) {
   return [a[0]! - b[0]!, a[1]! - b[1]!, a[2]! - b[2]!];
 }

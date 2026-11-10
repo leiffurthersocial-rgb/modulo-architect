@@ -14,6 +14,7 @@ export default defineElement({
     metal: { label: 'Stand', default: 'brass', category: 'fixture' },
     shade: { label: 'Shade', default: 'lamp-glow', category: 'fixture' },
   },
+  light: { y: -0.18, intensity: 7 },
   snap: 'floor',
   footprint: ({ size: { w } }) =>
     Array.from({ length: 10 }, (_, i) => ({

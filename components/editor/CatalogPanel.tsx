@@ -11,6 +11,8 @@ import { MaterialPicker } from '@/components/ui/MaterialPicker';
 import { IconButton } from '@/components/ui/Button';
 import { Segmented } from '@/components/ui/Segmented';
 import { SiteFields } from './inspector/SiteInspector';
+import { LightControls } from './LightPanel';
+import { EnvironmentPicker } from './EnvironmentPicker';
 import { formatArea, formatLength } from '@/core/units/units';
 import * as A from '@/store/actions';
 import { cn } from '@/lib/cn';
@@ -299,7 +301,6 @@ function BuildLibrary() {
 
 function ExteriorLibrary() {
   const facade = useDocument((s) => s.project.exterior.facadeMaterial);
-  const sun = useDocument((s) => s.project.exterior.sun);
   const [tab, setTab] = useState<'elements' | 'site'>('elements');
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -320,6 +321,9 @@ function ExteriorLibrary() {
         <Catalog kind="outdoor" />
       ) : (
         <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto">
+          <Section title="Surroundings">
+            <EnvironmentPicker />
+          </Section>
           <Section title="Facade">
             <MaterialPicker
               label="Whole house"
@@ -349,8 +353,8 @@ function ExteriorLibrary() {
           <Section title="Plot & terrain">
             <SiteFields />
           </Section>
-          <Section title="Sun & time of day">
-            <SunControls hour={sun.hour} month={sun.month} />
+          <Section title="Light & sky">
+            <LightControls />
           </Section>
         </div>
       )}

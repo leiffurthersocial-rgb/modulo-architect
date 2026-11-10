@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import type { Stair } from '@/core/model/schema';
 import type { StairLayout } from '@/core/geometry/stairs';
 import { getThreeMaterial } from './materials';
+import { partGeometry } from './parts';
 
 const unitBox = new THREE.BoxGeometry(1, 1, 1);
 
@@ -29,10 +30,9 @@ export function StairView({
         return (
           <group key={i} position={[s.x, elevation, s.y]} rotation={[0, -s.rotation, 0]}>
             <mesh
-              geometry={unitBox}
-              material={i % 2 === 0 ? mat : mat}
+              geometry={partGeometry({ kind: 'box', size: [s.w, h, s.d] })}
+              material={mat}
               position={[0, s.y0 + h / 2, 0]}
-              scale={[s.w, h, s.d]}
               castShadow={variant === 'normal'}
               receiveShadow
               userData={{ pick: true, id: stair.id }}

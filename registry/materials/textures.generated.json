@@ -1,0 +1,611 @@
+{
+  "Carpet016": {
+    "name": "Carpet016",
+    "size": [1.7, 1.7],
+    "avg": "#bcb093",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://ambientcg.com/view?id=Carpet016"
+  },
+  "Concrete034": {
+    "name": "Concrete034",
+    "size": [1.1, 1.1],
+    "avg": "#b8b8b8",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Concrete034"
+  },
+  "Fabric030": {
+    "name": "Fabric030",
+    "size": [0.5, 0.5],
+    "avg": "#5b5b5b",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://ambientcg.com/view?id=Fabric030"
+  },
+  "Grass001": {
+    "name": "Grass001",
+    "size": [1.4, 1.4],
+    "avg": "#445c28",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Grass001"
+  },
+  "Grass004": {
+    "name": "Grass004",
+    "size": [1.4, 1.4],
+    "avg": "#606d30",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Grass004"
+  },
+  "Ground037": {
+    "name": "Ground037",
+    "size": [2.1, 2.1],
+    "avg": "#989358",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Ground037"
+  },
+  "Leather037": {
+    "name": "Leather037",
+    "size": [0.5, 0.5],
+    "avg": "#643829",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Leather037"
+  },
+  "Marble012": {
+    "name": "Marble012",
+    "size": [2.0, 2.0],
+    "avg": "#acadb6",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Marble012"
+  },
+  "Marble016": {
+    "name": "Marble016",
+    "size": [2.0, 2.0],
+    "avg": "#3d3f3e",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Marble016"
+  },
+  "PavingStones130": {
+    "name": "PavingStones130",
+    "size": [2.3, 2.3],
+    "avg": "#9d8c7c",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=PavingStones130"
+  },
+  "Plaster001": {
+    "name": "Plaster001",
+    "size": [2.0, 2.0],
+    "avg": "#d7d3d0",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://ambientcg.com/view?id=Plaster001"
+  },
+  "Terrazzo005": {
+    "name": "Terrazzo005",
+    "size": [1.0, 1.0],
+    "avg": "#c1bcb8",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Terrazzo005"
+  },
+  "Tiles074": {
+    "name": "Tiles074",
+    "size": [2.1, 2.1],
+    "avg": "#554b43",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Tiles074"
+  },
+  "Tiles107": {
+    "name": "Tiles107",
+    "size": [1.0, 1.0],
+    "avg": "#f8f8f7",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Tiles107"
+  },
+  "Tiles131": {
+    "name": "Tiles131",
+    "size": [1.5, 1.5],
+    "avg": "#997d57",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Tiles131"
+  },
+  "Travertine009": {
+    "name": "Travertine009",
+    "size": [1.2, 1.2],
+    "avg": "#dfcbac",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=Travertine009"
+  },
+  "WoodFloor043": {
+    "name": "WoodFloor043",
+    "size": [1.3, 1.3],
+    "avg": "#664625",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=WoodFloor043"
+  },
+  "WoodFloor051": {
+    "name": "WoodFloor051",
+    "size": [1.8, 1.8],
+    "avg": "#9b7b5d",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://ambientcg.com/view?id=WoodFloor051"
+  },
+  "bark_brown_02": {
+    "name": "Bark Brown 02",
+    "size": [1.0, 1.0],
+    "avg": "#5f5640",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/bark_brown_02"
+  },
+  "beige_wall_001": {
+    "name": "Beige Wall 001",
+    "size": [3.0, 3.0],
+    "avg": "#9e8c78",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/beige_wall_001"
+  },
+  "black_oak_veneer": {
+    "name": "Black Oak Veneer",
+    "size": [1.0, 1.0],
+    "avg": "#6b6157",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/black_oak_veneer"
+  },
+  "black_painted_planks": {
+    "name": "Black Painted Planks",
+    "size": [1.6, 1.6],
+    "avg": "#1a1b20",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/black_painted_planks"
+  },
+  "brick_wall_001": {
+    "name": "Brick Wall 001",
+    "size": [3.0, 3.0],
+    "avg": "#644a3c",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/brick_wall_001"
+  },
+  "brown_leather": {
+    "name": "Brown Leather",
+    "size": [0.4, 0.4],
+    "avg": "#512d10",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/brown_leather"
+  },
+  "clay_roof_tiles_02": {
+    "name": "Clay Roof Tiles 02",
+    "size": [2.5, 2.5],
+    "avg": "#91502b",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/clay_roof_tiles_02"
+  },
+  "clean_asphalt": {
+    "name": "Clean Asphalt",
+    "size": [2.1, 2.1],
+    "avg": "#454646",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/clean_asphalt"
+  },
+  "coast_sand_01": {
+    "name": "Coast Sand 01",
+    "size": [15.0, 15.0],
+    "avg": "#82725b",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://polyhaven.com/a/coast_sand_01"
+  },
+  "cobblestone_floor_04": {
+    "name": "Cobblestone Floor 04",
+    "size": [1.5, 1.5],
+    "avg": "#8a7d62",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/cobblestone_floor_04"
+  },
+  "concrete_wall_003": {
+    "name": "Concrete Wall 003",
+    "size": [3.0, 3.0],
+    "avg": "#ceb89d",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/concrete_wall_003"
+  },
+  "corrugated_iron": {
+    "name": "Corrugated Iron",
+    "size": [1.12, 1.12],
+    "avg": "#aab3ae",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/corrugated_iron"
+  },
+  "cotton_jersey": {
+    "name": "Cotton Jersey",
+    "size": [0.264, 0.264],
+    "avg": "#c2ab9d",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://polyhaven.com/a/cotton_jersey"
+  },
+  "curly_teddy_natural": {
+    "name": "Curly Teddy Natural",
+    "size": [0.336, 0.331],
+    "avg": "#e9d3bb",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/curly_teddy_natural"
+  },
+  "dark_wood": {
+    "name": "Dark Wood",
+    "size": [2.0, 2.0],
+    "avg": "#5d2a18",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/dark_wood"
+  },
+  "denim_fabric": {
+    "name": "Denim Fabric",
+    "size": [0.1, 0.1],
+    "avg": "#4e718e",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/denim_fabric"
+  },
+  "diagonal_parquet": {
+    "name": "Diagonal Parquet",
+    "size": [2.36, 2.36],
+    "avg": "#a46636",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/diagonal_parquet"
+  },
+  "dirt": {
+    "name": "Dirt",
+    "size": [2.0, 2.0],
+    "avg": "#63523e",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/dirt"
+  },
+  "floor_tiles_06": {
+    "name": "Floor Tiles 06",
+    "size": [3.0, 3.0],
+    "avg": "#796f6b",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/floor_tiles_06"
+  },
+  "forest_leaves_02": {
+    "name": "Forest Leaves 02",
+    "size": [3.001, 3.001],
+    "avg": "#8e703a",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/forest_leaves_02"
+  },
+  "gravel_floor": {
+    "name": "Gravel Floor",
+    "size": [2.25, 2.25],
+    "avg": "#a28665",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/gravel_floor"
+  },
+  "gravel_stones": {
+    "name": "Gravel Stones",
+    "size": [2.0, 2.0],
+    "avg": "#4f4f4c",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/gravel_stones"
+  },
+  "grey_roof_tiles": {
+    "name": "Grey Roof Tiles",
+    "size": [3.0, 3.0],
+    "avg": "#615c4b",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/grey_roof_tiles"
+  },
+  "herringbone_parquet": {
+    "name": "Herringbone Parquet",
+    "size": [3.4, 3.4],
+    "avg": "#93704d",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/herringbone_parquet"
+  },
+  "herringbone_pavement": {
+    "name": "Herringbone Pavement",
+    "size": [2.0, 2.0],
+    "avg": "#5a4e40",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/herringbone_pavement"
+  },
+  "interior_tiles": {
+    "name": "Interior Tiles",
+    "size": [1.9, 1.9],
+    "avg": "#aa9884",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/interior_tiles"
+  },
+  "laminate_floor_02": {
+    "name": "Laminate Floor 02",
+    "size": [1.7, 1.7],
+    "avg": "#9b8063",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/laminate_floor_02"
+  },
+  "large_floor_tiles_02": {
+    "name": "Large Floor Tiles 02",
+    "size": [3.0, 3.0],
+    "avg": "#757673",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/large_floor_tiles_02"
+  },
+  "large_grey_tiles": {
+    "name": "Large Grey Tiles",
+    "size": [3.0, 3.0],
+    "avg": "#847e73",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/large_grey_tiles"
+  },
+  "leafy_grass": {
+    "name": "Leafy Grass",
+    "size": [2.0, 2.0],
+    "avg": "#978359",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/leafy_grass"
+  },
+  "leather_white": {
+    "name": "Leather White",
+    "size": [0.3, 0.3],
+    "avg": "#969380",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/leather_white"
+  },
+  "marble_01": {
+    "name": "Marble 01",
+    "size": [1.5, 1.5],
+    "avg": "#b19d7a",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/marble_01"
+  },
+  "mossy_rock": {
+    "name": "Mossy Rock",
+    "size": [3.0, 3.0],
+    "avg": "#6c6b57",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/mossy_rock"
+  },
+  "mud_cracked_dry_03": {
+    "name": "Mud Cracked Dry 03",
+    "size": [1.5, 1.5],
+    "avg": "#cfa981",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/mud_cracked_dry_03"
+  },
+  "oak_veneer_01": {
+    "name": "Oak Veneer 01",
+    "size": [1.83, 1.83],
+    "avg": "#a17e57",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/oak_veneer_01"
+  },
+  "painted_plaster_wall": {
+    "name": "Painted Plaster Wall",
+    "size": [2.0, 2.0],
+    "avg": "#aba3a0",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://polyhaven.com/a/painted_plaster_wall"
+  },
+  "palm_bark": {
+    "name": "Palm Bark",
+    "size": [1.86, 1.86],
+    "avg": "#584e45",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/palm_bark"
+  },
+  "planks_brown_10": {
+    "name": "Planks Brown 10",
+    "size": [1.0, 1.0],
+    "avg": "#756551",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/planks_brown_10"
+  },
+  "plywood": {
+    "name": "Plywood",
+    "size": [0.5, 0.5],
+    "avg": "#7e6140",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/plywood"
+  },
+  "poly_wool_herringbone": {
+    "name": "Poly Wool Herringbone",
+    "size": [0.27, 0.276],
+    "avg": "#797571",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://polyhaven.com/a/poly_wool_herringbone"
+  },
+  "rectangular_facade_tiles": {
+    "name": "Rectangular Facade Tiles",
+    "size": [2.0, 2.0],
+    "avg": "#58564f",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/rectangular_facade_tiles"
+  },
+  "red_brick": {
+    "name": "Red Brick",
+    "size": [1.4, 1.4],
+    "avg": "#8e6750",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/red_brick"
+  },
+  "rock_face_03": {
+    "name": "Rock Face 03",
+    "size": [2.7, 2.7],
+    "avg": "#836950",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/rock_face_03"
+  },
+  "rocks_ground_02": {
+    "name": "Rocks Ground 02",
+    "size": [2.0, 2.0],
+    "avg": "#6d5e46",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/rocks_ground_02"
+  },
+  "roof_slates_02": {
+    "name": "Roof Slates 02",
+    "size": [3.0, 3.0],
+    "avg": "#908675",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/roof_slates_02"
+  },
+  "rough_linen": {
+    "name": "Rough Linen",
+    "size": [0.271, 0.271],
+    "avg": "#91abcd",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://polyhaven.com/a/rough_linen"
+  },
+  "rustic_stone_wall_02": {
+    "name": "Rustic Stone Wall 02",
+    "size": [1.5, 1.5],
+    "avg": "#88745b",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/rustic_stone_wall_02"
+  },
+  "sandstone_blocks_05": {
+    "name": "Sandstone Blocks 05",
+    "size": [3.0, 3.0],
+    "avg": "#af9b84",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/sandstone_blocks_05"
+  },
+  "slab_tiles": {
+    "name": "Slab Tiles",
+    "size": [2.37, 2.37],
+    "avg": "#3e3a34",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/slab_tiles"
+  },
+  "slate_floor": {
+    "name": "Slate Floor",
+    "size": [2.29, 2.29],
+    "avg": "#2a1e1e",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/slate_floor"
+  },
+  "smooth_concrete_floor": {
+    "name": "Smooth Concrete Floor",
+    "size": [2.0, 2.0],
+    "avg": "#553c29",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/smooth_concrete_floor"
+  },
+  "snow_02": {
+    "name": "Snow 02",
+    "size": [2.0, 2.0],
+    "avg": "#a5a5a7",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/snow_02"
+  },
+  "sparse_grass": {
+    "name": "Sparse Grass",
+    "size": [2.0, 2.0],
+    "avg": "#4f3d15",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/sparse_grass"
+  },
+  "stone_wall": {
+    "name": "Stone Wall",
+    "size": [2.0, 2.0],
+    "avg": "#a2927a",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/stone_wall"
+  },
+  "teak_veneer": {
+    "name": "Teak Veneer",
+    "size": [1.0, 1.0],
+    "avg": "#af8257",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/teak_veneer"
+  },
+  "terracotta_floor_tiles": {
+    "name": "Terracotta Floor Tiles",
+    "size": [2.08, 2.08],
+    "avg": "#4d271a",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/terracotta_floor_tiles"
+  },
+  "terrazzo_tiles": {
+    "name": "Terrazzo Tiles",
+    "size": [2.0, 2.0],
+    "avg": "#896d57",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/terrazzo_tiles"
+  },
+  "thatch_roof_angled": {
+    "name": "Thatch Roof Angled",
+    "size": [0.54, 0.54],
+    "avg": "#545049",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/thatch_roof_angled"
+  },
+  "velour_velvet": {
+    "name": "Velour Velvet",
+    "size": [0.284, 0.273],
+    "avg": "#ae2d47",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/velour_velvet"
+  },
+  "walnut_veneer": {
+    "name": "Walnut Veneer",
+    "size": [1.8, 1.8],
+    "avg": "#8a6951",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/walnut_veneer"
+  },
+  "weathered_brown_planks": {
+    "name": "Weathered Brown Planks",
+    "size": [1.8, 1.8],
+    "avg": "#604b39",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/weathered_brown_planks"
+  },
+  "white_oak_veneer": {
+    "name": "White Oak Veneer",
+    "size": [0.5, 0.5],
+    "avg": "#907962",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/white_oak_veneer"
+  },
+  "white_rough_plaster": {
+    "name": "White Rough Plaster",
+    "size": [1.0, 1.0],
+    "avg": "#b7b5ae",
+    "maps": ["arm", "color", "detail", "normal"],
+    "source": "https://polyhaven.com/a/white_rough_plaster"
+  },
+  "white_stucco": {
+    "name": "White Stucco",
+    "size": [1.998, 1.998],
+    "avg": "#d7d3d0",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/white_stucco"
+  },
+  "whitewashed_brick": {
+    "name": "Whitewashed Brick",
+    "size": [2.0, 2.0],
+    "avg": "#a6998c",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/whitewashed_brick"
+  },
+  "wood_floor": {
+    "name": "Wood Floor",
+    "size": [1.7, 1.7],
+    "avg": "#806042",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/wood_floor"
+  },
+  "wood_floor_deck": {
+    "name": "Wood Floor Deck",
+    "size": [1.8, 1.8],
+    "avg": "#6e340e",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/wood_floor_deck"
+  },
+  "wood_planks": {
+    "name": "Wood Planks",
+    "size": [1.5, 1.5],
+    "avg": "#795839",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/wood_planks"
+  },
+  "wool_boucle": {
+    "name": "Wool Boucle",
+    "size": [0.315, 0.39],
+    "avg": "#766d61",
+    "maps": ["arm", "color", "normal"],
+    "source": "https://polyhaven.com/a/wool_boucle"
+  }
+}

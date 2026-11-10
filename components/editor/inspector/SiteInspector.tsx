@@ -5,6 +5,7 @@ import { MaterialPicker } from '@/components/ui/MaterialPicker';
 import { ModelNumber, mutate } from './fields';
 import { useDocument } from '@/store/document';
 import { bounds } from '@/core/geometry/polygon';
+import { getEnvironment } from '@/registry/environments';
 
 export function setPlotSize(d: Project, w: number, h: number) {
   const b = bounds(d.site.plot);
@@ -44,6 +45,19 @@ export function SiteFields() {
           apply={(d, v) => setPlotSize(d as Project, b.width, v)}
         />
       </Row>
+      {site.terrainMaterial !== getEnvironment(site.environment).ground && (
+        <button
+          className="self-start text-xs text-accent hover:underline"
+          onClick={() =>
+            mutate(
+              'Match surroundings',
+              (d) => void (d.site.terrainMaterial = getEnvironment(d.site.environment).ground),
+            )
+          }
+        >
+          Match the surrounding ground
+        </button>
+      )}
       <MaterialPicker
         label="Terrain"
         category="terrain"

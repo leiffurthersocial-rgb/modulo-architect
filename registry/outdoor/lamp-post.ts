@@ -14,6 +14,7 @@ export default defineElement({
     pole: { label: 'Pole', default: 'metal-anthracite', category: 'fixture' },
     glow: { label: 'Lantern', default: 'lamp-glow', category: 'fixture' },
   },
+  light: { y: -0.22, intensity: 6, distance: 12 },
   snap: 'ground',
   build: ({ size: { w, h } }) => [
     cyl(w * 0.45, 0.06, 0, 0, 0, 'pole', w * 0.4, 16),

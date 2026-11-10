@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { GizmoHelper, GizmoViewcube } from '@react-three/drei';
 import { useRef } from 'react';
 import type { CameraControls } from '@react-three/drei';
-import * as THREE from 'three';
+import { TextureInvalidator } from '@/features/scene/TextureInvalidator';
 import { SceneContent } from './SceneContent';
 import { CameraRig } from './CameraRig';
 import { Interaction3D } from './Interaction3D';
@@ -26,12 +26,9 @@ export default function Viewport3D() {
         dpr={[1, 2]}
         camera={{ fov: 45, near: 0.05, far: 2000, position: [14, 12, 16] }}
         gl={{ antialias: true, preserveDrawingBuffer: true, powerPreference: 'high-performance' }}
-        onCreated={({ gl }) => {
-          gl.toneMapping = THREE.ACESFilmicToneMapping;
-          gl.toneMappingExposure = 1.05;
-        }}
       >
         <SceneContent theme={theme} />
+        <TextureInvalidator />
         <CameraRig controls={controls} drawing={DRAWING.has(tool)} />
         <Interaction3D controls={controls} />
         <GizmoHelper alignment="bottom-right" margin={[60, 140]}>

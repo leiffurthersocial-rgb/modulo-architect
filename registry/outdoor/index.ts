@@ -1,4 +1,9 @@
 import type { ElementDef } from '../types';
+import boulder from './boulder';
+import cactus from './cactus';
+import floweringBush from './flowering-bush';
+import ornamentalGrass from './ornamental-grass';
+import birch from './birch';
 import hotTub from './hot-tub';
 import bbq from './bbq';
 import raisedBed from './raised-bed';
@@ -54,4 +59,9 @@ export const OUTDOOR: ElementDef[] = [
   bicycle,
   palmTree,
   gardenWall,
+  boulder,
+  cactus,
+  floweringBush,
+  ornamentalGrass,
+  birch,
 ];

@@ -1,0 +1,38 @@
+{
+  "clear": {
+    "asset": "kloofendal_43d_clear_puresky",
+    "sunU": 0.5977,
+    "sunV": 0.2539,
+    "source": "https://polyhaven.com/a/kloofendal_43d_clear_puresky"
+  },
+  "partly-cloudy": {
+    "asset": "kloofendal_48d_partly_cloudy_puresky",
+    "sunU": 0.6074,
+    "sunV": 0.207,
+    "source": "https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky"
+  },
+  "overcast": {
+    "asset": "overcast_soil_puresky",
+    "sunU": 0.457,
+    "sunV": 0.3008,
+    "source": "https://polyhaven.com/a/overcast_soil_puresky"
+  },
+  "golden-hour": {
+    "asset": "kloppenheim_06_puresky",
+    "sunU": 0.5859,
+    "sunV": 0.2578,
+    "source": "https://polyhaven.com/a/kloppenheim_06_puresky"
+  },
+  "sunset": {
+    "asset": "belfast_sunset_puresky",
+    "sunU": 0.6289,
+    "sunV": 0.4531,
+    "source": "https://polyhaven.com/a/belfast_sunset_puresky"
+  },
+  "night": {
+    "asset": "rogland_clear_night",
+    "sunU": 0.6113,
+    "sunV": 0.1133,
+    "source": "https://polyhaven.com/a/rogland_clear_night"
+  }
+}

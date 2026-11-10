@@ -48,6 +48,41 @@ export function partGeometry(g: PartGeom): THREE.BufferGeometry {
       geo = new THREE.TorusGeometry(g.radius, g.tube, 10, 32, g.arc ?? Math.PI * 2);
       break;
   }
+  metricUVs(geo);
   cache.set(key, geo);
   return geo;
+}
+
+/**
+ * Replace a primitive's 0..1 UVs with box-projected UVs in meters, so a textured material tiles
+ * at the same real-world scale on every face (and on every size of the same element).
+ */
+export function metricUVs(geo: THREE.BufferGeometry) {
+  const pos = geo.getAttribute('position');
+  const nrm = geo.getAttribute('normal');
+  if (!pos || !nrm) return;
+  const uv = new Float32Array(pos.count * 2);
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const y = pos.getY(i);
+    const z = pos.getZ(i);
+    const ax = Math.abs(nrm.getX(i));
+    const ay = Math.abs(nrm.getY(i));
+    const az = Math.abs(nrm.getZ(i));
+    let u: number;
+    let v: number;
+    if (ay >= ax && ay >= az) {
+      u = x;
+      v = z;
+    } else if (ax >= az) {
+      u = nrm.getX(i) > 0 ? -z : z;
+      v = y;
+    } else {
+      u = nrm.getZ(i) > 0 ? x : -x;
+      v = y;
+    }
+    uv[i * 2] = u;
+    uv[i * 2 + 1] = v;
+  }
+  geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
 }

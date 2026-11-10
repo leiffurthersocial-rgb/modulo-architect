@@ -31,11 +31,14 @@ export function ItemsLayer({
   baseY,
   variant,
   ceilingY,
+  pickable = true,
 }: {
   items: Item[];
   baseY: number;
   variant: 'normal' | 'ghost';
   ceilingY?: number;
+  /** Decorative items (environment scatter) are not selectable. */
+  pickable?: boolean;
 }) {
   const batches = useMemo(() => {
     const map = new Map<string, Batch>();
@@ -57,7 +60,14 @@ export function ItemsLayer({
   return (
     <>
       {batches.map((b) => (
-        <BatchMeshes key={b.key} batch={b} baseY={baseY} variant={variant} ceilingY={ceilingY} />
+        <BatchMeshes
+          key={b.key}
+          batch={b}
+          baseY={baseY}
+          variant={variant}
+          ceilingY={ceilingY}
+          pickable={pickable}
+        />
       ))}
     </>
   );
@@ -88,11 +98,13 @@ function BatchMeshes({
   baseY,
   variant,
   ceilingY,
+  pickable,
 }: {
   batch: Batch;
   baseY: number;
   variant: 'normal' | 'ghost';
   ceilingY?: number;
+  pickable: boolean;
 }) {
   const refs = useRef<(THREE.InstancedMesh | null)[]>([]);
   const invalidate = useThree((s) => s.invalidate);
@@ -132,7 +144,7 @@ function BatchMeshes({
           ]}
           castShadow={!p.noShadow && variant === 'normal'}
           receiveShadow={variant === 'normal'}
-          userData={{ pick: true, instanceIds: ids }}
+          userData={pickable ? { pick: true, instanceIds: ids } : undefined}
           frustumCulled={false}
         />
       ))}

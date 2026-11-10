@@ -1,6 +1,7 @@
 'use client';
 import { Box, Maximize, PanelTop, RectangleHorizontal } from 'lucide-react';
 import { IconButton } from '@/components/ui/Button';
+import { LightButton } from './LightPanel';
 import { useEditor } from '@/store/editor';
 import { runCommand, shortcutOf } from '@/features/commands/commands';
 
@@ -15,6 +16,7 @@ export function ViewControls() {
       role="toolbar"
       aria-label="Camera"
     >
+      <LightButton />
       {has3d && (
         <>
           <IconButton label="Top view" size="sm" tooltipSide="top" onClick={() => runCommand('view.top')}>

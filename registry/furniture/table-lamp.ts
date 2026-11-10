@@ -15,6 +15,7 @@ export default defineElement({
     base: { label: 'Base', default: 'ceramic', category: 'fixture' },
     shade: { label: 'Shade', default: 'lamp-glow', category: 'fixture' },
   },
+  light: { y: -0.12, intensity: 4, distance: 6 },
   snap: 'floor',
   solid: false,
   build: ({ size: { w, h } }) => [

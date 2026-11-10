@@ -15,6 +15,7 @@ export default defineElement({
     shade: { label: 'Shade', default: 'lacquer-black', category: 'fixture' },
     glow: { label: 'Bulb', default: 'lamp-glow', category: 'fixture' },
   },
+  light: { y: 0.05, intensity: 9, distance: 10 },
   snap: 'ceiling',
   solid: false,
   build: ({ size: { w, h } }) => [

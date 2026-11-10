@@ -7,7 +7,10 @@ import { LevelView } from '@/features/scene/LevelView';
 import { RoofView } from '@/features/scene/RoofView';
 import { ItemsLayer } from '@/features/scene/ItemsLayer';
 import { Terrain } from '@/features/scene/Terrain';
-import { Lighting } from '@/features/scene/Lighting';
+import { Lighting, SKY_FOG, useSun } from '@/features/scene/Lighting';
+import { LampLights } from '@/features/scene/LampLights';
+import { Surroundings } from '@/features/scene/Surroundings';
+import { getEnvironment } from '@/registry/environments';
 import { Ghost } from '@/features/scene/Ghost';
 import { Highlights } from '@/features/scene/Highlights';
 import { Overlay3D } from '@/features/scene/Overlay3D';
@@ -49,13 +52,30 @@ export function SceneContent({
   const effMode = walk ? 'walk' : mode;
   const outdoor = effMode === 'exterior' || effMode === 'walk';
   const planeY = mode === 'exterior' ? 0 : active.elevation;
+  const sun = useSun(project);
+  const visibleLevels = new Set(
+    levels
+      .filter((l, i) => !l.hidden && levelVariant(i, activeIdx, display, effMode) === 'normal')
+      .map((l) => l.id),
+  );
 
   return (
     <>
-      <color attach="background" args={[theme.background]} />
+      {!outdoor && <color attach="background" args={[theme.background]} />}
       <Lighting project={project} sky={outdoor} dark={theme.dark} />
-      {outdoor && <fog attach="fog" args={[theme.dark ? '#1b1d22' : '#dfe6ea', 80, 260]} />}
-      <Terrain site={project.site} showSurroundings={outdoor} accent={theme.accent} />
+      {outdoor && (
+        <fog
+          attach="fog"
+          args={[
+            SKY_FOG[sun.sky],
+            140 * (getEnvironment(project.site.environment).haze ?? 1),
+            560 * (getEnvironment(project.site.environment).haze ?? 1),
+          ]}
+        />
+      )}
+      <LampLights project={project} visibleLevels={visibleLevels} />
+      <Terrain site={project.site} showSurroundings={false} accent={theme.accent} showOutline={!walk} />
+      {outdoor && <Surroundings site={project.site} />}
       {!outdoor && showGrid && (
         <Grid
           position={[0, planeY - 0.006, 0]}
