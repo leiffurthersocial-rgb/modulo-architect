@@ -5,7 +5,15 @@ import * as A from '@/store/actions';
 import { Section } from '@/components/ui/Section';
 import { useDocument } from '@/store/document';
 
-export function EntityActions({ locked, duplicate = false }: { locked?: boolean; duplicate?: boolean }) {
+export function EntityActions({
+  locked,
+  duplicate = false,
+  hideDelete = false,
+}: {
+  locked?: boolean;
+  duplicate?: boolean;
+  hideDelete?: boolean;
+}) {
   const readOnly = useDocument((s) => s.readOnly);
   if (readOnly) return null;
   return (
@@ -37,16 +45,18 @@ export function EntityActions({ locked, duplicate = false }: { locked?: boolean;
         >
           Hide
         </Button>
-        <Button
-          size="sm"
-          variant="danger"
-          icon={<Trash2 className="h-3.5 w-3.5" />}
-          onClick={A.deleteSelection}
-          disabled={locked}
-          data-testid="delete-selection"
-        >
-          Delete
-        </Button>
+        {!hideDelete && (
+          <Button
+            size="sm"
+            variant="danger"
+            icon={<Trash2 className="h-3.5 w-3.5" />}
+            onClick={A.deleteSelection}
+            disabled={locked}
+            data-testid="delete-selection"
+          >
+            Delete
+          </Button>
+        )}
       </div>
     </Section>
   );

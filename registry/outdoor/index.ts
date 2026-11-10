@@ -1,4 +1,16 @@
 import type { ElementDef } from '../types';
+import hotTub from './hot-tub';
+import bbq from './bbq';
+import raisedBed from './raised-bed';
+import firePit from './fire-pit';
+import gardenBench from './garden-bench';
+import lampPost from './lamp-post';
+import mailbox from './mailbox';
+import trampoline from './trampoline';
+import gardenShed from './garden-shed';
+import bicycle from './bicycle';
+import palmTree from './palm-tree';
+import gardenWall from './stone-wall';
 import car from './car';
 import conifer from './conifer';
 import deck from './deck';
@@ -30,4 +42,16 @@ export const OUTDOOR: ElementDef[] = [
   parasol,
   pergola,
   car,
+  hotTub,
+  bbq,
+  raisedBed,
+  firePit,
+  gardenBench,
+  lampPost,
+  mailbox,
+  trampoline,
+  gardenShed,
+  bicycle,
+  palmTree,
+  gardenWall,
 ];

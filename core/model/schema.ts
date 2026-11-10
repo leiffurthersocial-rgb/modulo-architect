@@ -38,6 +38,17 @@ export const RoomSchema = z.object({
   nodes: z.array(id).min(3),
   floorMaterial: z.string(),
   ceilingMaterial: z.string(),
+  /** False when the user removed this room's floor (walls stay). */
+  floor: z.boolean().default(true),
+  ...flags,
+});
+
+/** A free-standing floor slab, independent of walls (patios, landings, kept floors). */
+export const SlabSchema = z.object({
+  id,
+  points: z.array(z.object({ x: num, y: num })).min(3),
+  material: z.string(),
+  thickness: num.positive(),
   ...flags,
 });
 
@@ -109,6 +120,7 @@ export const LevelSchema = z.object({
   openings: z.array(OpeningSchema),
   stairs: z.array(StairSchema),
   items: z.array(ItemSchema),
+  slabs: z.array(SlabSchema).default([]),
   ...flags,
 });
 
@@ -176,6 +188,7 @@ export const ProjectSchema = z.object({
 export type Node = z.infer<typeof NodeSchema>;
 export type Wall = z.infer<typeof WallSchema>;
 export type Room = z.infer<typeof RoomSchema>;
+export type Slab = z.infer<typeof SlabSchema>;
 export type Opening = z.infer<typeof OpeningSchema>;
 export type Stair = z.infer<typeof StairSchema>;
 export type Item = z.infer<typeof ItemSchema>;
@@ -187,4 +200,5 @@ export type Exterior = z.infer<typeof ExteriorSchema>;
 export type Settings = z.infer<typeof SettingsSchema>;
 export type Project = z.infer<typeof ProjectSchema>;
 
-export type EntityKind = 'node' | 'wall' | 'room' | 'opening' | 'stair' | 'item' | 'roof' | 'level' | 'site';
+export type EntityKind =
+  'node' | 'wall' | 'room' | 'slab' | 'opening' | 'stair' | 'item' | 'roof' | 'level' | 'site';

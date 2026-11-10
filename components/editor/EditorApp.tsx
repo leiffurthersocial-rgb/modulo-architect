@@ -15,9 +15,11 @@ import { CommandPalette } from './CommandPalette';
 import { ShortcutSheet } from './ShortcutSheet';
 import { ProjectsDialog } from './ProjectsDialog';
 import { ShareDialog } from './ShareDialog';
+import { SettingsDialog } from './SettingsDialog';
 import { Onboarding } from './Onboarding';
 import { installToolLifecycle } from '@/features/tools/dispatch';
 import { refreshSelectionOverlay } from '@/features/tools/select';
+import { viewApis } from '@/features/tools/viewApi';
 import { installKeyboard } from '@/features/commands/keyboard';
 import { installAutosave } from '@/features/project/io';
 import { loadProject, saveProject } from '@/lib/persistence';
@@ -85,7 +87,11 @@ export default function EditorApp() {
       useDocument.getState().load(p);
       useEditor.getState().set({ activeLevelId: p.building.levels[0]!.id });
       // Debugging/testing handle (used by the Playwright suite), exposed once loaded.
-      (window as unknown as { __modulo: unknown }).__modulo = { doc: useDocument, editor: useEditor };
+      (window as unknown as { __modulo: unknown }).__modulo = {
+        doc: useDocument,
+        editor: useEditor,
+        views: viewApis,
+      };
       setReady(true);
     });
     const offs = [installToolLifecycle(), installKeyboard(), installAutosave()];
@@ -176,6 +182,7 @@ export default function EditorApp() {
         <ShortcutSheet />
         <ProjectsDialog />
         <ShareDialog />
+        <SettingsDialog />
       </main>
     </TooltipProvider>
   );

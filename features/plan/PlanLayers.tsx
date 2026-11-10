@@ -53,17 +53,32 @@ export const LevelPlan = memo(function LevelPlan({
         if (r.hidden) return null;
         const dr = d.rooms.find((x) => x.id === r.id);
         if (!dr) return null;
+        const hasFloor = r.floor !== false;
         return (
           <polygon
             key={r.id}
             data-id={r.id}
             points={pts(dr.polygon)}
-            fill={getMaterial(r.floorMaterial).color}
-            fillOpacity={0.22}
+            fill={hasFloor ? getMaterial(r.floorMaterial).color : 'url(#no-floor)'}
+            fillOpacity={hasFloor ? 0.22 : 1}
             stroke="none"
           />
         );
       })}
+      {/* Free-standing floor slabs */}
+      {level.slabs.map((s) =>
+        s.hidden ? null : (
+          <polygon
+            key={s.id}
+            data-id={s.id}
+            points={pts(s.points)}
+            fill={getMaterial(s.material).color}
+            fillOpacity={0.3}
+            stroke={getMaterial(s.material).color}
+            strokeWidth={k}
+          />
+        ),
+      )}
       {/* Stairs */}
       {level.stairs.map((s) => {
         if (s.hidden) return null;

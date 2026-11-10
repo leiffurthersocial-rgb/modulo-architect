@@ -79,6 +79,7 @@ export function Interaction3D({ controls }: { controls: React.RefObject<CameraCo
       return {
         point: { x: p.x, y: p.z },
         hitId: pick.id,
+        hitPoint: pick.point ? { x: pick.point.x, y: pick.point.z } : null,
         handle: pick.handle,
         shift: e.shiftKey,
         alt: e.altKey,
@@ -164,7 +165,7 @@ export function Interaction3D({ controls }: { controls: React.RefObject<CameraCo
         const p = useDocument.getState().project;
         const ids = [
           ...p.building.levels.flatMap((l) =>
-            [...l.walls, ...l.openings, ...l.stairs, ...l.items].map((e) => e.id),
+            [...l.walls, ...l.slabs, ...l.openings, ...l.stairs, ...l.items].map((e) => e.id),
           ),
           ...p.exterior.items.map((i) => i.id),
         ].filter(filter);
@@ -178,6 +179,11 @@ export function Interaction3D({ controls }: { controls: React.RefObject<CameraCo
           const sy = rect.top + ((1 - v.y) / 2) * rect.height;
           return sx >= x0 && sx <= x1 && sy >= y0 && sy <= y1;
         });
+      },
+      worldToClient(pt) {
+        const rect = el.getBoundingClientRect();
+        const v = new THREE.Vector3(pt.x, pt.h, pt.y).project(camera);
+        return { x: rect.left + ((v.x + 1) / 2) * rect.width, y: rect.top + ((1 - v.y) / 2) * rect.height };
       },
       toClient(pt) {
         const rect = el.getBoundingClientRect();

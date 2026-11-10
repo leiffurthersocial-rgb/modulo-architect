@@ -27,6 +27,8 @@ export interface DocumentState {
   undo: () => void;
   redo: () => void;
   markSaved: (revision: number) => void;
+  /** View mode: lock or unlock all editing. */
+  setReadOnly: (readOnly: boolean) => void;
 }
 
 function apply(h: H.HistoryState<Project>, s: DocumentState) {
@@ -67,7 +69,7 @@ export const useDocument = create<DocumentState>()((set, get) => {
       );
       if (h !== s.history) set(apply(h, s));
     },
-    begin: (label) => set((s) => ({ history: H.begin(s.history, label) })),
+    begin: (label) => set((s) => (s.readOnly ? {} : { history: H.begin(s.history, label) })),
     commit: () => set((s) => ({ history: H.commit(s.history) })),
     cancel: () => {
       const s = get();
@@ -75,13 +77,16 @@ export const useDocument = create<DocumentState>()((set, get) => {
     },
     undo: () => {
       const s = get();
+      if (s.readOnly) return;
       set(apply(H.undo(s.history), s));
     },
     redo: () => {
       const s = get();
+      if (s.readOnly) return;
       set(apply(H.redo(s.history), s));
     },
     markSaved: (revision) => set({ savedRevision: revision }),
+    setReadOnly: (readOnly) => set({ readOnly }),
   };
 });
 

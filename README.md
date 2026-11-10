@@ -42,7 +42,10 @@ npx vercel@latest --prod
 
 - **Start designing** → press **R** and drag a room, or click a quick room (Bedroom, Kitchen…). Type `4x3` + Enter for exact sizes.
 - Every number in the Inspector takes typing, math (`2.5*3`, `320cm`, `10' 6"`), ↑/↓ (Shift ×10, Alt ×0.1) or dragging its label.
-- **W** draws walls (type a length + Enter while drawing; close the loop to make a room). **D** door, **N** window, **S** stairs.
+- **W** draws walls (type a length + Enter while drawing; close the loop to make a room). The Build panel also has **Single wall** (two clicks). **D** door, **N** window, **S** stairs.
+- **G** adds a floor: drag a free floor slab (patio, landing), or click a room without a floor to restore it. Select any single wall or floor and press Delete to remove just that piece; Delete on a room removes its floor first, a second Delete removes its walls.
+- **Shift+V** (eye icon) toggles **View mode**: look, measure and walk, with all editing locked.
+- **Settings** (gear, ⌘/Ctrl+,): units, theme, snapping and snap step, angle step, new-wall thickness, dimensions, grid, shadows, walk speed / sensitivity / eye height, automatic doors.
 - **Levels** panel (bottom left): add a floor, set the **floor height** directly.
 - **3** Furnish: drag items from the catalog. **4** Exterior: facade, roof, terrain, sun, fence, outdoor shower… **5** Walk.
 - **⌘/Ctrl K** finds every command; **?** lists shortcuts; **Tab** hides the UI.

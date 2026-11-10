@@ -8,6 +8,7 @@ import { useSceneTheme } from '@/lib/hooks/useSceneTheme';
 import { WalkController } from './WalkController';
 import { TouchControls } from './TouchControls';
 import { useWalk } from './walkStore';
+import { usePrefs } from '@/store/prefs';
 import { Kbd } from '@/components/ui/Kbd';
 import { NumberField } from '@/components/ui/NumberField';
 import { useDocument } from '@/store/document';
@@ -25,7 +26,7 @@ export default function WalkView({
   const [hint, setHint] = useState(true);
   const locked = useWalk((s) => s.locked);
   const slow = useWalk((s) => s.slow);
-  const eye = useWalk((s) => s.eyeHeight);
+  const eye = usePrefs((s) => s.eyeHeight);
   const levelName = useWalk((s) => s.levelName);
   const units = useDocument((s) => s.project.settings.units);
 
@@ -88,7 +89,7 @@ export default function WalkView({
             units={units}
             min={0.6}
             max={2.2}
-            onChange={(v) => useWalk.getState().set({ eyeHeight: v })}
+            onChange={(v) => usePrefs.getState().set({ eyeHeight: v })}
           />
         </div>
         <button

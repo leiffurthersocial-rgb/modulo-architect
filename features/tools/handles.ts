@@ -5,7 +5,13 @@ import { getElement } from '@/registry';
 import { itemToPlan } from '@/core/model/footprint';
 
 /** On-canvas handles for the current selection. */
-export function selectionHandles(project: Project, selection: string[], mode: string): Overlay[] {
+export function selectionHandles(
+  project: Project,
+  selection: string[],
+  mode: string,
+  readOnly = false,
+): Overlay[] {
+  if (readOnly) return [];
   if (selection.length !== 1) return [];
   const ref = findEntity(project, selection[0]!);
   if (!ref) return [];

@@ -2,6 +2,7 @@
 import { Grid } from '@react-three/drei';
 import { useDocument } from '@/store/document';
 import { useEditor } from '@/store/editor';
+import { usePrefs } from '@/store/prefs';
 import { LevelView } from '@/features/scene/LevelView';
 import { RoofView } from '@/features/scene/RoofView';
 import { ItemsLayer } from '@/features/scene/ItemsLayer';
@@ -38,6 +39,7 @@ export function SceneContent({
   const display = useEditor((s) => s.levelDisplay);
   const activeId = useEditor((s) => s.activeLevelId);
   const selection = useEditor((s) => s.selection);
+  const showGrid = usePrefs((s) => s.showGrid);
   const levels = project.building.levels;
   const activeIdx = Math.max(
     0,
@@ -54,9 +56,9 @@ export function SceneContent({
       <Lighting project={project} sky={outdoor} dark={theme.dark} />
       {outdoor && <fog attach="fog" args={[theme.dark ? '#1b1d22' : '#dfe6ea', 80, 260]} />}
       <Terrain site={project.site} showSurroundings={outdoor} accent={theme.accent} />
-      {!outdoor && (
+      {!outdoor && showGrid && (
         <Grid
-          position={[0, planeY + 0.002, 0]}
+          position={[0, planeY - 0.006, 0]}
           infiniteGrid
           cellSize={0.5}
           sectionSize={5}

@@ -1,7 +1,7 @@
 import type { Tool, Overlay } from './types';
 import { activeLevel, doc, editor, project, stepFor } from './context';
 import { toolUI } from './store';
-import { placeItem } from './placement';
+import { placeItem, pointedWall } from './placement';
 import { getElement } from '@/registry';
 import * as ops from '@/core/model/ops';
 import type { Item, Project } from '@/core/model/schema';
@@ -45,7 +45,9 @@ export const placeTool: Tool = {
     const base = newItem(def.id, e.point.x, e.point.y, rotation)!;
     const ground = isOut ? project().building.levels[0]! : level;
     const others = isOut ? project().exterior.items : level.items;
-    const pl = placeItem(e.point, def, base.size, rotation, ground, {
+    // Pointing at a wall face in 3D: place against that face, not on the floor behind it.
+    const pointed = pointedWall(ground, e.hitId, e.hitPoint);
+    const pl = placeItem(pointed?.point ?? e.point, def, base.size, rotation, ground, {
       step: stepFor(e),
       disabled: e.alt,
       others,

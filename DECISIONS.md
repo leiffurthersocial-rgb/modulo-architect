@@ -25,6 +25,21 @@ Defaults chosen while building autonomously. Each is easy to revisit.
 - Furniture lives on levels; **outdoor items live in `exterior.items`** on the terrain.
 - Doors in walk mode are passable openings; leaves animate open when you approach (nice-to-have done cheaply).
 
+## Granular walls and floors (v2)
+
+- Floors exist in two forms: a room's own floor (`room.floor`, toggleable) and free **slabs** (`level.slabs`, schema-additive with a default, so v1 files still load).
+- Deleting one wall never takes floors with it: rooms whose enclosure breaks (and are not merged into a neighbour) leave their floor behind as a slab.
+- Delete on a room removes its floor only; a second Delete (or "Delete room & walls") removes the walls only that room uses.
+
+## Picking walls in 3D (v2)
+
+- Tools receive both the working-plane point and the actual surface hit point. Doors, windows and wall-snapped items prefer the wall under the cursor, so aiming at a wall face above the floor no longer lands on a wall behind it.
+
+## View mode and preferences (v2)
+
+- View mode reuses the document's read-only flag (the same one the shared viewer uses): mutations, transactions and undo/redo are no-ops, and the inspector renders inside a disabled `<fieldset>`.
+- Personal preferences (theme, snap step, shadows, grid, walk tuning, new-wall thickness) live in `localStorage` (`store/prefs.ts`); project settings stay in the file.
+
 ## History
 
 - **Command pattern on Immer patches**: each command stores forward + inverse patches. Drags/scrubs use `begin` / `commit` transactions (one undo step); repeated arrow-key nudges on a field merge via a `mergeKey` within 1.2 s. Normalisation that must follow geometry edits (auto-roof refit) runs inside every mutation so it is undone with it.

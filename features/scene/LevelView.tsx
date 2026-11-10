@@ -55,18 +55,21 @@ export function LevelView({
         if (room.hidden) return null;
         const dr = derived.rooms.find((r) => r.id === room.id);
         if (!dr || dr.polygon.length < 3) return null;
+        const hasFloor = room.floor !== false;
         const roomHoles = holes.filter((h) => h.every((p) => pointInPolygon(p, dr.polygon)));
         return (
           <group key={room.id}>
-            <FloorSlab
-              id={room.id}
-              polygon={dr.polygon}
-              holes={roomHoles}
-              top={level.elevation + 0.001}
-              thickness={level.floorThickness}
-              material={getThreeMaterial(room.floorMaterial, variant)}
-              shadows={variant === 'normal'}
-            />
+            {hasFloor && (
+              <FloorSlab
+                id={room.id}
+                polygon={dr.polygon}
+                holes={roomHoles}
+                top={level.elevation + 0.001}
+                thickness={level.floorThickness}
+                material={getThreeMaterial(room.floorMaterial, variant)}
+                shadows={variant === 'normal'}
+              />
+            )}
             {showCeilings && (
               <Ceiling
                 polygon={dr.polygon}
@@ -78,6 +81,20 @@ export function LevelView({
           </group>
         );
       })}
+      {level.slabs.map((s) =>
+        s.hidden ? null : (
+          <FloorSlab
+            key={s.id}
+            id={s.id}
+            polygon={s.points}
+            holes={holes.filter((h) => h.every((p) => pointInPolygon(p, s.points)))}
+            top={level.elevation + 0.0005}
+            thickness={s.thickness}
+            material={getThreeMaterial(s.material, variant)}
+            shadows={variant === 'normal'}
+          />
+        ),
+      )}
       {level.openings.map((o) => {
         if (o.hidden) return null;
         const dw = derived.wallById.get(o.wallId);

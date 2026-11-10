@@ -47,6 +47,7 @@ export function createLevel(index: number, elevation: number, height: number = D
     openings: [],
     stairs: [],
     items: [],
+    slabs: [],
   };
 }
 

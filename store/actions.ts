@@ -40,16 +40,40 @@ export function redo() {
 }
 
 export function deleteSelection() {
+  const p = D().project;
   const ids = E().selection.filter((id) => {
-    const ref = findEntity(D().project, id);
+    const ref = findEntity(p, id);
     return ref && !(ref.entity as { locked?: boolean }).locked && ref.kind !== 'level';
   });
   if (ids.length === 0) return;
+  const rooms = ids.map((id) => findEntity(p, id)).filter((r) => r?.kind === 'room');
+  // First Delete on a room removes its floor; a second Delete removes its walls too.
+  const roomWalls = rooms.length > 0 && rooms.every((r) => r!.kind === 'room' && r!.entity.floor === false);
   D().mutate(ids.length === 1 ? 'Delete' : `Delete ${ids.length} objects`, (d) =>
-    ops.deleteEntities(d as Project, ids),
+    ops.deleteEntities(d as Project, ids, { roomWalls }),
   );
+  if (rooms.length === ids.length && !roomWalls) {
+    E().notify(
+      rooms.length === 1 ? 'Floor removed · press Delete again to remove the room’s walls' : 'Floors removed',
+    );
+    return;
+  }
   E().clearSelection();
   E().notify(ids.length === 1 ? 'Deleted' : `Deleted ${ids.length} objects`);
+}
+
+/** Delete a room together with the walls only it uses. */
+export function deleteRoomWithWalls(roomId: string) {
+  D().mutate('Delete room', (d) => ops.deleteEntities(d as Project, [roomId], { roomWalls: true }));
+  E().clearSelection();
+  E().notify('Room and its walls deleted');
+}
+
+export function setRoomFloor(roomId: string, on: boolean) {
+  D().mutate(on ? 'Add floor' : 'Remove floor', (d) => {
+    const ref = findEntity(d as Project, roomId);
+    if (ref?.kind === 'room') ref.entity.floor = on;
+  });
 }
 
 let clipboard: ops.ClipboardData | null = null;
@@ -234,6 +258,8 @@ export function nudgeSelection(dx: number, dy: number) {
           ops.translateNodes(ref.level, [ref.entity.a, ref.entity.b], { x: dx, y: dy });
         } else if (ref.kind === 'room') {
           ops.translateNodes(ref.level, ref.entity.nodes, { x: dx, y: dy });
+        } else if (ref.kind === 'slab') {
+          ref.entity.points = ref.entity.points.map((q) => ({ x: q.x + dx, y: q.y + dy }));
         } else if (ref.kind === 'node') {
           ref.entity.x += dx;
           ref.entity.y += dy;

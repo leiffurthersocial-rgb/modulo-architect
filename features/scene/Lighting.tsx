@@ -3,6 +3,7 @@ import { useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { Sky } from '@react-three/drei';
 import { sunDirection } from '@/core/geometry/sun';
+import { usePrefs } from '@/store/prefs';
 import type { Project } from '@/core/model/schema';
 
 export function Lighting({ project, sky, dark }: { project: Project; sky: boolean; dark: boolean }) {
@@ -15,6 +16,7 @@ export function Lighting({ project, sky, dark }: { project: Project; sky: boolea
   const up = dir[1];
   const day = Math.max(0, Math.min(1, up * 4));
   const light = useRef<THREE.DirectionalLight>(null);
+  const shadows = usePrefs((s) => s.shadows);
   const target = useMemo(() => new THREE.Object3D(), []);
   useEffect(() => {
     if (light.current) light.current.target = target;
@@ -33,7 +35,7 @@ export function Lighting({ project, sky, dark }: { project: Project; sky: boolea
         position={sunPos}
         intensity={0.4 + 1.9 * day}
         color={warm}
-        castShadow
+        castShadow={shadows}
         shadow-mapSize={[2048, 2048]}
         shadow-bias={-0.0004}
         shadow-normalBias={0.03}

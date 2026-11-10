@@ -1,4 +1,17 @@
 import type { ElementDef } from '../types';
+import barStool from './bar-stool';
+import sideboard from './sideboard';
+import bunkBed from './bunk-bed';
+import consoleTable from './console-table';
+import wallShelf from './wall-shelf';
+import wallArt from './wall-art';
+import mirror from './mirror';
+import piano from './piano';
+import coatRack from './coat-rack';
+import ottoman from './ottoman';
+import radiator from './radiator';
+import ceilingFan from './ceiling-fan';
+import sinkUnit from './dishwasher';
 import armchair from './armchair';
 import bathroomSink from './bathroom-sink';
 import bathtub from './bathtub';
@@ -70,4 +83,17 @@ export const FURNITURE: ElementDef[] = [
   plant,
   rug,
   bench,
+  barStool,
+  sideboard,
+  bunkBed,
+  consoleTable,
+  wallShelf,
+  wallArt,
+  mirror,
+  piano,
+  coatRack,
+  ottoman,
+  radiator,
+  ceilingFan,
+  sinkUnit,
 ];

@@ -2,7 +2,6 @@
 import { create } from 'zustand';
 
 export interface WalkState {
-  eyeHeight: number;
   slow: boolean;
   locked: boolean;
   /** Touch joystick vector (-1..1), y forward. */
@@ -14,7 +13,6 @@ export interface WalkState {
 }
 
 export const useWalk = create<WalkState>()((set) => ({
-  eyeHeight: 1.7,
   slow: false,
   locked: false,
   joy: { x: 0, y: 0 },

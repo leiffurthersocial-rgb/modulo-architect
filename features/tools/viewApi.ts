@@ -9,6 +9,8 @@ export interface ViewApi {
   ): string[];
   /** Plan point → client coordinates. */
   toClient(p: Vec2): { x: number; y: number } | null;
+  /** World point (plan x, plan y, height) → client coordinates (3D view only). */
+  worldToClient?(p: { x: number; y: number; h: number }): { x: number; y: number } | null;
 }
 
 export const viewApis: Partial<Record<'2d' | '3d', ViewApi>> = {};

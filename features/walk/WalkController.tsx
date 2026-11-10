@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { useDocument } from '@/store/document';
 import { buildWalkWorld, collide, groundHeight, spawnPoint } from './physics';
 import { useWalk } from './walkStore';
+import { prefs } from '@/store/prefs';
 
 const keys = new Set<string>();
 
@@ -45,8 +46,8 @@ export function WalkController({ onDoors }: { onDoors: (open: Record<string, num
     const mm = (e: MouseEvent) => {
       if (document.pointerLockElement !== el) return;
       const s = state.current;
-      s.yaw -= e.movementX * 0.0022;
-      s.pitch = Math.max(-1.45, Math.min(1.45, s.pitch - e.movementY * 0.0022));
+      s.yaw -= e.movementX * 0.0022 * prefs().lookSensitivity;
+      s.pitch = Math.max(-1.45, Math.min(1.45, s.pitch - e.movementY * 0.0022 * prefs().lookSensitivity));
     };
     const click = () => {
       if (window.matchMedia('(pointer: coarse)').matches) return;
@@ -96,7 +97,7 @@ export function WalkController({ onDoors }: { onDoors: (open: Record<string, num
       side /= mag;
     }
     const sprint = keys.has('ShiftLeft') || keys.has('ShiftRight');
-    const speed = (w.slow ? 0.8 : 1.6) * (sprint ? 2.2 : 1);
+    const speed = (w.slow ? 0.8 : 1.6) * (sprint ? 2.2 : 1) * prefs().walkSpeed;
     // yaw = 0 looks towards -z (north)
     const fx = -Math.sin(s.yaw);
     const fz = -Math.cos(s.yaw);
@@ -123,14 +124,17 @@ export function WalkController({ onDoors }: { onDoors: (open: Record<string, num
       s.feet = Math.max(g, s.feet + s.vy * dt);
       if (s.feet === g) s.vy = 0;
     }
-    camera.position.set(s.x, s.feet + w.eyeHeight, s.y);
+    camera.position.set(s.x, s.feet + prefs().eyeHeight, s.y);
     camera.rotation.set(s.pitch, s.yaw, 0, 'YXZ');
 
     // Doors swing open as you approach.
     let changed = false;
     const next: Record<string, number> = { ...s.doors };
     for (const d of world.doors) {
-      const near = Math.hypot(d.center.x - s.x, d.center.y - s.y) < 1.8 && Math.abs(d.y - s.feet) < 1.5;
+      const near =
+        prefs().autoDoors &&
+        Math.hypot(d.center.x - s.x, d.center.y - s.y) < 1.8 &&
+        Math.abs(d.y - s.feet) < 1.5;
       const cur = next[d.id] ?? 0;
       const target = near ? 1 : 0;
       if (cur !== target) {

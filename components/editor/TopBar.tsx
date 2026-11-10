@@ -3,6 +3,9 @@ import {
   Box,
   Columns2,
   Download,
+  Eye,
+  PencilLine,
+  Settings,
   FolderOpen,
   Footprints,
   Home,
@@ -31,6 +34,7 @@ import { Kbd } from '@/components/ui/Kbd';
 import { LogoMark } from '@/components/ui/Logo';
 import { runCommand, shortcutOf } from '@/features/commands/commands';
 import * as A from '@/store/actions';
+import { toggleViewMode } from '@/store/viewMode';
 import { cn } from '@/lib/cn';
 
 const MODES: { value: Mode; label: string; icon: React.ReactNode }[] = [
@@ -188,6 +192,15 @@ export function TopBar() {
           />
         )}
         <IconButton
+          label={readOnly ? 'Leave view mode (edit)' : 'View mode (lock editing)'}
+          shortcut={shortcutOf('mode.view')}
+          active={readOnly}
+          onClick={toggleViewMode}
+          data-testid="view-mode-toggle"
+        >
+          <Eye />
+        </IconButton>
+        <IconButton
           label="Search commands"
           shortcut={shortcutOf('help.palette')}
           onClick={() => runCommand('help.palette')}
@@ -197,6 +210,14 @@ export function TopBar() {
         </IconButton>
         <IconButton label="Share view-only link" onClick={() => runCommand('project.share')}>
           <Share2 />
+        </IconButton>
+        <IconButton
+          label="Settings"
+          shortcut={shortcutOf('app.settings')}
+          onClick={() => runCommand('app.settings')}
+          data-testid="open-settings"
+        >
+          <Settings />
         </IconButton>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
@@ -258,6 +279,23 @@ export function TopBar() {
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
       </div>
+      {readOnly && (
+        <div className="animate-in pointer-events-auto absolute left-1/2 top-[64px] -translate-x-1/2">
+          <div
+            className="flex items-center gap-2 rounded-full bg-fg py-1 pl-3 pr-1 text-xs font-medium text-bg shadow-pop"
+            data-testid="view-mode-pill"
+          >
+            <Eye className="h-3.5 w-3.5" />
+            Viewing · editing is locked
+            <button
+              onClick={toggleViewMode}
+              className="flex h-6 items-center gap-1 rounded-full bg-bg/15 px-2.5 hover:bg-bg/25"
+            >
+              <PencilLine className="h-3 w-3" /> Edit
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

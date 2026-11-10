@@ -6,18 +6,21 @@ import * as ops from '@/core/model/ops';
 import type { Project } from '@/core/model/schema';
 import { add, angleOf, dist, equals, normalize, scale, sub, type Vec2 } from '@/core/geometry/vec2';
 import { formatAngle, formatLength, parseValue } from '@/core/units/units';
-import { DEFAULTS, defaultWallProps } from '@/core/model/defaults';
+import { defaultWallProps } from '@/core/model/defaults';
+import { prefs } from '@/store/prefs';
 
 let points: Vec2[] = [];
 let cursor: Vec2 | null = null;
 let text = '';
 let lastEvent: ToolPointerEvent | null = null;
-let thickness: number = DEFAULTS.wallThickness;
-
+/** New-wall thickness comes from preferences; `single` draws one wall per two clicks. */
 export function setWallThickness(t: number) {
-  thickness = t;
+  prefs().set({ wallThickness: t });
 }
-export const getWallThickness = () => thickness;
+export const getWallThickness = () => prefs().wallThickness;
+let single = false;
+export const setSingleWall = (on: boolean) => void (single = on);
+export const isSingleWall = () => single;
 
 function render() {
   const o: Overlay[] = [];
@@ -65,7 +68,7 @@ function commitSegment(a: Vec2, b: Vec2) {
   const levelId = activeLevel().id;
   const before = activeLevel().rooms.length;
   doc().mutate('Draw wall', (d) => {
-    ops.addWallChain(d as Project, levelId, [a, b], defaultWallProps(thickness));
+    ops.addWallChain(d as Project, levelId, [a, b], defaultWallProps(getWallThickness()));
   });
   const after = activeLevel().rooms.length;
   if (after > before) {
@@ -90,7 +93,7 @@ function place(p: Vec2) {
   }
   if (dist(last, p) < 0.05) return;
   const closedRoom = commitSegment(last, p);
-  if (equals(p, points[0]!, 1e-3) || closedRoom) {
+  if (equals(p, points[0]!, 1e-3) || closedRoom || single) {
     finish();
     return;
   }

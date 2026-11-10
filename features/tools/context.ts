@@ -9,6 +9,7 @@ import { mid, type Vec2 } from '@/core/geometry/vec2';
 import { smartStep, snapPoint, type SnapResult, type SnapTarget, SNAP_LABEL } from '@/core/snapping/snap';
 import type { ToolPointerEvent } from './types';
 import { toolUI } from './store';
+import { prefs } from '@/store/prefs';
 
 export const doc = () => useDocument.getState();
 export const editor = () => useEditor.getState();
@@ -31,9 +32,10 @@ export function snapRadius(e: ToolPointerEvent) {
   return e.metersPerPixel * (e.pointerType === 'touch' ? 22 : PICK_PX);
 }
 
+/** Snap step: by zoom ("auto") or the fixed step chosen in Settings. */
 export function stepFor(e: ToolPointerEvent) {
-  const s = smartStep(e.metersPerPixel);
-  return Math.max(s, Math.min(project().settings.gridSize, s));
+  const fixed = prefs().snapStep;
+  return fixed === 'auto' ? smartStep(e.metersPerPixel) : fixed;
 }
 
 const targetCache = new WeakMap<Level['nodes'], { walls: Level['walls']; t: SnapTarget }>();

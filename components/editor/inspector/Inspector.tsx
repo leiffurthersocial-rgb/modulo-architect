@@ -13,12 +13,14 @@ import { RoofInspector } from './RoofInspector';
 import { SiteInspector } from './SiteInspector';
 import { MultiInspector } from './MultiInspector';
 import { NodeInspector } from './NodeInspector';
+import { SlabInspector } from './SlabInspector';
 import { getElement, getOpening } from '@/registry';
 
 /** Contextual inspector: appears only when something is selected. */
 export function Inspector() {
   const selection = useEditor((s) => s.selection);
   const project = useDocument((s) => s.project);
+  const readOnly = useDocument((s) => s.readOnly);
   if (selection.length === 0) return null;
   let title = '';
   let body: React.ReactNode = null;
@@ -54,6 +56,9 @@ export function Inspector() {
       case 'roof':
         body = <RoofInspector roof={ref.entity} />;
         break;
+      case 'slab':
+        body = <SlabInspector slab={ref.entity} level={ref.level} />;
+        break;
       case 'node':
         body = <NodeInspector node={ref.entity} level={ref.level} />;
         break;
@@ -78,7 +83,9 @@ export function Inspector() {
           <X />
         </IconButton>
       </header>
-      <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto">{body}</div>
+      <fieldset disabled={readOnly} className="min-w-0 scrollbar-thin min-h-0 flex-1 overflow-y-auto">
+        {body}
+      </fieldset>
     </aside>
   );
 }

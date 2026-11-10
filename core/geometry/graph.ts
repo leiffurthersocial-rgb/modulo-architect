@@ -356,6 +356,7 @@ export function syncRooms(level: Level, defaults: RoomDefaults): string[] {
       nodes: f,
       floorMaterial: parent?.floorMaterial ?? defaults.floorMaterial,
       ceilingMaterial: parent?.ceilingMaterial ?? defaults.ceilingMaterial,
+      floor: parent?.floor ?? true,
     });
     created.push(id);
   });

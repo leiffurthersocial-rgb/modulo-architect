@@ -3,6 +3,7 @@ import { useEditor, type Mode, type ToolId, type PlaceSpec } from '@/store/edito
 import { useDocument } from '@/store/document';
 import * as A from '@/store/actions';
 import { applyTheme, readTheme } from '@/lib/theme';
+import { toggleViewMode } from '@/store/viewMode';
 import { downloadProject, importProjectFile, newProjectFromTemplate } from '@/features/project/io';
 
 /**
@@ -31,7 +32,10 @@ function tool(id: ToolId, place: PlaceSpec | null = null) {
   return () => {
     const ed = E();
     if (ed.mode === 'walk') ed.setMode(ed.modeBeforeWalk);
-    if (ed.mode === 'furnish' && (id === 'wall' || id === 'room' || id === 'opening' || id === 'stair'))
+    if (
+      ed.mode === 'furnish' &&
+      (id === 'wall' || id === 'room' || id === 'floor' || id === 'opening' || id === 'stair')
+    )
       ed.setMode('build');
     E().setTool(id, place);
   };
@@ -54,6 +58,15 @@ export const COMMANDS: Command[] = [
     run: mode('walk'),
   },
 
+  {
+    id: 'mode.view',
+    title: 'View mode (lock editing)',
+    group: 'Modes',
+    shortcut: 'shift+v',
+    keywords: 'read only lock preview present inspect',
+    run: toggleViewMode,
+  },
+
   // Tools
   { id: 'tool.select', title: 'Select', group: 'Tools', shortcut: 'v', run: tool('select') },
   { id: 'tool.wall', title: 'Draw walls', group: 'Tools', shortcut: 'w', when: editable, run: tool('wall') },
@@ -65,6 +78,15 @@ export const COMMANDS: Command[] = [
     keywords: 'rectangle',
     when: editable,
     run: tool('room'),
+  },
+  {
+    id: 'tool.floor',
+    title: 'Add a floor',
+    group: 'Tools',
+    shortcut: 'g',
+    keywords: 'slab patio ground deck',
+    when: editable,
+    run: tool('floor'),
   },
   {
     id: 'tool.door',
@@ -445,6 +467,14 @@ export const COMMANDS: Command[] = [
     group: 'Project',
     keywords: 'open upload file',
     run: importProjectFile,
+  },
+  {
+    id: 'app.settings',
+    title: 'Settings…',
+    group: 'Project',
+    shortcut: 'mod+,',
+    keywords: 'preferences options',
+    run: () => E().set({ settingsOpen: true }),
   },
   {
     id: 'project.share',

@@ -25,6 +25,8 @@ export function matches(e: KeyboardEvent, shortcut: string): boolean {
       return k === 'delete';
     case 'backspace':
       return k === 'backspace';
+    case ',':
+      return e.key === ',';
     case 'space':
       return e.code === 'Space';
     case 'tab':
@@ -47,7 +49,7 @@ export function installKeyboard() {
       if (e.key === 'Escape') (e.target as HTMLElement).blur();
       return;
     }
-    if (ed.paletteOpen || ed.shortcutsOpen || ed.projectsOpen || ed.shareOpen) return;
+    if (ed.paletteOpen || ed.shortcutsOpen || ed.projectsOpen || ed.shareOpen || ed.settingsOpen) return;
     if (ed.mode === 'walk' && e.key !== 'Escape' && !(e.metaKey || e.ctrlKey)) return;
 
     // The active tool gets first dibs (typed lengths, Esc, R to rotate, ...).

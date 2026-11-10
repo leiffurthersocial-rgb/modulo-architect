@@ -14,7 +14,8 @@ import { SiteFields } from './inspector/SiteInspector';
 import { formatArea, formatLength } from '@/core/units/units';
 import * as A from '@/store/actions';
 import { cn } from '@/lib/cn';
-import { getWallThickness, setWallThickness } from '@/features/tools/wall';
+import { isSingleWall, setSingleWall, setWallThickness } from '@/features/tools/wall';
+import { usePrefs } from '@/store/prefs';
 import { DEFAULTS } from '@/core/model/defaults';
 
 /** Start placing something: click = ghost follows the cursor; drag = drop where released. */
@@ -178,9 +179,9 @@ function BuildLibrary() {
   const place = useEditor((s) => s.place);
   const tool = useEditor((s) => s.tool);
   const units = useDocument((s) => s.project.settings.units);
-  const [thick, setThick] = useState(
-    getWallThickness() === DEFAULTS.interiorWallThickness ? 'interior' : 'exterior',
-  );
+  const wallT = usePrefs((p) => p.wallThickness);
+  const thick = Math.abs(wallT - DEFAULTS.interiorWallThickness) < 1e-6 ? 'interior' : 'exterior';
+  useEditor((s) => s.place);
   return (
     <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto">
       <Section title="Quick rooms">
@@ -216,20 +217,55 @@ function BuildLibrary() {
           })}
         </div>
       </Section>
-      <Section title="Walls">
+      <Section title="Walls & floors">
+        <div className="grid grid-cols-3 gap-1.5">
+          <Card
+            label="Walls"
+            sub="click points"
+            icon={<WallGlyph />}
+            testId="draw-walls"
+            active={tool === 'wall' && !isSingleWall()}
+            onPick={() => {
+              setSingleWall(false);
+              startPlacingTool('wall');
+            }}
+          />
+          <Card
+            label="Single wall"
+            sub="two clicks"
+            icon={<WallGlyph single />}
+            testId="draw-single-wall"
+            active={tool === 'wall' && isSingleWall()}
+            onPick={() => {
+              setSingleWall(true);
+              startPlacingTool('wall');
+            }}
+          />
+          <Card
+            label="Floor"
+            sub="drag an area"
+            icon={<FloorGlyph />}
+            testId="draw-floor"
+            active={tool === 'floor'}
+            onPick={() => startPlacingTool('floor')}
+          />
+        </div>
         <Segmented
           ariaLabel="New wall thickness"
           size="sm"
           value={thick}
-          onChange={(v) => {
-            setThick(v);
-            setWallThickness(v === 'interior' ? DEFAULTS.interiorWallThickness : DEFAULTS.wallThickness);
-          }}
+          className="w-full [&>button]:flex-1"
+          onChange={(v) =>
+            setWallThickness(v === 'interior' ? DEFAULTS.interiorWallThickness : DEFAULTS.wallThickness)
+          }
           options={[
             { value: 'exterior', label: `Exterior ${formatLength(DEFAULTS.wallThickness, units)}` },
             { value: 'interior', label: `Interior ${formatLength(DEFAULTS.interiorWallThickness, units)}` },
           ]}
         />
+        <p className="text-xs text-fg-subtle">
+          Select any wall or floor and press Delete to remove just that piece.
+        </p>
       </Section>
       <Section title="Stairs & roof">
         <div className="grid grid-cols-3 gap-1.5">
@@ -394,6 +430,45 @@ function SliderRow({
         aria-label={label}
       />
     </Slider.Root>
+  );
+}
+
+function startPlacingTool(tool: ToolId) {
+  const ed = useEditor.getState();
+  // Re-activate even if already active so the single/chain choice applies.
+  ed.setTool('select');
+  ed.setTool(tool);
+}
+
+function WallGlyph({ single }: { single?: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 22 22"
+      aria-hidden
+      className="!h-6 !w-6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.4}
+      strokeLinecap="round"
+    >
+      {single ? <path d="M4 16 18 6" /> : <path d="M4 17V6h14v8" />}
+    </svg>
+  );
+}
+
+function FloorGlyph() {
+  return (
+    <svg
+      viewBox="0 0 22 22"
+      aria-hidden
+      className="!h-6 !w-6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+    >
+      <path d="M3 14 11 9l8 5-8 5z" />
+      <path d="M7 11.5l8 5M11 9l0 0M15 11.5l-8 5" strokeOpacity={0.5} />
+    </svg>
   );
 }
 

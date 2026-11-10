@@ -101,6 +101,7 @@ export default function PlanView() {
           p.building.levels.find((l) => l.id === useEditor.getState().activeLevelId) ?? p.building.levels[0]!;
         const ids = [
           ...level.walls,
+          ...level.slabs,
           ...level.openings,
           ...level.stairs,
           ...level.items,
@@ -145,6 +146,7 @@ export default function PlanView() {
     return {
       point: toPlan(e.clientX, e.clientY),
       hitId,
+      hitPoint: hitId ? toPlan(e.clientX, e.clientY) : null,
       handle,
       shift: e.shiftKey,
       alt: e.altKey,
@@ -270,6 +272,15 @@ export default function PlanView() {
         aria-label="Floor plan"
       >
         <defs>
+          <pattern
+            id="no-floor"
+            width={8 * k}
+            height={8 * k}
+            patternUnits="userSpaceOnUse"
+            patternTransform="rotate(45)"
+          >
+            <line x1={0} y1={0} x2={0} y2={8 * k} stroke="var(--line-strong)" strokeWidth={k} />
+          </pattern>
           <pattern id="grid-minor" width={minor} height={minor} patternUnits="userSpaceOnUse">
             <path
               d={`M ${minor} 0 L 0 0 0 ${minor}`}

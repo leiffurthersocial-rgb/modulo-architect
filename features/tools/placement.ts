@@ -98,17 +98,19 @@ export function placeOpening(
   raw: Vec2,
   width: number,
   level: Level,
-  opts: { step: number; disabled: boolean; radius: number; excludeId?: string },
+  opts: { step: number; disabled: boolean; radius: number; excludeId?: string; preferWallId?: string | null },
 ): OpeningPlacement | null {
   let best: (OpeningPlacement & { d: number }) | null = null;
-  for (const w of level.walls) {
+  // The wall under the cursor wins outright; otherwise the wall nearest the floor point.
+  const preferred = opts.preferWallId ? level.walls.filter((w) => w.id === opts.preferWallId) : [];
+  for (const w of preferred.length ? preferred : level.walls) {
     const a = nodePos(level, w.a);
     const b = nodePos(level, w.b);
     if (!a || !b) continue;
     const L = dist(a, b);
     if (L < width + 0.1) continue;
     const c = closestOnSegment(raw, a, b);
-    if (c.distance > Math.max(opts.radius, w.thickness / 2 + 0.6)) continue;
+    if (!preferred.length && c.distance > Math.max(opts.radius, w.thickness / 2 + 0.6)) continue;
     if (best && c.distance >= best.d) continue;
     const dir = normalize(sub(b, a));
     let offset = c.t * L;
@@ -138,3 +140,19 @@ const clean = (n: number) => Math.round(n * 1e6) / 1e6 + 0;
 
 /** Rotate a local offset into plan space around an item. */
 export const localToPlan = itemToPlan;
+
+/**
+ * The wall the user is pointing at, if any: a wall hit directly, or the wall an opening sits in.
+ * Returns the wall id and the plan point (on the wall surface) to place against.
+ */
+export function pointedWall(
+  level: Level,
+  hitId: string | null,
+  hitPoint: Vec2 | null,
+): { wallId: string; point: Vec2 } | null {
+  if (!hitId || !hitPoint) return null;
+  if (level.walls.some((w) => w.id === hitId)) return { wallId: hitId, point: hitPoint };
+  const o = level.openings.find((x) => x.id === hitId);
+  if (o) return { wallId: o.wallId, point: hitPoint };
+  return null;
+}

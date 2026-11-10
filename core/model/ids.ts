@@ -11,6 +11,7 @@ const PREFIX = {
   item: 'i',
   level: 'l',
   roof: 'rf',
+  slab: 'sl',
   project: 'p',
 } as const;
 

@@ -3,7 +3,7 @@ import { activeLevel, doc, editor, project, snap, snapTargets, stepFor, units, s
 import { toolUI } from './store';
 import { selectionHandles } from './handles';
 import { viewApis } from './viewApi';
-import { placeItem, placeOpening } from './placement';
+import { placeItem, placeOpening, pointedWall } from './placement';
 import { findEntity, kindOf } from '@/core/model/entities';
 import type { Item, Project, Stair } from '@/core/model/schema';
 import * as ops from '@/core/model/ops';
@@ -24,6 +24,7 @@ type Drag =
       orig: Map<string, { x: number; y: number; rotation?: number }>;
       nodes: Map<string, Vec2>;
       levelId: string;
+      slabs: Map<string, Vec2[]>;
     }
   | { kind: 'node'; nodeId: string; levelId: string }
   | { kind: 'rotate'; id: string; center: Vec2; startAngle: number; orig: number }
@@ -46,18 +47,28 @@ function pickable(id: string): boolean {
   const k = kindOf(id);
   if (k === 'level') return false;
   if (mode === 'furnish') return k === 'item' || k === 'stair' || k === 'opening';
-  if (mode === 'exterior') return k === 'item' || k === 'wall' || k === 'roof' || id === 'site';
+  if (mode === 'exterior')
+    return k === 'item' || k === 'wall' || k === 'roof' || k === 'slab' || id === 'site';
   return id !== 'site';
 }
 
 function movable(id: string): boolean {
+  if (doc().readOnly) return false;
   const mode = editor().mode;
   const k = kindOf(id);
   const ref = findEntity(project(), id);
   if (!ref || (ref.entity as { locked?: boolean }).locked) return false;
   if (mode === 'exterior') return k === 'item';
   if (mode === 'furnish') return k === 'item' || k === 'stair' || k === 'opening';
-  return k === 'item' || k === 'stair' || k === 'wall' || k === 'room' || k === 'opening' || k === 'node';
+  return (
+    k === 'item' ||
+    k === 'stair' ||
+    k === 'wall' ||
+    k === 'room' ||
+    k === 'slab' ||
+    k === 'opening' ||
+    k === 'node'
+  );
 }
 
 export function refreshSelectionOverlay() {
@@ -74,7 +85,7 @@ export function refreshSelectionOverlay() {
       closed: true,
     });
   }
-  o.push(...selectionHandles(project(), editor().selection, editor().mode));
+  o.push(...selectionHandles(project(), editor().selection, editor().mode, doc().readOnly));
   toolUI().set({ overlay: o });
 }
 
@@ -82,6 +93,7 @@ function beginMove(e: ToolPointerEvent, ids: string[]) {
   const p = project();
   const orig = new Map<string, { x: number; y: number; rotation?: number }>();
   const nodes = new Map<string, Vec2>();
+  const slabs = new Map<string, Vec2[]>();
   let levelId = activeLevel().id;
   for (const id of ids) {
     const ref = findEntity(p, id);
@@ -95,9 +107,14 @@ function beginMove(e: ToolPointerEvent, ids: string[]) {
     else if (ref.kind === 'room')
       for (const nid of ref.entity.nodes) nodes.set(nid, nodePos(ref.level, nid)!);
     else if (ref.kind === 'node') nodes.set(id, { x: ref.entity.x, y: ref.entity.y });
+    else if (ref.kind === 'slab')
+      slabs.set(
+        id,
+        ref.entity.points.map((q) => ({ ...q })),
+      );
   }
   doc().begin('Move');
-  drag = { kind: 'move', start: e.point, ids, orig, nodes, levelId };
+  drag = { kind: 'move', start: e.point, ids, orig, nodes, levelId, slabs };
 }
 
 function updateMove(e: ToolPointerEvent, d: Extract<Drag, { kind: 'move' }>) {
@@ -149,7 +166,13 @@ function updateMove(e: ToolPointerEvent, d: Extract<Drag, { kind: 'move' }>) {
 
   if (singleRef?.kind === 'opening') {
     const o = singleRef.entity;
-    const pl = placeOpening(e.point, o.width, singleRef.level, { step, disabled, radius: snapRadius(e) * 3 });
+    const pointed = pointedWall(singleRef.level, e.hitId === o.id ? null : e.hitId, e.hitPoint);
+    const pl = placeOpening(pointed?.point ?? e.point, o.width, singleRef.level, {
+      step,
+      disabled,
+      radius: snapRadius(e) * 3,
+      preferWallId: pointed?.wallId ?? (e.view === '3d' ? o.wallId : null),
+    });
     if (pl) {
       doc().mutate('Move', (draft) => {
         const ref = findEntity(draft as Project, o.id);
@@ -187,6 +210,10 @@ function updateMove(e: ToolPointerEvent, d: Extract<Drag, { kind: 'move' }>) {
           n.y = orig.y + delta.y;
         }
       }
+    for (const [id, pts] of d.slabs) {
+      const ref = findEntity(dp, id);
+      if (ref?.kind === 'slab') ref.entity.points = pts.map((q) => ({ x: q.x + delta.x, y: q.y + delta.y }));
+    }
     for (const [id, o] of d.orig) {
       const ref = findEntity(dp, id);
       if (ref && (ref.kind === 'item' || ref.kind === 'stair')) {
@@ -289,7 +316,7 @@ export const selectTool: Tool = {
         hoverHandle = h;
         const cur = h
           ? (
-              selectionHandles(project(), editor().selection, editor().mode).find(
+              selectionHandles(project(), editor().selection, editor().mode, doc().readOnly).find(
                 (x) => x.kind === 'handle' && x.id === h,
               ) as { cursor?: string } | undefined
             )?.cursor

@@ -1,4 +1,16 @@
-import type { EntityKind, Item, Level, Opening, Project, Roof, Room, Stair, Wall, Node } from './schema';
+import type {
+  EntityKind,
+  Item,
+  Level,
+  Opening,
+  Project,
+  Roof,
+  Room,
+  Slab,
+  Stair,
+  Wall,
+  Node,
+} from './schema';
 
 /** Ids carry a kind prefix (see ids.ts), so lookups never scan the wrong collection. */
 export function kindOf(id: string): EntityKind | null {
@@ -18,6 +30,8 @@ export function kindOf(id: string): EntityKind | null {
       return 'item';
     case 'rf':
       return 'roof';
+    case 'sl':
+      return 'slab';
     case 'l':
       return 'level';
     default:
@@ -29,6 +43,7 @@ export type EntityRef =
   | { kind: 'node'; entity: Node; level: Level }
   | { kind: 'wall'; entity: Wall; level: Level }
   | { kind: 'room'; entity: Room; level: Level }
+  | { kind: 'slab'; entity: Slab; level: Level }
   | { kind: 'opening'; entity: Opening; level: Level }
   | { kind: 'stair'; entity: Stair; level: Level }
   | { kind: 'item'; entity: Item; level: Level | null }
@@ -59,9 +74,17 @@ export function findEntity(project: Project, id: string): EntityRef | null {
     case 'wall':
     case 'room':
     case 'opening':
+    case 'slab':
     case 'stair': {
       const key = (
-        { node: 'nodes', wall: 'walls', room: 'rooms', opening: 'openings', stair: 'stairs' } as const
+        {
+          node: 'nodes',
+          wall: 'walls',
+          room: 'rooms',
+          opening: 'openings',
+          stair: 'stairs',
+          slab: 'slabs',
+        } as const
       )[kind];
       for (const l of levels) {
         const list = l[key] as { id: string }[];
@@ -85,6 +108,8 @@ export function entityLabel(ref: EntityRef): string {
       return ref.entity.type.startsWith('door') ? 'Door' : 'Window';
     case 'stair':
       return 'Stairs';
+    case 'slab':
+      return 'Floor';
     case 'item':
       return ref.entity.name ?? 'Item';
     case 'roof':

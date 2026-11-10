@@ -158,9 +158,73 @@ export function resizeRoom(p: Project, levelId: string, roomId: string, axis: 'x
   for (const w of level.walls) clampOpenings(level, w);
 }
 
-/** Delete anything by id. Rooms take their unshared walls with them. */
-export function deleteEntities(p: Project, ids: string[]) {
+/** Remove the walls of a room that no other room uses. */
+export function removeRoomWalls(level: Level, roomId: string) {
+  const room = level.rooms.find((r) => r.id === roomId);
+  if (!room) return;
+  const others = level.rooms.filter((r) => r.id !== roomId);
+  const loop = room.nodes;
+  const wallIds: string[] = [];
+  for (let i = 0; i < loop.length; i++) {
+    const a = loop[i]!;
+    const b = loop[(i + 1) % loop.length]!;
+    const shared = others.some((r) =>
+      r.nodes.some((n, j) => {
+        const m = r.nodes[(j + 1) % r.nodes.length]!;
+        return (n === a && m === b) || (n === b && m === a);
+      }),
+    );
+    if (shared) continue;
+    const w = level.walls.find((x) => (x.a === a && x.b === b) || (x.a === b && x.b === a));
+    if (w) wallIds.push(w.id);
+  }
+  level.rooms = others;
+  for (const wid of wallIds) removeWall(level, wid);
+}
+
+export function addSlab(
+  p: Project,
+  levelId: string,
+  points: Vec2[],
+  material = DEFAULT_MATERIALS.floor,
+): string {
+  const level = getLevel(p, levelId);
+  const id = createId('slab');
+  level.slabs.push({
+    id,
+    points: points.map((q) => ({ x: q.x, y: q.y })),
+    material,
+    thickness: level.floorThickness,
+  });
+  return id;
+}
+
+export interface DeleteOptions {
+  /** Rooms: also remove their walls (default: only the floor). */
+  roomWalls?: boolean;
+}
+
+/**
+ * Delete anything by id, as granularly as possible:
+ * - a wall goes on its own; floors of rooms it enclosed are kept as free slabs;
+ * - a room loses only its floor (its walls stay) unless `roomWalls` is set.
+ */
+export function deleteEntities(p: Project, ids: string[], opts: DeleteOptions = {}) {
   const touched = new Set<Level>();
+  const before = new Map<Level, { id: string; poly: Vec2[]; material: string; floor: boolean }[]>();
+  const snapshot = (level: Level) => {
+    if (!before.has(level))
+      before.set(
+        level,
+        level.rooms.map((r) => ({
+          id: r.id,
+          poly: roomPolygon(level, r),
+          material: r.floorMaterial,
+          floor: r.floor !== false,
+        })),
+      );
+  };
+  const intentionallyRemoved = new Set<string>();
   for (const id of ids) {
     const kind = kindOf(id);
     if (kind === 'roof') {
@@ -175,12 +239,14 @@ export function deleteEntities(p: Project, ids: string[]) {
       switch (kind) {
         case 'wall':
           if (level.walls.some((w) => w.id === id)) {
+            snapshot(level);
             removeWall(level, id);
             touched.add(level);
           }
           break;
         case 'node':
           if (level.nodes.some((n) => n.id === id)) {
+            snapshot(level);
             for (const w of wallsAtNode(level, id)) removeWall(level, w.id);
             level.nodes = level.nodes.filter((n) => n.id !== id);
             touched.add(level);
@@ -189,28 +255,19 @@ export function deleteEntities(p: Project, ids: string[]) {
         case 'room': {
           const room = level.rooms.find((r) => r.id === id);
           if (!room) break;
-          const others = level.rooms.filter((r) => r.id !== id);
-          const loop = room.nodes;
-          const wallIds: string[] = [];
-          for (let i = 0; i < loop.length; i++) {
-            const a = loop[i]!;
-            const b = loop[(i + 1) % loop.length]!;
-            const shared = others.some((r) =>
-              r.nodes.some((n, j) => {
-                const m = r.nodes[(j + 1) % r.nodes.length]!;
-                return (n === a && m === b) || (n === b && m === a);
-              }),
-            );
-            if (shared) continue;
-            const w = level.walls.find((x) => (x.a === a && x.b === b) || (x.a === b && x.b === a));
-            if (w) wallIds.push(w.id);
+          if (!opts.roomWalls) {
+            room.floor = false;
+            break;
           }
-          level.rooms = others;
-          // Items standing in the room stay; only geometry goes.
-          for (const wid of wallIds) removeWall(level, wid);
+          snapshot(level);
+          intentionallyRemoved.add(id);
+          removeRoomWalls(level, id);
           touched.add(level);
           break;
         }
+        case 'slab':
+          level.slabs = level.slabs.filter((s) => s.id !== id);
+          break;
         case 'opening':
           level.openings = level.openings.filter((o) => o.id !== id);
           break;
@@ -228,6 +285,20 @@ export function deleteEntities(p: Project, ids: string[]) {
   for (const level of touched) {
     for (const n of [...level.nodes]) cleanupNode(level, n.id);
     sync(level);
+    // Keep the floor of any room whose enclosure was broken (it was not merged into another room).
+    const survivors = level.rooms.map((r) => roomPolygon(level, r));
+    for (const old of before.get(level) ?? []) {
+      if (!old.floor || intentionallyRemoved.has(old.id) || old.poly.length < 3) continue;
+      if (level.rooms.some((r) => r.id === old.id)) continue;
+      const c = centroid(old.poly);
+      if (survivors.some((poly) => pointInPolygon(c, poly))) continue;
+      level.slabs.push({
+        id: createId('slab'),
+        points: old.poly,
+        material: old.material,
+        thickness: level.floorThickness,
+      });
+    }
   }
 }
 

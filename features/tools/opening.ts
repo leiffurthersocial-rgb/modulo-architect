@@ -1,7 +1,7 @@
 import type { Tool, Overlay } from './types';
 import { activeLevel, doc, editor, snapRadius, stepFor, units } from './context';
 import { toolUI } from './store';
-import { placeOpening } from './placement';
+import { placeOpening, pointedWall } from './placement';
 import { getOpening, defaultParams } from '@/registry';
 import * as ops from '@/core/model/ops';
 import type { Opening, Project } from '@/core/model/schema';
@@ -36,10 +36,12 @@ export const openingTool: Tool = {
     const level = activeLevel();
     editor().setCursor(e.point);
     const width = preview?.type === def.id ? preview.width : def.defaults.width;
-    const pl = placeOpening(e.point, width, level, {
+    const pointed = pointedWall(level, e.hitId, e.hitPoint);
+    const pl = placeOpening(pointed?.point ?? e.point, width, level, {
       step: stepFor(e),
       disabled: e.alt,
       radius: snapRadius(e) * 3,
+      preferWallId: pointed?.wallId,
     });
     if (!pl) {
       clear();

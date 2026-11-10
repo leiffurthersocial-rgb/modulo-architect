@@ -86,47 +86,49 @@ export function LevelSwitcher() {
           </DropdownMenu.Root>
         )}
       </div>
-      <div className="flex items-center gap-1.5">
-        <TextField
-          label="Level name"
-          value={active.name}
-          className="h-7 flex-1 text-xs"
-          onChange={(v) =>
-            useDocument
-              .getState()
-              .mutate(
-                'Rename level',
-                (d) => void (d.building.levels.find((l) => l.id === active.id)!.name = v),
-              )
-          }
-        />
-        {!readOnly && levels.length > 1 && (
-          <IconButton label="Remove this level" size="sm" onClick={() => A.removeLevel(active.id)}>
-            <Trash2 />
-          </IconButton>
-        )}
-      </div>
-      <div className="grid grid-cols-2 gap-1.5">
-        <ModelNumber
-          label="Floor height"
-          short="Height"
-          value={active.height}
-          min={1.8}
-          max={8}
-          mergeKey={`lvl-h-${active.id}`}
-          testId="floor-height"
-          apply={(d, v) => ops.setLevelHeight(d as Project, active.id, v)}
-        />
-        <ModelNumber
-          label="Floor thickness"
-          short="Slab"
-          value={active.floorThickness}
-          min={0.05}
-          max={1}
-          mergeKey={`lvl-t-${active.id}`}
-          apply={(d, v) => void (d.building.levels.find((l) => l.id === active.id)!.floorThickness = v)}
-        />
-      </div>
+      <fieldset disabled={readOnly} className="flex min-w-0 flex-col gap-2">
+        <div className="flex items-center gap-1.5">
+          <TextField
+            label="Level name"
+            value={active.name}
+            className="h-7 flex-1 text-xs"
+            onChange={(v) =>
+              useDocument
+                .getState()
+                .mutate(
+                  'Rename level',
+                  (d) => void (d.building.levels.find((l) => l.id === active.id)!.name = v),
+                )
+            }
+          />
+          {!readOnly && levels.length > 1 && (
+            <IconButton label="Remove this level" size="sm" onClick={() => A.removeLevel(active.id)}>
+              <Trash2 />
+            </IconButton>
+          )}
+        </div>
+        <div className="grid grid-cols-2 gap-1.5">
+          <ModelNumber
+            label="Floor height"
+            short="Height"
+            value={active.height}
+            min={1.8}
+            max={8}
+            mergeKey={`lvl-h-${active.id}`}
+            testId="floor-height"
+            apply={(d, v) => ops.setLevelHeight(d as Project, active.id, v)}
+          />
+          <ModelNumber
+            label="Floor thickness"
+            short="Slab"
+            value={active.floorThickness}
+            min={0.05}
+            max={1}
+            mergeKey={`lvl-t-${active.id}`}
+            apply={(d, v) => void (d.building.levels.find((l) => l.id === active.id)!.floorThickness = v)}
+          />
+        </div>
+      </fieldset>
       <Segmented<LevelDisplay>
         ariaLabel="Other levels"
         size="sm"

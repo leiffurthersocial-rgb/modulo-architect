@@ -69,7 +69,9 @@ export function buildWalkWorld(project: Project): WalkWorld {
     const holes = below
       ? below.stairs.filter((s) => s.rise === null).flatMap((s) => stairLayout(s, below.height).footprint)
       : [];
+    for (const s of level.slabs) if (!s.hidden) surfaces.push({ poly: s.points, y: level.elevation, holes });
     for (const r of level.rooms) {
+      if (r.floor === false && i > 0) continue;
       const poly = roomPolygon(level, r);
       if (poly.length >= 3) surfaces.push({ poly, y: level.elevation, holes });
     }

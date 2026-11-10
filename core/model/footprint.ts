@@ -122,6 +122,10 @@ export function entityOutline(
         y1: l.elevation + (w.height ?? l.height),
       };
     }
+    if (kind === 'slab') {
+      const s = l.slabs.find((x) => x.id === id);
+      if (s) return { polygons: [s.points], y0: l.elevation - s.thickness, y1: l.elevation + 0.02 };
+    }
     if (kind === 'room') {
       const r = l.rooms.find((x) => x.id === id);
       if (r) return { polygons: [roomPolygon(l, r)], y0: l.elevation, y1: l.elevation + 0.02 };

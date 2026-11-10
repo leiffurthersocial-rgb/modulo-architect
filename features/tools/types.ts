@@ -7,6 +7,9 @@ export interface ToolPointerEvent {
   point: Vec2;
   /** Entity under the pointer. */
   hitId: string | null;
+  /** Where the pointer actually touches the hit entity (plan space). In 3D this differs from
+   * `point` (the working plane) when you point at a wall face above the floor. */
+  hitPoint: Vec2 | null;
   /** Overlay handle under the pointer. */
   handle: string | null;
   shift: boolean;

@@ -1,5 +1,6 @@
 'use client';
 import {
+  Grid2x2,
   AppWindow,
   DoorOpen,
   Footprints,
@@ -28,6 +29,7 @@ const ITEMS: RailItem[] = [
   { key: 'select', tool: 'select', label: 'Select', icon: <MousePointer2 />, command: 'tool.select' },
   { key: 'wall', tool: 'wall', label: 'Wall', icon: <PenLine />, command: 'tool.wall' },
   { key: 'room', tool: 'room', label: 'Room', icon: <SquareDashed />, command: 'tool.room' },
+  { key: 'floor', tool: 'floor', label: 'Floor', icon: <Grid2x2 />, command: 'tool.floor' },
   { key: 'door', tool: 'opening', label: 'Door', icon: <DoorOpen />, command: 'tool.door', placeId: 'door' },
   {
     key: 'window',

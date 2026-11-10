@@ -7,7 +7,7 @@ export type ViewKind = '2d' | '3d' | 'split';
 export type LevelDisplay = 'all' | 'isolate' | 'ghost';
 export type CameraPreset = 'top' | 'front' | 'iso' | 'fit';
 
-export type ToolId = 'select' | 'wall' | 'room' | 'opening' | 'stair' | 'place' | 'measure' | 'pan';
+export type ToolId = 'select' | 'wall' | 'room' | 'floor' | 'opening' | 'stair' | 'place' | 'measure' | 'pan';
 
 export interface PlaceSpec {
   kind: 'element' | 'opening' | 'room-template';
@@ -38,6 +38,7 @@ export interface EditorState {
   shortcutsOpen: boolean;
   projectsOpen: boolean;
   shareOpen: boolean;
+  settingsOpen: boolean;
   camera: CameraRequest | null;
   /** Live cursor position on the active level (plan space), for the status bar. */
   cursor: Vec2 | null;
@@ -65,8 +66,8 @@ export interface EditorState {
 
 /** Tools offered by each mode (the rail shows these). */
 export const MODE_TOOLS: Record<Mode, ToolId[]> = {
-  plan: ['select', 'wall', 'room', 'opening', 'stair', 'measure'],
-  build: ['select', 'wall', 'room', 'opening', 'stair', 'measure'],
+  plan: ['select', 'wall', 'room', 'floor', 'opening', 'stair', 'measure'],
+  build: ['select', 'wall', 'room', 'floor', 'opening', 'stair', 'measure'],
   furnish: ['select', 'place', 'measure'],
   exterior: ['select', 'place', 'measure'],
   walk: [],
@@ -88,6 +89,7 @@ export const useEditor = create<EditorState>()((set) => ({
   shortcutsOpen: false,
   projectsOpen: false,
   shareOpen: false,
+  settingsOpen: false,
   camera: null,
   cursor: null,
   toast: null,
