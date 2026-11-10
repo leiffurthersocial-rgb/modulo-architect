@@ -15,6 +15,8 @@ export default {
     { angle: 5.4, distance: 270, radius: 130, height: 26, material: 'rough-grass', rounded: true },
   ],
   scatter: [
+    { element: 'm-island-tree-01', count: 6, band: [6, 40], scale: [0.9, 1.2] },
+    { element: 'm-tree-small-02', count: 8, band: [4, 35], scale: [0.8, 1.2] },
     { element: 'tree', count: 40, band: [8, 120], scale: [0.8, 1.5] },
     { element: 'birch', count: 18, band: [10, 90], scale: [0.8, 1.3] },
     { element: 'shrub', count: 40, band: [3, 70], scale: [0.7, 1.6] },

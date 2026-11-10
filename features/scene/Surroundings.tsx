@@ -37,7 +37,11 @@ function flatGeometry(polys: { outer: Vec2[]; holes: Vec2[][] }[], y: number) {
 }
 
 /** Geometry rebuilt when the preset or plot changes, disposed when replaced. */
-function useDisposable<T extends THREE.BufferGeometry | null>(make: () => T, preset: EnvironmentPreset, f: PlotFrame): T {
+function useDisposable<T extends THREE.BufferGeometry | null>(
+  make: () => T,
+  preset: EnvironmentPreset,
+  f: PlotFrame,
+): T {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const g = useMemo(() => make(), [preset, f]);
   useEffect(() => () => g?.dispose(), [g]);
@@ -45,28 +49,32 @@ function useDisposable<T extends THREE.BufferGeometry | null>(make: () => T, pre
 }
 
 function Ground({ preset, f }: { preset: EnvironmentPreset; f: PlotFrame }) {
-  const geo = useDisposable(() => {
-    const square: Vec2[] = [
-      { x: f.cx - R, y: f.cy - R },
-      { x: f.cx + R, y: f.cy - R },
-      { x: f.cx + R, y: f.cy + R },
-      { x: f.cx - R, y: f.cy + R },
-    ];
-    const cuts: Vec2[][] = [];
-    if (preset.coast) {
-      const n = SIDE_NORMAL[preset.coast.side];
-      const t = { x: -n.y, y: n.x };
-      const d = edgeOffset(f, preset.coast.side) + preset.coast.distance;
-      const P = (s: number, dd: number) => ({
-        x: t.x * s + n.x * dd + f.cx * Math.abs(t.x),
-        y: t.y * s + n.y * dd + f.cy * Math.abs(t.y),
-      });
-      cuts.push([P(-2 * R, d), P(2 * R, d), P(2 * R, d + 3 * R), P(-2 * R, d + 3 * R)]);
-    }
-    const lake = lakePolygon(preset, f);
-    if (lake) cuts.push(lake);
-    return flatGeometry(subtract(square, cuts), -0.045);
-  }, preset, f);
+  const geo = useDisposable(
+    () => {
+      const square: Vec2[] = [
+        { x: f.cx - R, y: f.cy - R },
+        { x: f.cx + R, y: f.cy - R },
+        { x: f.cx + R, y: f.cy + R },
+        { x: f.cx - R, y: f.cy + R },
+      ];
+      const cuts: Vec2[][] = [];
+      if (preset.coast) {
+        const n = SIDE_NORMAL[preset.coast.side];
+        const t = { x: -n.y, y: n.x };
+        const d = edgeOffset(f, preset.coast.side) + preset.coast.distance;
+        const P = (s: number, dd: number) => ({
+          x: t.x * s + n.x * dd + f.cx * Math.abs(t.x),
+          y: t.y * s + n.y * dd + f.cy * Math.abs(t.y),
+        });
+        cuts.push([P(-2 * R, d), P(2 * R, d), P(2 * R, d + 3 * R), P(-2 * R, d + 3 * R)]);
+      }
+      const lake = lakePolygon(preset, f);
+      if (lake) cuts.push(lake);
+      return flatGeometry(subtract(square, cuts), -0.045);
+    },
+    preset,
+    f,
+  );
   return <mesh geometry={geo} material={getThreeMaterial(preset.ground)} receiveShadow />;
 }
 
@@ -175,19 +183,23 @@ function Coast({ preset, f }: { preset: EnvironmentPreset; f: PlotFrame }) {
 
 function Lake({ preset, f }: { preset: EnvironmentPreset; f: PlotFrame }) {
   const lake = preset.lake!;
-  const geos = useDisposable(() => {
-    const poly = lakePolygon(preset, f)!;
-    const c = poly.reduce((a, q) => ({ x: a.x + q.x / poly.length, y: a.y + q.y / poly.length }), {
-      x: 0,
-      y: 0,
-    });
-    const outer = poly.map((q) => ({ x: c.x + (q.x - c.x) * 1.08, y: c.y + (q.y - c.y) * 1.08 }));
-    const g = flatGeometry(subtract(outer, [poly]), -0.04);
-    const water = flatGeometry([{ outer: poly, holes: [] }], -0.35);
-    const merged = new THREE.BufferGeometry();
-    merged.userData = { shore: g, water };
-    return merged;
-  }, preset, f);
+  const geos = useDisposable(
+    () => {
+      const poly = lakePolygon(preset, f)!;
+      const c = poly.reduce((a, q) => ({ x: a.x + q.x / poly.length, y: a.y + q.y / poly.length }), {
+        x: 0,
+        y: 0,
+      });
+      const outer = poly.map((q) => ({ x: c.x + (q.x - c.x) * 1.08, y: c.y + (q.y - c.y) * 1.08 }));
+      const g = flatGeometry(subtract(outer, [poly]), -0.04);
+      const water = flatGeometry([{ outer: poly, holes: [] }], -0.35);
+      const merged = new THREE.BufferGeometry();
+      merged.userData = { shore: g, water };
+      return merged;
+    },
+    preset,
+    f,
+  );
   const { shore, water } = geos.userData as { shore: THREE.BufferGeometry; water: THREE.BufferGeometry };
   useEffect(
     () => () => {
@@ -206,24 +218,32 @@ function Lake({ preset, f }: { preset: EnvironmentPreset; f: PlotFrame }) {
 }
 
 function Road({ preset, f }: { preset: EnvironmentPreset; f: PlotFrame }) {
-  const geo = useDisposable(() => {
-    const r = roadRect(preset, f)!;
-    return flatGeometry([{ outer: r, holes: [] }], -0.03);
-  }, preset, f);
-  const walk = useDisposable(() => {
-    const n = SIDE_NORMAL[preset.road!.side];
-    const r = roadRect(preset, f)!;
-    const off = (p: Vec2, k: number) => ({ x: p.x + n.x * k, y: p.y + n.y * k });
-    const near = [off(r[0]!, -2), off(r[1]!, -2), r[1]!, r[0]!];
-    const far = [r[3]!, r[2]!, off(r[2]!, 2), off(r[3]!, 2)];
-    return flatGeometry(
-      [
-        { outer: near, holes: [] },
-        { outer: far, holes: [] },
-      ],
-      -0.02,
-    );
-  }, preset, f);
+  const geo = useDisposable(
+    () => {
+      const r = roadRect(preset, f)!;
+      return flatGeometry([{ outer: r, holes: [] }], -0.03);
+    },
+    preset,
+    f,
+  );
+  const walk = useDisposable(
+    () => {
+      const n = SIDE_NORMAL[preset.road!.side];
+      const r = roadRect(preset, f)!;
+      const off = (p: Vec2, k: number) => ({ x: p.x + n.x * k, y: p.y + n.y * k });
+      const near = [off(r[0]!, -2), off(r[1]!, -2), r[1]!, r[0]!];
+      const far = [r[3]!, r[2]!, off(r[2]!, 2), off(r[3]!, 2)];
+      return flatGeometry(
+        [
+          { outer: near, holes: [] },
+          { outer: far, holes: [] },
+        ],
+        -0.02,
+      );
+    },
+    preset,
+    f,
+  );
   return (
     <>
       <mesh geometry={geo} material={getThreeMaterial('asphalt')} receiveShadow />

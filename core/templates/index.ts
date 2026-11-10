@@ -108,7 +108,7 @@ function twoBedroom(p: P) {
   add(item('armchair', ox + 3.4, oy + 0.9, Math.PI / 4 + Math.PI));
   add(item('rug', ox + 2.0, oy + 1.8, Math.PI / 2, { size: { w: 2.4, d: 2.0, h: 0.012 } }));
   add(item('floor-lamp', ox + 0.45, oy + 0.45));
-  add(item('plant', ox + 0.45, oy + 3.2));
+  add(item('m-potted-plant-01', ox + 0.45, oy + 3.4));
   // Kitchen & dining
   add(item('kitchen-base', ox + 5.66, oy + 4.85, Math.PI / 2, { size: { w: 2.4, d: 0.62, h: 0.9 } }));
   add(item('fridge', ox + 5.6, oy + 6.4, Math.PI / 2));
@@ -117,7 +117,7 @@ function twoBedroom(p: P) {
     add(item('dining-chair', ox + 2.9 + dx, oy + 4.3, 0 + Math.PI));
     add(item('dining-chair', ox + 2.9 + dx, oy + 5.7, 0));
   }
-  add(item('pendant-lamp', ox + 2.9, oy + 5.0));
+  add(item('m-chandelier-02', ox + 2.9, oy + 5.0));
   // Bedroom
   add(item('bed-double', ox + 9.85, oy + 1.4, Math.PI / 2, { size: { w: 1.6, d: 2.05, h: 1 } }));
   add(item('nightstand', ox + 10.68, oy + 0.3, Math.PI / 2));

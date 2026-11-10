@@ -40,6 +40,14 @@ Defaults chosen while building autonomously. Each is easy to revisit.
 - A stair that reaches the next level cuts its footprint out of every floor above it (room floors and free slabs) and out of its own level's ceiling, using a real polygon difference (`polygon-clipping`), so partial overlaps across walls or rooms work. Previously the cut only happened when the stair sat entirely inside one room.
 - `stair.opening` (default true, schema-additive) turns the cut off per stair; stairs with a custom rise that doesn't reach the next level never cut.
 
+## Realism (v4)
+
+- **Bundled CC0 assets, not runtime downloads.** Textures (26 MB), skies (8.5 MB) and models (23 MB) ship in `/public` so the app keeps zero runtime dependencies and works offline; everything is lazy-loaded, so a project only fetches what it uses. Scripts in `scripts/` reproduce them.
+- Texture maps: colour 1024², normal 512², packed glTF-style ARM 512² (AO/roughness), JPEG. Models: meshopt-compressed GLB, simplified to a triangle budget, WebP textures.
+- **Tone mapping: Khronos PBR Neutral** (keeps material colours faithful) with exposure control and automatic exposure at dusk/night.
+- Light temperature is applied to the sun (and a fill light when set manually); image-based light keeps the sky's own colour.
+- Outdoor presets are decorative and seeded (deterministic); they never modify the project beyond `site.environment` (+ optional terrain/latitude/sky when picked).
+
 ## View mode and preferences (v2)
 
 - View mode reuses the document's read-only flag (the same one the shared viewer uses): mutations, transactions and undo/redo are no-ops, and the inspector renders inside a disabled `<fieldset>`.

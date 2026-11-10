@@ -46,6 +46,7 @@ function Card({
   label,
   sub,
   icon,
+  image,
   active,
   onPick,
   testId,
@@ -53,6 +54,8 @@ function Card({
   label: string;
   sub?: string;
   icon: React.ReactNode;
+  /** Real preview (models) instead of the line icon. */
+  image?: string;
   active?: boolean;
   onPick: (e?: React.PointerEvent) => void;
   testId?: string;
@@ -78,14 +81,19 @@ function Card({
           : 'border-transparent bg-bg-elevated hover:border-line-strong hover:bg-panel-solid',
       )}
     >
-      <span
-        className={cn(
-          'flex h-9 w-9 items-center justify-center rounded-[10px] [&_svg]:h-5 [&_svg]:w-5 [&_svg]:stroke-[1.5]',
-          active ? 'text-accent' : 'text-fg-muted group-hover:text-fg',
-        )}
-      >
-        {icon}
-      </span>
+      {image ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={image} alt="" loading="lazy" className="h-12 w-12 rounded-[8px] object-cover" />
+      ) : (
+        <span
+          className={cn(
+            'flex h-9 w-9 items-center justify-center rounded-[10px] [&_svg]:h-5 [&_svg]:w-5 [&_svg]:stroke-[1.5]',
+            active ? 'text-accent' : 'text-fg-muted group-hover:text-fg',
+          )}
+        >
+          {icon}
+        </span>
+      )}
       <span className="line-clamp-2 text-[11.5px] font-medium leading-tight text-fg">{label}</span>
       {sub && <span className="tnum text-[10.5px] leading-none text-fg-subtle">{sub}</span>}
     </button>
@@ -112,6 +120,7 @@ function ElementGrid({ list }: { list: ElementDef[] }) {
             label={def.name}
             sub={`${formatLength(def.size.w, units, { unit: false, precision: 1 })}×${formatLength(def.size.d, units, { precision: 1 })}`}
             icon={<Icon />}
+            image={def.thumb}
             active={place?.kind === 'element' && place.id === def.id}
             onPick={(e) => startPlacing('place', { kind: 'element', id: def.id }, e)}
           />

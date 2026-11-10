@@ -1,6 +1,7 @@
 import { FURNITURE } from './furniture';
 import { OUTDOOR } from './outdoor';
 import { OPENINGS } from './openings';
+import { MODELS } from './models';
 import type { ElementDef, OpeningDef } from './types';
 
 export type { ElementDef, OpeningDef, Part, ParamSpec, SnapSurface, ParamValue } from './types';
@@ -24,6 +25,7 @@ export function registerOpening(def: OpeningDef) {
 
 FURNITURE.forEach(registerElement);
 OUTDOOR.forEach(registerElement);
+MODELS.forEach(registerElement);
 OPENINGS.forEach(registerOpening);
 
 export const getElement = (id: string): ElementDef | undefined => elements.get(id);

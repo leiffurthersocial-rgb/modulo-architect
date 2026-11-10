@@ -13,6 +13,7 @@ export default {
     { angle: 2.4, distance: 340, radius: 180, height: 55, material: 'forest-floor', rounded: true },
   ],
   scatter: [
+    { element: 'm-pine-tree-01', count: 12, band: [16, 70], scale: [0.7, 1.0], inland: true },
     { element: 'conifer', count: 160, band: [14, 150], scale: [0.8, 1.6], inland: true },
     { element: 'birch', count: 60, band: [8, 90], scale: [0.8, 1.3], inland: true },
     { element: 'boulder', count: 20, band: [4, 60], scale: [0.5, 1.6] },

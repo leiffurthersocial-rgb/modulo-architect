@@ -6,6 +6,7 @@ import type { Item } from '@/core/model/schema';
 import { getElement, type ElementDef, type Part } from '@/registry';
 import { partGeometry } from './parts';
 import { getThreeMaterial } from './materials';
+import { ModelBatch } from './ModelBatch';
 
 interface Batch {
   key: string;
@@ -46,10 +47,16 @@ export function ItemsLayer({
       if (it.hidden) continue;
       const def = getElement(it.type);
       if (!def) continue;
-      const key = itemBatchKey(it);
+      const key = def.model ? `model|${def.id}` : itemBatchKey(it);
       let b = map.get(key);
       if (!b) {
-        b = { key, def, parts: def.build({ size: it.size, params: { ...it.params } }), items: [] };
+        // Models batch by type only: resizing is a per-instance scale.
+        b = {
+          key,
+          def,
+          parts: def.model ? [] : def.build({ size: it.size, params: { ...it.params } }),
+          items: [],
+        };
         map.set(key, b);
       }
       b.items.push(it);
@@ -59,16 +66,27 @@ export function ItemsLayer({
 
   return (
     <>
-      {batches.map((b) => (
-        <BatchMeshes
-          key={b.key}
-          batch={b}
-          baseY={baseY}
-          variant={variant}
-          ceilingY={ceilingY}
-          pickable={pickable}
-        />
-      ))}
+      {batches.map((b) =>
+        b.def.model ? (
+          <ModelBatch
+            key={b.key}
+            def={b.def}
+            items={b.items}
+            baseY={baseY}
+            variant={variant}
+            pickable={pickable}
+          />
+        ) : (
+          <BatchMeshes
+            key={b.key}
+            batch={b}
+            baseY={baseY}
+            variant={variant}
+            ceilingY={ceilingY}
+            pickable={pickable}
+          />
+        ),
+      )}
     </>
   );
 }

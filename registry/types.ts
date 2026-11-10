@@ -71,8 +71,17 @@ export interface ElementDef {
   build: (ctx: BuildContext) => Part[];
   /** Emits light when lamps are on. `y` is height above the base (negative = below the top). */
   light?: { y: number; x?: number; z?: number; intensity?: number; distance?: number };
-  /** Future: replace procedural geometry with a GLB model. */
-  model?: { url: string; scale?: number };
+  /** A GLB model rendered instead of procedural parts. `origin` is the model-space point that
+   *  maps to the item's footprint centre on the floor; `size` is the model's native size. */
+  model?: {
+    url: string;
+    origin: { x: number; y: number; z: number };
+    size: { w: number; d: number; h: number };
+  };
+  /** Catalog preview image. */
+  thumb?: string;
+  /** Attribution / source page for third-party assets. */
+  source?: string;
 }
 
 export interface OpeningBuildContext {

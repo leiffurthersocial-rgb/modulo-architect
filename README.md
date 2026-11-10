@@ -51,6 +51,15 @@ npx vercel@latest --prod
 - **3** Furnish: drag items from the catalog. **4** Exterior: facade, roof, terrain, sun, fence, outdoor shower… **5** Walk.
 - **⌘/Ctrl K** finds every command; **?** lists shortcuts; **Tab** hides the UI.
 
+## Realism: textures, lighting, surroundings, models
+
+- **Materials** are CC0 photo scans (Poly Haven, ambientCG) with colour, normal and packed AO/roughness maps, tiled at their real-world size on every surface. Paints, fabrics and carpets tint a neutral scan, so any colour keeps a real texture. Large terrain uses an anti-tiling shader.
+- **Lighting** uses real sky HDRIs for ambient light and reflections, rotated so the sun in the sky matches the simulated sun. The Lighting popover (sun icon, bottom right, and in Walk mode) sets sky, time, season, **light temperature in Kelvin** (or automatic from the sun), sun/sky strength and exposure. Lamps emit real light with their own bulb temperature.
+- **Surroundings** (Exterior → House & site): Open field, Countryside, Suburban street, Cliffside, Tropical beach, Alpine valley, Desert, Lakeside forest. The plot uses the same ground as its surroundings unless the setting calls for a lawn.
+- **3D models**: ~60 CC0 Poly Haven models (sofas, chairs, tables, cabinets, chandeliers, plants, trees, patio sets …) next to ~60 procedural pieces. Catalog cards show photo thumbnails.
+
+Re-fetch or extend assets with the scripts in `scripts/` (see CREDITS.md).
+
 ## Architecture
 
 ```
@@ -112,6 +121,14 @@ export default defineElement({
 ### Add an outdoor element
 
 Same as above with `kind: 'outdoor'` and `snap: 'ground'`, in `registry/outdoor/` (see `outdoor-shower.ts`, the first "fun" element). `solid: false` with a low height makes it walkable (decks, paths).
+
+### Add a 3D model
+
+Add the Poly Haven id with its catalog metadata to `MODELS` in `scripts/fetch-models.mjs` and run `NODE_USE_ENV_PROXY=1 node scripts/fetch-models.mjs <id>`. It is packed into `public/models/<id>.glb` and appears in the catalog automatically (`registry/models`).
+
+### Add an outdoor setting
+
+Create a file in `registry/environments/` (ground, coast or lake, road, hills, scatter list) and list it in `index.ts`.
 
 ### Add a material
 

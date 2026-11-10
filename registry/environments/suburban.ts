@@ -10,6 +10,7 @@ export default {
   road: { side: 'south', distance: 3, width: 7 },
   neighbours: 6,
   scatter: [
+    { element: 'm-tree-small-02', count: 6, band: [3, 30], scale: [0.9, 1.2] },
     { element: 'tree', count: 14, band: [4, 45], scale: [0.8, 1.2] },
     { element: 'shrub', count: 24, band: [2, 30], scale: [0.6, 1.2] },
     { element: 'hedge', count: 6, band: [2, 30], scale: [0.8, 1] },

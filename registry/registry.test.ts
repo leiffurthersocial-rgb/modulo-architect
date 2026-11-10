@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { allElements, allOpenings, defaultParams, getElement, searchElements } from './index';
 import { getMaterial, MATERIALS } from './materials';
 
 describe('element registry', () => {
   it('ships a full catalog with unique ids', () => {
     const furniture = allElements().filter((e) => e.kind === 'furniture');
-    expect(furniture.length).toBeGreaterThanOrEqual(30);
+    expect(furniture.length).toBeGreaterThanOrEqual(90);
     const ids = allElements().map((e) => e.id);
     expect(new Set(ids).size).toBe(ids.length);
     expect(getElement('outdoor-shower')).toBeDefined();
@@ -14,6 +16,12 @@ describe('element registry', () => {
   it('every element builds valid parts with resolvable materials', () => {
     for (const def of allElements()) {
       const parts = def.build({ size: def.size, params: defaultParams(def) });
+      if (def.model) {
+        // Model elements render their GLB; check the asset exists and has a sane size.
+        expect(existsSync(join(process.cwd(), 'public', def.model.url)), def.id).toBe(true);
+        expect(def.size.w * def.size.d * def.size.h, def.id).toBeGreaterThan(0);
+        continue;
+      }
       expect(parts.length, def.id).toBeGreaterThan(0);
       for (const p of parts) {
         expect(p.position.every(Number.isFinite), def.id).toBe(true);

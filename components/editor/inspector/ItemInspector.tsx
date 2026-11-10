@@ -120,19 +120,21 @@ export function ItemInspector({ item, level }: { item: Item; level: Level | null
           apply={(d, v) => set((i) => void (i.z = v))(d as Project)}
         />
       </Section>
-      <Section title="Materials">
-        {Object.entries(def.slots).map(([slot, s]) => (
-          <MaterialPicker
-            key={slot}
-            label={s.label}
-            category={s.category}
-            value={item.materials[slot] ?? s.default}
-            onChange={(id) =>
-              mutate(`${s.label} finish`, (d) => set((i) => void (i.materials[slot] = id))(d as Project))
-            }
-          />
-        ))}
-      </Section>
+      {Object.keys(def.slots).length > 0 && (
+        <Section title="Materials">
+          {Object.entries(def.slots).map(([slot, s]) => (
+            <MaterialPicker
+              key={slot}
+              label={s.label}
+              category={s.category}
+              value={item.materials[slot] ?? s.default}
+              onChange={(id) =>
+                mutate(`${s.label} finish`, (d) => set((i) => void (i.materials[slot] = id))(d as Project))
+              }
+            />
+          ))}
+        </Section>
+      )}
       {(def.params?.length ?? 0) > 0 && (
         <Section title="Options">
           <ParamFields
@@ -155,6 +157,16 @@ export function ItemInspector({ item, level }: { item: Item; level: Level | null
       )}
       <Section>
         <More>
+          {def.source && (
+            <a
+              href={def.source}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-accent hover:underline"
+            >
+              3D model: Poly Haven (CC0)
+            </a>
+          )}
           <TextField
             label="Custom name"
             value={item.name ?? def.name}

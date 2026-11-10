@@ -3,6 +3,7 @@ import { useToolUI } from '@/features/tools/store';
 import { useDocument } from '@/store/document';
 import { getElement } from '@/registry';
 import { PartsGroup } from './PartsGroup';
+import { ModelBatch } from './ModelBatch';
 import { OpeningView } from './OpeningView';
 import { StairView } from './StairView';
 import { deriveLevel } from './derive';
@@ -19,6 +20,16 @@ export function Ghost() {
     if (!def) return null;
     const level = ghost.levelId ? project.building.levels.find((l) => l.id === ghost.levelId) : null;
     const base = level ? level.elevation : 0;
+    if (def.model)
+      return (
+        <ModelBatch
+          def={def}
+          items={[{ ...ghost.item, id: 'ghost' }]}
+          baseY={base}
+          variant={ghost.invalid ? 'danger' : 'preview'}
+          pickable={false}
+        />
+      );
     const parts = def.build({ size: ghost.item.size, params: ghost.item.params });
     return (
       <group

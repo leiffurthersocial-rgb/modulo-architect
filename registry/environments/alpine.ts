@@ -16,6 +16,7 @@ export default {
     { angle: 5.2, distance: 430, radius: 230, height: 240, material: 'rock', snow: true },
   ],
   scatter: [
+    { element: 'm-fir-tree-01', count: 16, band: [18, 75], scale: [0.7, 1.05] },
     { element: 'conifer', count: 220, band: [18, 180], scale: [0.8, 1.8] },
     { element: 'boulder', count: 30, band: [5, 90], scale: [0.6, 2] },
     { element: 'shrub', count: 20, band: [3, 40], scale: [0.5, 1] },

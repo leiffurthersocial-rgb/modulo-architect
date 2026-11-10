@@ -20,6 +20,7 @@ import { Onboarding } from './Onboarding';
 import { installToolLifecycle } from '@/features/tools/dispatch';
 import { refreshSelectionOverlay } from '@/features/tools/select';
 import { viewApis } from '@/features/tools/viewApi';
+import { newItem } from '@/store/actions';
 import { installKeyboard } from '@/features/commands/keyboard';
 import { installAutosave } from '@/features/project/io';
 import { loadProject, saveProject } from '@/lib/persistence';
@@ -91,6 +92,7 @@ export default function EditorApp() {
         doc: useDocument,
         editor: useEditor,
         views: viewApis,
+        newItem,
       };
       setReady(true);
     });

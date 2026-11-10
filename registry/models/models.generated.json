@@ -1,0 +1,1311 @@
+{
+  "ArmChair_01": {
+    "name": "Wingback armchair",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["chair"],
+    "id": "m-armchair-01",
+    "asset": "ArmChair_01",
+    "url": "/models/ArmChair_01.glb",
+    "thumb": "/models/ArmChair_01.webp",
+    "size": {
+      "w": 0.848,
+      "d": 0.766,
+      "h": 1.065
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": -0.034
+    },
+    "source": "https://polyhaven.com/a/ArmChair_01"
+  },
+  "Chandelier_01": {
+    "name": "Crystal chandelier",
+    "kind": "furniture",
+    "category": "Lighting",
+    "snap": "ceiling",
+    "light": true,
+    "id": "m-chandelier-01",
+    "asset": "Chandelier_01",
+    "url": "/models/Chandelier_01.glb",
+    "thumb": "/models/Chandelier_01.webp",
+    "size": {
+      "w": 0.746,
+      "d": 0.816,
+      "h": 0.798
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.798,
+      "z": 0.006
+    },
+    "source": "https://polyhaven.com/a/Chandelier_01"
+  },
+  "Chandelier_02": {
+    "name": "Brass chandelier",
+    "kind": "furniture",
+    "category": "Lighting",
+    "snap": "ceiling",
+    "light": true,
+    "id": "m-chandelier-02",
+    "asset": "Chandelier_02",
+    "url": "/models/Chandelier_02.glb",
+    "thumb": "/models/Chandelier_02.webp",
+    "size": {
+      "w": 0.679,
+      "d": 0.619,
+      "h": 0.848
+    },
+    "origin": {
+      "x": -0.001,
+      "y": 0.06,
+      "z": 0.004
+    },
+    "source": "https://polyhaven.com/a/Chandelier_02"
+  },
+  "ClassicConsole_01": {
+    "name": "Console table",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["hallway"],
+    "id": "m-classicconsole-01",
+    "asset": "ClassicConsole_01",
+    "url": "/models/ClassicConsole_01.glb",
+    "thumb": "/models/ClassicConsole_01.webp",
+    "size": {
+      "w": 1.543,
+      "d": 0.589,
+      "h": 0.949
+    },
+    "origin": {
+      "x": 0.001,
+      "y": 0,
+      "z": -0.044
+    },
+    "source": "https://polyhaven.com/a/ClassicConsole_01"
+  },
+  "ClassicNightstand_01": {
+    "name": "Classic nightstand",
+    "kind": "furniture",
+    "category": "Bedroom",
+    "tags": ["bedside"],
+    "id": "m-classicnightstand-01",
+    "asset": "ClassicNightstand_01",
+    "url": "/models/ClassicNightstand_01.glb",
+    "thumb": "/models/ClassicNightstand_01.webp",
+    "size": {
+      "w": 0.568,
+      "d": 0.424,
+      "h": 0.7
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/ClassicNightstand_01"
+  },
+  "GreenChair_01": {
+    "name": "Green lounge chair",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["chair", "armchair"],
+    "id": "m-greenchair-01",
+    "asset": "GreenChair_01",
+    "url": "/models/GreenChair_01.glb",
+    "thumb": "/models/GreenChair_01.webp",
+    "size": {
+      "w": 0.673,
+      "d": 0.664,
+      "h": 1.059
+    },
+    "origin": {
+      "x": -0.001,
+      "y": -0.001,
+      "z": -0.046
+    },
+    "source": "https://polyhaven.com/a/GreenChair_01"
+  },
+  "Lantern_01": {
+    "name": "Lantern",
+    "kind": "furniture",
+    "category": "Lighting",
+    "light": true,
+    "solid": false,
+    "id": "m-lantern-01",
+    "asset": "Lantern_01",
+    "url": "/models/Lantern_01.glb",
+    "thumb": "/models/Lantern_01.webp",
+    "size": {
+      "w": 0.122,
+      "d": 0.097,
+      "h": 0.294
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/Lantern_01"
+  },
+  "Ottoman_01": {
+    "name": "Ottoman",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["footstool", "pouf"],
+    "id": "m-ottoman-01",
+    "asset": "Ottoman_01",
+    "url": "/models/Ottoman_01.glb",
+    "thumb": "/models/Ottoman_01.webp",
+    "size": {
+      "w": 0.885,
+      "d": 0.621,
+      "h": 0.624
+    },
+    "origin": {
+      "x": 0.002,
+      "y": 0,
+      "z": 0.001
+    },
+    "source": "https://polyhaven.com/a/Ottoman_01"
+  },
+  "Rockingchair_01": {
+    "name": "Rocking chair",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["chair"],
+    "id": "m-rockingchair-01",
+    "asset": "Rockingchair_01",
+    "url": "/models/Rockingchair_01.glb",
+    "thumb": "/models/Rockingchair_01.webp",
+    "size": {
+      "w": 0.708,
+      "d": 0.834,
+      "h": 0.995
+    },
+    "origin": {
+      "x": 0,
+      "y": 0.102,
+      "z": 0.062
+    },
+    "source": "https://polyhaven.com/a/Rockingchair_01"
+  },
+  "Shelf_01": {
+    "name": "Wall shelf unit",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["bookcase"],
+    "id": "m-shelf-01",
+    "asset": "Shelf_01",
+    "url": "/models/Shelf_01.glb",
+    "thumb": "/models/Shelf_01.webp",
+    "size": {
+      "w": 1.003,
+      "d": 0.257,
+      "h": 2.08
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0.128
+    },
+    "source": "https://polyhaven.com/a/Shelf_01"
+  },
+  "Sofa_01": {
+    "name": "Classic sofa",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["couch"],
+    "id": "m-sofa-01",
+    "asset": "Sofa_01",
+    "url": "/models/Sofa_01.glb",
+    "thumb": "/models/Sofa_01.webp",
+    "size": {
+      "w": 1.571,
+      "d": 0.658,
+      "h": 0.797
+    },
+    "origin": {
+      "x": 0.008,
+      "y": -0.001,
+      "z": -0.032
+    },
+    "source": "https://polyhaven.com/a/Sofa_01"
+  },
+  "Television_01": {
+    "name": "Retro television",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["tv"],
+    "id": "m-television-01",
+    "asset": "Television_01",
+    "url": "/models/Television_01.glb",
+    "thumb": "/models/Television_01.webp",
+    "size": {
+      "w": 0.6,
+      "d": 0.471,
+      "h": 0.457
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": -0.023
+    },
+    "source": "https://polyhaven.com/a/Television_01"
+  },
+  "anthurium_botany_01": {
+    "name": "Anthurium",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["plant", "flowers"],
+    "tris": 20000,
+    "solid": false,
+    "id": "m-anthurium-botany-01",
+    "asset": "anthurium_botany_01",
+    "url": "/models/anthurium_botany_01.glb",
+    "thumb": "/models/anthurium_botany_01.webp",
+    "size": {
+      "w": 0.896,
+      "d": 1.142,
+      "h": 0.5
+    },
+    "origin": {
+      "x": -0.972,
+      "y": -0.01,
+      "z": 0.081
+    },
+    "source": "https://polyhaven.com/a/anthurium_botany_01"
+  },
+  "antique_ceramic_vase_01": {
+    "name": "Antique vase",
+    "kind": "furniture",
+    "category": "Decor",
+    "solid": false,
+    "id": "m-antique-ceramic-vase-01",
+    "asset": "antique_ceramic_vase_01",
+    "url": "/models/antique_ceramic_vase_01.glb",
+    "thumb": "/models/antique_ceramic_vase_01.webp",
+    "size": {
+      "w": 0.255,
+      "d": 0.255,
+      "h": 0.44
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/antique_ceramic_vase_01"
+  },
+  "brass_vase_03": {
+    "name": "Brass vase",
+    "kind": "furniture",
+    "category": "Decor",
+    "solid": false,
+    "id": "m-brass-vase-03",
+    "asset": "brass_vase_03",
+    "url": "/models/brass_vase_03.glb",
+    "thumb": "/models/brass_vase_03.webp",
+    "size": {
+      "w": 0.083,
+      "d": 0.083,
+      "h": 0.2
+    },
+    "origin": {
+      "x": 0,
+      "y": 0.001,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/brass_vase_03"
+  },
+  "calathea_orbifolia_01": {
+    "name": "Calathea",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["plant"],
+    "tris": 20000,
+    "id": "m-calathea-orbifolia-01",
+    "asset": "calathea_orbifolia_01",
+    "url": "/models/calathea_orbifolia_01.glb",
+    "thumb": "/models/calathea_orbifolia_01.webp",
+    "size": {
+      "w": 0.601,
+      "d": 0.526,
+      "h": 0.424
+    },
+    "origin": {
+      "x": -0.993,
+      "y": -0.008,
+      "z": -0.053
+    },
+    "source": "https://polyhaven.com/a/calathea_orbifolia_01"
+  },
+  "ceramic_vase_01": {
+    "name": "Ceramic vase",
+    "kind": "furniture",
+    "category": "Decor",
+    "solid": false,
+    "id": "m-ceramic-vase-01",
+    "asset": "ceramic_vase_01",
+    "url": "/models/ceramic_vase_01.glb",
+    "thumb": "/models/ceramic_vase_01.webp",
+    "size": {
+      "w": 0.204,
+      "d": 0.204,
+      "h": 0.4
+    },
+    "origin": {
+      "x": 0,
+      "y": 0.001,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/ceramic_vase_01"
+  },
+  "chess_set": {
+    "name": "Chess set",
+    "kind": "furniture",
+    "category": "Decor",
+    "solid": false,
+    "id": "m-chess-set",
+    "asset": "chess_set",
+    "url": "/models/chess_set.glb",
+    "thumb": "/models/chess_set.webp",
+    "size": {
+      "w": 0.553,
+      "d": 0.553,
+      "h": 0.112
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/chess_set"
+  },
+  "coffee_table_round_01": {
+    "name": "Round coffee table",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["table"],
+    "id": "m-coffee-table-round-01",
+    "asset": "coffee_table_round_01",
+    "url": "/models/coffee_table_round_01.glb",
+    "thumb": "/models/coffee_table_round_01.webp",
+    "size": {
+      "w": 1.301,
+      "d": 1.301,
+      "h": 0.491
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.001,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/coffee_table_round_01"
+  },
+  "desk_lamp_arm_01": {
+    "name": "Architect lamp",
+    "kind": "furniture",
+    "category": "Lighting",
+    "light": true,
+    "solid": false,
+    "id": "m-desk-lamp-arm-01",
+    "asset": "desk_lamp_arm_01",
+    "url": "/models/desk_lamp_arm_01.glb",
+    "thumb": "/models/desk_lamp_arm_01.webp",
+    "size": {
+      "w": 0.202,
+      "d": 0.614,
+      "h": 0.893
+    },
+    "origin": {
+      "x": -0.018,
+      "y": -0.088,
+      "z": 0.01
+    },
+    "source": "https://polyhaven.com/a/desk_lamp_arm_01"
+  },
+  "dining_chair_02": {
+    "name": "Bistro chair",
+    "kind": "furniture",
+    "category": "Dining",
+    "tags": ["chair"],
+    "id": "m-dining-chair-02",
+    "asset": "dining_chair_02",
+    "url": "/models/dining_chair_02.glb",
+    "thumb": "/models/dining_chair_02.webp",
+    "size": {
+      "w": 0.434,
+      "d": 0.576,
+      "h": 0.973
+    },
+    "origin": {
+      "x": 0,
+      "y": 0.001,
+      "z": -0.043
+    },
+    "source": "https://polyhaven.com/a/dining_chair_02"
+  },
+  "drawer_cabinet": {
+    "name": "Drawer cabinet",
+    "kind": "furniture",
+    "category": "Office",
+    "tags": ["storage"],
+    "id": "m-drawer-cabinet",
+    "asset": "drawer_cabinet",
+    "url": "/models/drawer_cabinet.glb",
+    "thumb": "/models/drawer_cabinet.webp",
+    "size": {
+      "w": 1.141,
+      "d": 0.488,
+      "h": 1.881
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": -0.004
+    },
+    "source": "https://polyhaven.com/a/drawer_cabinet"
+  },
+  "exterior_aircon_unit": {
+    "name": "AC unit",
+    "kind": "outdoor",
+    "category": "Structures",
+    "tags": ["air conditioning", "heat pump"],
+    "id": "m-exterior-aircon-unit",
+    "asset": "exterior_aircon_unit",
+    "url": "/models/exterior_aircon_unit.glb",
+    "thumb": "/models/exterior_aircon_unit.webp",
+    "size": {
+      "w": 1.8,
+      "d": 0.374,
+      "h": 0.928
+    },
+    "origin": {
+      "x": 0.007,
+      "y": -0.32,
+      "z": -0.029
+    },
+    "source": "https://polyhaven.com/a/exterior_aircon_unit"
+  },
+  "fancy_picture_frame_01": {
+    "name": "Gilded frame",
+    "kind": "furniture",
+    "category": "Decor",
+    "snap": "wall",
+    "elevation": 1.3,
+    "solid": false,
+    "id": "m-fancy-picture-frame-01",
+    "asset": "fancy_picture_frame_01",
+    "url": "/models/fancy_picture_frame_01.glb",
+    "thumb": "/models/fancy_picture_frame_01.webp",
+    "size": {
+      "w": 0.603,
+      "d": 0.02,
+      "h": 0.464
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.232,
+      "z": 0.012
+    },
+    "source": "https://polyhaven.com/a/fancy_picture_frame_01"
+  },
+  "fir_tree_01": {
+    "name": "Fir tree",
+    "kind": "outdoor",
+    "category": "Planting",
+    "tags": ["tree", "conifer"],
+    "tris": 40000,
+    "tex": 1024,
+    "id": "m-fir-tree-01",
+    "asset": "fir_tree_01",
+    "url": "/models/fir_tree_01.glb",
+    "thumb": "/models/fir_tree_01.webp",
+    "size": {
+      "w": 6.401,
+      "d": 6.213,
+      "h": 18.787
+    },
+    "origin": {
+      "x": 0.083,
+      "y": -0.079,
+      "z": -0.333
+    },
+    "source": "https://polyhaven.com/a/fir_tree_01"
+  },
+  "gallinera_table": {
+    "name": "Gallinera table",
+    "kind": "furniture",
+    "category": "Dining",
+    "tags": ["table"],
+    "id": "m-gallinera-table",
+    "asset": "gallinera_table",
+    "url": "/models/gallinera_table.glb",
+    "thumb": "/models/gallinera_table.webp",
+    "size": {
+      "w": 0.83,
+      "d": 0.518,
+      "h": 0.488
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/gallinera_table"
+  },
+  "garden_gnome": {
+    "name": "Garden gnome",
+    "kind": "outdoor",
+    "category": "Furniture",
+    "solid": false,
+    "id": "m-garden-gnome",
+    "asset": "garden_gnome",
+    "url": "/models/garden_gnome.glb",
+    "thumb": "/models/garden_gnome.webp",
+    "size": {
+      "w": 0.258,
+      "d": 0.21,
+      "h": 0.599
+    },
+    "origin": {
+      "x": -0.015,
+      "y": 0,
+      "z": 0.007
+    },
+    "source": "https://polyhaven.com/a/garden_gnome"
+  },
+  "island_tree_01": {
+    "name": "Island tree",
+    "kind": "outdoor",
+    "category": "Planting",
+    "tags": ["tree"],
+    "tris": 40000,
+    "tex": 1024,
+    "id": "m-island-tree-01",
+    "asset": "island_tree_01",
+    "url": "/models/island_tree_01.glb",
+    "thumb": "/models/island_tree_01.webp",
+    "size": {
+      "w": 4.737,
+      "d": 4.806,
+      "h": 5.024
+    },
+    "origin": {
+      "x": 0.042,
+      "y": -0.016,
+      "z": -0.169
+    },
+    "source": "https://polyhaven.com/a/island_tree_01"
+  },
+  "jacaranda_tree": {
+    "name": "Jacaranda",
+    "kind": "outdoor",
+    "category": "Planting",
+    "tags": ["tree", "flowering"],
+    "tris": 45000,
+    "tex": 1024,
+    "id": "m-jacaranda-tree",
+    "asset": "jacaranda_tree",
+    "url": "/models/jacaranda_tree.glb",
+    "thumb": "/models/jacaranda_tree.webp",
+    "size": {
+      "w": 23.943,
+      "d": 18.851,
+      "h": 19.325
+    },
+    "origin": {
+      "x": -0.749,
+      "y": -0.146,
+      "z": -0.517
+    },
+    "source": "https://polyhaven.com/a/jacaranda_tree"
+  },
+  "marble_bust_01": {
+    "name": "Marble bust",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["sculpture", "statue"],
+    "solid": false,
+    "id": "m-marble-bust-01",
+    "asset": "marble_bust_01",
+    "url": "/models/marble_bust_01.glb",
+    "thumb": "/models/marble_bust_01.webp",
+    "size": {
+      "w": 0.272,
+      "d": 0.3,
+      "h": 0.515
+    },
+    "origin": {
+      "x": 0.013,
+      "y": 0,
+      "z": 0.005
+    },
+    "source": "https://polyhaven.com/a/marble_bust_01"
+  },
+  "mid_century_lounge_chair": {
+    "name": "Lounge chair",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["eames", "chair"],
+    "id": "m-mid-century-lounge-chair",
+    "asset": "mid_century_lounge_chair",
+    "url": "/models/mid_century_lounge_chair.glb",
+    "thumb": "/models/mid_century_lounge_chair.webp",
+    "size": {
+      "w": 1.009,
+      "d": 1.19,
+      "h": 1.169
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": -0.066
+    },
+    "source": "https://polyhaven.com/a/mid_century_lounge_chair"
+  },
+  "modern_arm_chair_01": {
+    "name": "Modern armchair",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["chair", "lounge"],
+    "id": "m-modern-arm-chair-01",
+    "asset": "modern_arm_chair_01",
+    "url": "/models/modern_arm_chair_01.glb",
+    "thumb": "/models/modern_arm_chair_01.webp",
+    "size": {
+      "w": 0.82,
+      "d": 0.987,
+      "h": 1.023
+    },
+    "origin": {
+      "x": 0.003,
+      "y": 0,
+      "z": -0.082
+    },
+    "source": "https://polyhaven.com/a/modern_arm_chair_01"
+  },
+  "modern_ceiling_lamp_01": {
+    "name": "Modern ceiling lamp",
+    "kind": "furniture",
+    "category": "Lighting",
+    "snap": "ceiling",
+    "light": true,
+    "id": "m-modern-ceiling-lamp-01",
+    "asset": "modern_ceiling_lamp_01",
+    "url": "/models/modern_ceiling_lamp_01.glb",
+    "thumb": "/models/modern_ceiling_lamp_01.webp",
+    "size": {
+      "w": 0.432,
+      "d": 0.432,
+      "h": 0.952
+    },
+    "origin": {
+      "x": 0,
+      "y": 0.221,
+      "z": 0.002
+    },
+    "source": "https://polyhaven.com/a/modern_ceiling_lamp_01"
+  },
+  "modern_coffee_table_01": {
+    "name": "Modern coffee table",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["table"],
+    "id": "m-modern-coffee-table-01",
+    "asset": "modern_coffee_table_01",
+    "url": "/models/modern_coffee_table_01.glb",
+    "thumb": "/models/modern_coffee_table_01.webp",
+    "size": {
+      "w": 0.6,
+      "d": 1.202,
+      "h": 0.39
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/modern_coffee_table_01"
+  },
+  "modern_wooden_cabinet": {
+    "name": "Modern cabinet",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["sideboard", "storage"],
+    "id": "m-modern-wooden-cabinet",
+    "asset": "modern_wooden_cabinet",
+    "url": "/models/modern_wooden_cabinet.glb",
+    "thumb": "/models/modern_wooden_cabinet.webp",
+    "size": {
+      "w": 2.44,
+      "d": 0.52,
+      "h": 0.68
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": -0.01
+    },
+    "source": "https://polyhaven.com/a/modern_wooden_cabinet"
+  },
+  "ornate_mirror_01": {
+    "name": "Ornate mirror",
+    "kind": "furniture",
+    "category": "Decor",
+    "snap": "wall",
+    "elevation": 0.9,
+    "solid": false,
+    "id": "m-ornate-mirror-01",
+    "asset": "ornate_mirror_01",
+    "url": "/models/ornate_mirror_01.glb",
+    "thumb": "/models/ornate_mirror_01.webp",
+    "size": {
+      "w": 0.487,
+      "d": 0.026,
+      "h": 0.744
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.411,
+      "z": 0.013
+    },
+    "source": "https://polyhaven.com/a/ornate_mirror_01"
+  },
+  "outdoor_table_chair_set_01": {
+    "name": "Patio dining set",
+    "kind": "outdoor",
+    "category": "Furniture",
+    "tags": ["table", "chairs"],
+    "id": "m-outdoor-table-chair-set-01",
+    "asset": "outdoor_table_chair_set_01",
+    "url": "/models/outdoor_table_chair_set_01.glb",
+    "thumb": "/models/outdoor_table_chair_set_01.webp",
+    "size": {
+      "w": 0.742,
+      "d": 1.717,
+      "h": 0.859
+    },
+    "origin": {
+      "x": -0.055,
+      "y": -0.006,
+      "z": 0.048
+    },
+    "source": "https://polyhaven.com/a/outdoor_table_chair_set_01"
+  },
+  "pachira_aquatica_01": {
+    "name": "Money tree",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["plant"],
+    "tris": 25000,
+    "id": "m-pachira-aquatica-01",
+    "asset": "pachira_aquatica_01",
+    "url": "/models/pachira_aquatica_01.glb",
+    "thumb": "/models/pachira_aquatica_01.webp",
+    "size": {
+      "w": 1.055,
+      "d": 0.997,
+      "h": 1.902
+    },
+    "origin": {
+      "x": 4.033,
+      "y": -0.016,
+      "z": -0.092
+    },
+    "source": "https://polyhaven.com/a/pachira_aquatica_01"
+  },
+  "painted_wooden_chair_01": {
+    "name": "Painted chair",
+    "kind": "furniture",
+    "category": "Dining",
+    "tags": ["chair"],
+    "id": "m-painted-wooden-chair-01",
+    "asset": "painted_wooden_chair_01",
+    "url": "/models/painted_wooden_chair_01.glb",
+    "thumb": "/models/painted_wooden_chair_01.webp",
+    "size": {
+      "w": 0.432,
+      "d": 0.54,
+      "h": 0.956
+    },
+    "origin": {
+      "x": -0.002,
+      "y": -0.001,
+      "z": -0.031
+    },
+    "source": "https://polyhaven.com/a/painted_wooden_chair_01"
+  },
+  "pine_tree_01": {
+    "name": "Pine tree",
+    "kind": "outdoor",
+    "category": "Planting",
+    "tags": ["tree", "conifer"],
+    "tris": 40000,
+    "tex": 1024,
+    "id": "m-pine-tree-01",
+    "asset": "pine_tree_01",
+    "url": "/models/pine_tree_01.glb",
+    "thumb": "/models/pine_tree_01.webp",
+    "size": {
+      "w": 7.476,
+      "d": 8.109,
+      "h": 20.243
+    },
+    "origin": {
+      "x": -5.706,
+      "y": -0.079,
+      "z": -0.343
+    },
+    "source": "https://polyhaven.com/a/pine_tree_01"
+  },
+  "plastic_monobloc_chair_01": {
+    "name": "Garden chair",
+    "kind": "outdoor",
+    "category": "Furniture",
+    "tags": ["chair", "plastic"],
+    "id": "m-plastic-monobloc-chair-01",
+    "asset": "plastic_monobloc_chair_01",
+    "url": "/models/plastic_monobloc_chair_01.glb",
+    "thumb": "/models/plastic_monobloc_chair_01.webp",
+    "size": {
+      "w": 0.642,
+      "d": 0.628,
+      "h": 0.88
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": -0.022
+    },
+    "source": "https://polyhaven.com/a/plastic_monobloc_chair_01"
+  },
+  "potted_plant_01": {
+    "name": "Potted palm",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["plant"],
+    "tris": 25000,
+    "id": "m-potted-plant-01",
+    "asset": "potted_plant_01",
+    "url": "/models/potted_plant_01.glb",
+    "thumb": "/models/potted_plant_01.webp",
+    "size": {
+      "w": 0.587,
+      "d": 0.634,
+      "h": 1.336
+    },
+    "origin": {
+      "x": -0.045,
+      "y": 0,
+      "z": -0.047
+    },
+    "source": "https://polyhaven.com/a/potted_plant_01"
+  },
+  "potted_plant_02": {
+    "name": "Potted fern",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["plant"],
+    "tris": 25000,
+    "id": "m-potted-plant-02",
+    "asset": "potted_plant_02",
+    "url": "/models/potted_plant_02.glb",
+    "thumb": "/models/potted_plant_02.webp",
+    "size": {
+      "w": 0.701,
+      "d": 0.657,
+      "h": 0.841
+    },
+    "origin": {
+      "x": -0.046,
+      "y": 0,
+      "z": -0.092
+    },
+    "source": "https://polyhaven.com/a/potted_plant_02"
+  },
+  "potted_plant_04": {
+    "name": "Succulent pot",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["plant"],
+    "tris": 20000,
+    "solid": false,
+    "id": "m-potted-plant-04",
+    "asset": "potted_plant_04",
+    "url": "/models/potted_plant_04.glb",
+    "thumb": "/models/potted_plant_04.webp",
+    "size": {
+      "w": 0.168,
+      "d": 0.185,
+      "h": 0.267
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0.008
+    },
+    "source": "https://polyhaven.com/a/potted_plant_04"
+  },
+  "round_wooden_table_01": {
+    "name": "Round dining table",
+    "kind": "furniture",
+    "category": "Dining",
+    "tags": ["table"],
+    "id": "m-round-wooden-table-01",
+    "asset": "round_wooden_table_01",
+    "url": "/models/round_wooden_table_01.glb",
+    "thumb": "/models/round_wooden_table_01.webp",
+    "size": {
+      "w": 1.399,
+      "d": 1.399,
+      "h": 1.005
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.001,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/round_wooden_table_01"
+  },
+  "side_table_01": {
+    "name": "Wooden side table",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["end table"],
+    "id": "m-side-table-01",
+    "asset": "side_table_01",
+    "url": "/models/side_table_01.glb",
+    "thumb": "/models/side_table_01.webp",
+    "size": {
+      "w": 0.55,
+      "d": 0.45,
+      "h": 0.551
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.002,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/side_table_01"
+  },
+  "sofa_02": {
+    "name": "Chesterfield sofa",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["couch", "leather"],
+    "id": "m-sofa-02",
+    "asset": "sofa_02",
+    "url": "/models/sofa_02.glb",
+    "thumb": "/models/sofa_02.webp",
+    "size": {
+      "w": 1.807,
+      "d": 0.818,
+      "h": 0.71
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": -0.069
+    },
+    "source": "https://polyhaven.com/a/sofa_02"
+  },
+  "sofa_03": {
+    "name": "Mid-century sofa",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["couch"],
+    "id": "m-sofa-03",
+    "asset": "sofa_03",
+    "url": "/models/sofa_03.glb",
+    "thumb": "/models/sofa_03.webp",
+    "size": {
+      "w": 2.731,
+      "d": 0.925,
+      "h": 1.118
+    },
+    "origin": {
+      "x": 0,
+      "y": 0.001,
+      "z": -0.001
+    },
+    "source": "https://polyhaven.com/a/sofa_03"
+  },
+  "stone_fire_pit": {
+    "name": "Stone fire pit",
+    "kind": "outdoor",
+    "category": "Furniture",
+    "id": "m-stone-fire-pit",
+    "asset": "stone_fire_pit",
+    "url": "/models/stone_fire_pit.glb",
+    "thumb": "/models/stone_fire_pit.webp",
+    "size": {
+      "w": 1.448,
+      "d": 1.433,
+      "h": 0.388
+    },
+    "origin": {
+      "x": -0.012,
+      "y": -0.193,
+      "z": 0.002
+    },
+    "source": "https://polyhaven.com/a/stone_fire_pit"
+  },
+  "street_lamp_01": {
+    "name": "Street lamp",
+    "kind": "outdoor",
+    "category": "Lighting",
+    "light": true,
+    "id": "m-street-lamp-01",
+    "asset": "street_lamp_01",
+    "url": "/models/street_lamp_01.glb",
+    "thumb": "/models/street_lamp_01.webp",
+    "size": {
+      "w": 0.704,
+      "d": 0.387,
+      "h": 3.871
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/street_lamp_01"
+  },
+  "throw_pillows_01": {
+    "name": "Throw pillows",
+    "kind": "furniture",
+    "category": "Decor",
+    "tags": ["cushions"],
+    "solid": false,
+    "id": "m-throw-pillows-01",
+    "asset": "throw_pillows_01",
+    "url": "/models/throw_pillows_01.glb",
+    "thumb": "/models/throw_pillows_01.webp",
+    "size": {
+      "w": 0.94,
+      "d": 0.452,
+      "h": 0.45
+    },
+    "origin": {
+      "x": 0.006,
+      "y": -0.002,
+      "z": 0.05
+    },
+    "source": "https://polyhaven.com/a/throw_pillows_01"
+  },
+  "tree_small_02": {
+    "name": "Young tree",
+    "kind": "outdoor",
+    "category": "Planting",
+    "tags": ["tree"],
+    "tris": 30000,
+    "tex": 1024,
+    "id": "m-tree-small-02",
+    "asset": "tree_small_02",
+    "url": "/models/tree_small_02.glb",
+    "thumb": "/models/tree_small_02.webp",
+    "size": {
+      "w": 2.884,
+      "d": 4.142,
+      "h": 4.543
+    },
+    "origin": {
+      "x": 0.146,
+      "y": -0.022,
+      "z": 0.729
+    },
+    "source": "https://polyhaven.com/a/tree_small_02"
+  },
+  "tree_stump_01": {
+    "name": "Tree stump",
+    "kind": "outdoor",
+    "category": "Planting",
+    "tags": ["log"],
+    "tris": 12000,
+    "id": "m-tree-stump-01",
+    "asset": "tree_stump_01",
+    "url": "/models/tree_stump_01.glb",
+    "thumb": "/models/tree_stump_01.webp",
+    "size": {
+      "w": 1.426,
+      "d": 1.59,
+      "h": 0.572
+    },
+    "origin": {
+      "x": -0.072,
+      "y": -0.193,
+      "z": 0.035
+    },
+    "source": "https://polyhaven.com/a/tree_stump_01"
+  },
+  "vintage_cabinet_01": {
+    "name": "Vintage cabinet",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["cupboard", "storage"],
+    "id": "m-vintage-cabinet-01",
+    "asset": "vintage_cabinet_01",
+    "url": "/models/vintage_cabinet_01.glb",
+    "thumb": "/models/vintage_cabinet_01.webp",
+    "size": {
+      "w": 2.022,
+      "d": 0.67,
+      "h": 2.235
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.001,
+      "z": 0.057
+    },
+    "source": "https://polyhaven.com/a/vintage_cabinet_01"
+  },
+  "vintage_grandfather_clock_01": {
+    "name": "Grandfather clock",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["clock"],
+    "id": "m-vintage-grandfather-clock-01",
+    "asset": "vintage_grandfather_clock_01",
+    "url": "/models/vintage_grandfather_clock_01.glb",
+    "thumb": "/models/vintage_grandfather_clock_01.webp",
+    "size": {
+      "w": 0.626,
+      "d": 0.427,
+      "h": 2.191
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0.025
+    },
+    "source": "https://polyhaven.com/a/vintage_grandfather_clock_01"
+  },
+  "vintage_wooden_drawer_01": {
+    "name": "Vintage drawers",
+    "kind": "furniture",
+    "category": "Bedroom",
+    "tags": ["dresser"],
+    "id": "m-vintage-wooden-drawer-01",
+    "asset": "vintage_wooden_drawer_01",
+    "url": "/models/vintage_wooden_drawer_01.glb",
+    "thumb": "/models/vintage_wooden_drawer_01.webp",
+    "size": {
+      "w": 1.715,
+      "d": 1.007,
+      "h": 1.091
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.001,
+      "z": 0.063
+    },
+    "source": "https://polyhaven.com/a/vintage_wooden_drawer_01"
+  },
+  "wicker_basket_01": {
+    "name": "Wicker basket",
+    "kind": "furniture",
+    "category": "Decor",
+    "solid": false,
+    "id": "m-wicker-basket-01",
+    "asset": "wicker_basket_01",
+    "url": "/models/wicker_basket_01.glb",
+    "thumb": "/models/wicker_basket_01.webp",
+    "size": {
+      "w": 0.383,
+      "d": 0.295,
+      "h": 0.117
+    },
+    "origin": {
+      "x": 0,
+      "y": -0.001,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/wicker_basket_01"
+  },
+  "wine_barrel_01": {
+    "name": "Barrel planter",
+    "kind": "outdoor",
+    "category": "Planting",
+    "id": "m-wine-barrel-01",
+    "asset": "wine_barrel_01",
+    "url": "/models/wine_barrel_01.glb",
+    "thumb": "/models/wine_barrel_01.webp",
+    "size": {
+      "w": 0.742,
+      "d": 0.756,
+      "h": 0.871
+    },
+    "origin": {
+      "x": 0,
+      "y": 0.001,
+      "z": 0.007
+    },
+    "source": "https://polyhaven.com/a/wine_barrel_01"
+  },
+  "wooden_display_shelves_01": {
+    "name": "Display shelves",
+    "kind": "furniture",
+    "category": "Living",
+    "tags": ["bookcase", "shelving"],
+    "id": "m-wooden-display-shelves-01",
+    "asset": "wooden_display_shelves_01",
+    "url": "/models/wooden_display_shelves_01.glb",
+    "thumb": "/models/wooden_display_shelves_01.webp",
+    "size": {
+      "w": 0.371,
+      "d": 1.078,
+      "h": 1.556
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/wooden_display_shelves_01"
+  },
+  "wooden_picnic_table": {
+    "name": "Picnic table",
+    "kind": "outdoor",
+    "category": "Furniture",
+    "tags": ["bench"],
+    "id": "m-wooden-picnic-table",
+    "asset": "wooden_picnic_table",
+    "url": "/models/wooden_picnic_table.glb",
+    "thumb": "/models/wooden_picnic_table.webp",
+    "size": {
+      "w": 2.241,
+      "d": 3.022,
+      "h": 0.746
+    },
+    "origin": {
+      "x": -0.001,
+      "y": 0,
+      "z": 0.01
+    },
+    "source": "https://polyhaven.com/a/wooden_picnic_table"
+  },
+  "wooden_table_02": {
+    "name": "Farmhouse table",
+    "kind": "furniture",
+    "category": "Dining",
+    "tags": ["table", "rustic"],
+    "id": "m-wooden-table-02",
+    "asset": "wooden_table_02",
+    "url": "/models/wooden_table_02.glb",
+    "thumb": "/models/wooden_table_02.webp",
+    "size": {
+      "w": 1.134,
+      "d": 0.706,
+      "h": 0.8
+    },
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "source": "https://polyhaven.com/a/wooden_table_02"
+  }
+}

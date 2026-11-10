@@ -21,6 +21,7 @@ export default {
     { angle: 2.2, distance: 260, radius: 120, height: 24, material: 'meadow', rounded: true },
   ],
   scatter: [
+    { element: 'm-pine-tree-01', count: 4, band: [20, 60], scale: [0.6, 0.85], inland: true },
     { element: 'boulder', count: 40, band: [2, 60], scale: [0.6, 2.2] },
     { element: 'ornamental-grass', count: 50, band: [1, 40], scale: [0.6, 1.2] },
     { element: 'conifer', count: 10, band: [20, 90], scale: [0.6, 1.0], inland: true },
