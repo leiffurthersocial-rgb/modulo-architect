@@ -19,6 +19,25 @@ pnpm e2e                                   # Playwright (builds must exist; star
 
 Requires Node 20+. Zero environment variables. Deploys to Vercel as a standard Next.js app (`vercel.json` pins pnpm).
 
+## Deploy to Vercel
+
+No environment variables are needed. Either:
+
+- **Dashboard:** vercel.com → Add New → Project → import `leiffurthersocial-rgb/modulo-architect` → Deploy. Framework, install (`pnpm install --frozen-lockfile`) and build (`pnpm build`) come from `vercel.json`. Every push to a branch then gets a preview URL.
+- **CLI:**
+
+```bash
+npx vercel@latest login
+```
+
+```bash
+npx vercel@latest
+```
+
+```bash
+npx vercel@latest --prod
+```
+
 ## Using it (30-second version)
 
 - **Start designing** → press **R** and drag a room, or click a quick room (Bedroom, Kitchen…). Type `4x3` + Enter for exact sizes.
