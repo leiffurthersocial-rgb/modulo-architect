@@ -176,6 +176,7 @@ function twoStorey(p: P) {
     length2: 1.6,
     turn: 'left',
     rise: null,
+    opening: true,
     material: 'floor-oak',
   });
   const upId = ops.addLevel(p, { copyWalls: false });

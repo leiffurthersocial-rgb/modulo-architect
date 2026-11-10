@@ -35,6 +35,11 @@ Defaults chosen while building autonomously. Each is easy to revisit.
 
 - Tools receive both the working-plane point and the actual surface hit point. Doors, windows and wall-snapped items prefer the wall under the cursor, so aiming at a wall face above the floor no longer lands on a wall behind it.
 
+## Stairwells (v3)
+
+- A stair that reaches the next level cuts its footprint out of every floor above it (room floors and free slabs) and out of its own level's ceiling, using a real polygon difference (`polygon-clipping`), so partial overlaps across walls or rooms work. Previously the cut only happened when the stair sat entirely inside one room.
+- `stair.opening` (default true, schema-additive) turns the cut off per stair; stairs with a custom rise that doesn't reach the next level never cut.
+
 ## View mode and preferences (v2)
 
 - View mode reuses the document's read-only flag (the same one the shared viewer uses): mutations, transactions and undo/redo are no-ops, and the inspector renders inside a disabled `<fieldset>`.

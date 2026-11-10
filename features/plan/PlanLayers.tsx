@@ -20,6 +20,7 @@ export const LevelPlan = memo(function LevelPlan({
   units,
   showDims,
   facade,
+  voids = [],
 }: {
   level: Level;
   k: number;
@@ -27,6 +28,8 @@ export const LevelPlan = memo(function LevelPlan({
   units: UnitSystem;
   showDims: boolean;
   facade: string;
+  /** Stairwell openings in this floor (from stairs on the level below). */
+  voids?: Vec2[][];
 }) {
   const d = deriveLevel(level);
   void facade;
@@ -63,6 +66,35 @@ export const LevelPlan = memo(function LevelPlan({
             fillOpacity={hasFloor ? 0.22 : 1}
             stroke="none"
           />
+        );
+      })}
+      {/* Stairwell openings: open to the level below */}
+      {voids.map((v, i) => {
+        const c = {
+          x: v.reduce((a, p) => a + p.x, 0) / v.length,
+          y: v.reduce((a, p) => a + p.y, 0) / v.length,
+        };
+        return (
+          <g key={`void-${i}`} pointerEvents="none" data-testid="stair-void">
+            <polygon points={pts(v)} fill="var(--bg)" />
+            <polygon
+              points={pts(v)}
+              fill="url(#no-floor)"
+              stroke="var(--accent)"
+              strokeWidth={1.25 * k}
+              strokeDasharray={`${5 * k} ${3 * k}`}
+            />
+            <text
+              x={c.x}
+              y={c.y}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize={9.5 * k}
+              fill="var(--accent)"
+            >
+              Open to below
+            </text>
+          </g>
         );
       })}
       {/* Free-standing floor slabs */}

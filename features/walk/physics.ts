@@ -10,6 +10,7 @@ import { computeWallShapes, wallPieces } from '@/core/geometry/walls';
 import { nodeMap, roomPolygon } from '@/core/geometry/graph';
 import { stairHeightAt, stairLayout, type StairLayout } from '@/core/geometry/stairs';
 import { itemBox } from '@/core/model/footprint';
+import { stairOpenings } from '@/core/model/voids';
 import { getElement } from '@/registry';
 
 export interface Obstacle {
@@ -66,9 +67,7 @@ export function buildWalkWorld(project: Project): WalkWorld {
         });
     }
     const below = levels[i - 1];
-    const holes = below
-      ? below.stairs.filter((s) => s.rise === null).flatMap((s) => stairLayout(s, below.height).footprint)
-      : [];
+    const holes = below ? stairOpenings(below) : [];
     for (const s of level.slabs) if (!s.hidden) surfaces.push({ poly: s.points, y: level.elevation, holes });
     for (const r of level.rooms) {
       if (r.floor === false && i > 0) continue;

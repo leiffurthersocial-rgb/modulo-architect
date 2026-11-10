@@ -142,3 +142,44 @@ test('new catalog elements are placeable', async ({ page }) => {
   const p = await project(page);
   expect(p.exterior.items.map((i: any) => i.type)).toEqual(['hot-tub']);
 });
+
+test('stairs open the floor above, and the opening can be toggled', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('modulo:onboarded', '1'));
+  await page.goto('/editor?template=two-storey');
+  await page.waitForFunction(() => !!(window as any).__modulo);
+  const p = await project(page);
+  const [ground, upper] = p.building.levels;
+  // Upper floor in 2D shows the stairwell.
+  await page.evaluate((id: string) => {
+    const e = (window as any).__modulo.editor.getState();
+    e.setActiveLevel(id);
+    e.setView('2d');
+  }, upper.id);
+  await expect(page.getByTestId('stair-void')).toHaveCount(1);
+  await page.screenshot({ path: `${shotDir}/v3-stairwell-2d.png` });
+  // 3D with all levels visible.
+  await page.evaluate(() => {
+    const e = (window as any).__modulo.editor.getState();
+    e.setView('3d');
+    e.setLevelDisplay('isolate');
+  });
+  await page.waitForTimeout(2000);
+  await page.screenshot({ path: `${shotDir}/v3-stairwell-3d.png` });
+  // Toggle it off from the stair inspector on the ground floor.
+  await page.evaluate(
+    ([gid, sid]: string[]) => {
+      const e = (window as any).__modulo.editor.getState();
+      e.setActiveLevel(gid);
+      e.select([sid]);
+    },
+    [ground.id, ground.stairs[0].id],
+  );
+  await page.getByRole('switch', { name: 'Cut an opening in the floor above' }).click();
+  expect((await project(page)).building.levels[0].stairs[0].opening).toBe(false);
+  await page.evaluate((id: string) => {
+    const e = (window as any).__modulo.editor.getState();
+    e.setActiveLevel(id);
+    e.setView('2d');
+  }, upper.id);
+  await expect(page.getByTestId('stair-void')).toHaveCount(0);
+});

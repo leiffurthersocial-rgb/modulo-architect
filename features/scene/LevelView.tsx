@@ -8,8 +8,9 @@ import { getThreeMaterial } from './materials';
 import { OpeningView } from './OpeningView';
 import { ItemsLayer } from './ItemsLayer';
 import { StairView } from './StairView';
-import { pointInPolygon } from '@/core/geometry/polygon';
-import { stairLayout } from '@/core/geometry/stairs';
+import { stairOpenings } from '@/core/model/voids';
+import { subtract, type Region } from '@/core/geometry/clip';
+import type { Vec2 } from '@/core/geometry/vec2';
 
 export type Variant = 'normal' | 'ghost';
 
@@ -34,11 +35,9 @@ export function LevelView({
   const below = levelBelow(project, level);
   const above = levelAbove(project, level);
 
-  // Stair voids: stairs on the level below that climb up to this one.
-  const holes = useMemo(() => {
-    if (!below) return [];
-    return below.stairs.filter((s) => s.rise === null).flatMap((s) => stairLayout(s, below.height).footprint);
-  }, [below]);
+  // Stairwells: stairs on the level below cut this floor; this level's own stairs cut its ceiling.
+  const voids = useMemo(() => (below ? stairOpenings(below) : []), [below]);
+  const ceilingVoids = useMemo(() => stairOpenings(level), [level]);
 
   const ceilingY = level.elevation + level.height - (above ? above.floorThickness : 0) - 0.002;
 
@@ -56,14 +55,13 @@ export function LevelView({
         const dr = derived.rooms.find((r) => r.id === room.id);
         if (!dr || dr.polygon.length < 3) return null;
         const hasFloor = room.floor !== false;
-        const roomHoles = holes.filter((h) => h.every((p) => pointInPolygon(p, dr.polygon)));
         return (
           <group key={room.id}>
             {hasFloor && (
               <FloorSlab
                 id={room.id}
                 polygon={dr.polygon}
-                holes={roomHoles}
+                cuts={voids}
                 top={level.elevation + 0.001}
                 thickness={level.floorThickness}
                 material={getThreeMaterial(room.floorMaterial, variant)}
@@ -73,7 +71,7 @@ export function LevelView({
             {showCeilings && (
               <Ceiling
                 polygon={dr.polygon}
-                holes={roomHoles.length ? [] : []}
+                cuts={ceilingVoids}
                 y={ceilingY}
                 material={getThreeMaterial(room.ceilingMaterial)}
               />
@@ -87,7 +85,7 @@ export function LevelView({
             key={s.id}
             id={s.id}
             polygon={s.points}
-            holes={holes.filter((h) => h.every((p) => pointInPolygon(p, s.points)))}
+            cuts={voids}
             top={level.elevation + 0.0005}
             thickness={s.thickness}
             material={getThreeMaterial(s.material, variant)}
@@ -127,31 +125,36 @@ export function LevelView({
   );
 }
 
+function regionShape(r: Region) {
+  const shape = new THREE.Shape(r.outer.map((p) => new THREE.Vector2(p.x, p.y)));
+  for (const h of r.holes) shape.holes.push(new THREE.Path(h.map((p) => new THREE.Vector2(p.x, p.y))));
+  return shape;
+}
+
 function FloorSlab({
   id,
   polygon,
-  holes,
+  cuts,
   top,
   thickness,
   material,
   shadows,
 }: {
   id: string;
-  polygon: { x: number; y: number }[];
-  holes: { x: number; y: number }[][];
+  polygon: Vec2[];
+  cuts: Vec2[][];
   top: number;
   thickness: number;
   material: THREE.Material;
   shadows: boolean;
 }) {
   const geometry = useMemo(() => {
-    const shape = new THREE.Shape(polygon.map((p) => new THREE.Vector2(p.x, p.y)));
-    for (const h of holes) shape.holes.push(new THREE.Path(h.map((p) => new THREE.Vector2(p.x, p.y))));
-    const g = new THREE.ExtrudeGeometry(shape, { depth: thickness, bevelEnabled: false });
+    const shapes = subtract(polygon, cuts).map(regionShape);
+    const g = new THREE.ExtrudeGeometry(shapes, { depth: thickness, bevelEnabled: false });
     g.rotateX(Math.PI / 2);
     g.translate(0, top, 0);
     return g;
-  }, [polygon, holes, top, thickness]);
+  }, [polygon, cuts, top, thickness]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   return (
     <mesh
@@ -166,21 +169,21 @@ function FloorSlab({
 
 function Ceiling({
   polygon,
+  cuts,
   y,
   material,
 }: {
-  polygon: { x: number; y: number }[];
-  holes: unknown[];
+  polygon: Vec2[];
+  cuts: Vec2[][];
   y: number;
   material: THREE.Material;
 }) {
   const geometry = useMemo(() => {
-    const shape = new THREE.Shape(polygon.map((p) => new THREE.Vector2(p.x, p.y)));
-    const g = new THREE.ShapeGeometry(shape);
+    const g = new THREE.ShapeGeometry(subtract(polygon, cuts).map(regionShape));
     g.rotateX(Math.PI / 2);
     g.translate(0, y, 0);
     return g;
-  }, [polygon, y]);
+  }, [polygon, cuts, y]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   return <mesh geometry={geometry} material={material} receiveShadow />;
 }

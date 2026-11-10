@@ -38,6 +38,7 @@ export const stairTool: Tool = {
       length2: 1.6,
       turn: 'left',
       rise: null,
+      opening: true,
       material: DEFAULT_MATERIALS.stair,
     };
     toolUI().set({
@@ -55,8 +56,12 @@ export const stairTool: Tool = {
     });
     editor().select([id]);
     const levels = doc().project.building.levels;
-    if (levels[levels.length - 1]!.id === lid)
-      editor().notify('Stairs added · add a level above to climb to');
+    const up = levels[levels.findIndex((l) => l.id === lid) + 1];
+    editor().notify(
+      up
+        ? `Stairs added · stairwell opened in the ${up.name} floor (toggle it in the inspector)`
+        : 'Stairs added · add a level above and the stairwell opens automatically',
+    );
     editor().setTool('select');
     return true;
   },

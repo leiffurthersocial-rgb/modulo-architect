@@ -7,8 +7,15 @@ import { ModelNumber, mutate } from './fields';
 import { EntityActions, Readout } from './common';
 import { findEntity } from '@/core/model/entities';
 import { stairLayout } from '@/core/geometry/stairs';
-import { formatLength } from '@/core/units/units';
+import { formatArea, formatLength } from '@/core/units/units';
 import { useDocument } from '@/store/document';
+import { useEditor } from '@/store/editor';
+import { Switch } from '@/components/ui/Switch';
+import { Button } from '@/components/ui/Button';
+import { ArrowUpToLine, Plus } from 'lucide-react';
+import { addLevel } from '@/store/actions';
+import { stairReachesNext } from '@/core/model/voids';
+import { area } from '@/core/geometry/polygon';
 
 export function StairInspector({ stair, level }: { stair: Stair; level: Level }) {
   const u = useDocument((s) => s.project.settings.units);
@@ -17,6 +24,10 @@ export function StairInspector({ stair, level }: { stair: Stair; level: Level })
     if (ref?.kind === 'stair') fn(ref.entity);
   };
   const lay = stairLayout(stair, stair.rise ?? level.height);
+  const levels = useDocument((s) => s.project.building.levels);
+  const above = levels[levels.findIndex((l) => l.id === level.id) + 1];
+  const reaches = stairReachesNext(stair, level);
+  const openArea = lay.footprint.reduce((a, poly) => a + area(poly), 0);
   return (
     <>
       <Section title="Shape">
@@ -99,6 +110,52 @@ export function StairInspector({ stair, level }: { stair: Stair; level: Level })
         />
         <Readout label="Steps" value={`${lay.count} × ${formatLength(lay.riser, u)}`} />
         <Readout label="Going" value={formatLength(lay.tread, u)} />
+      </Section>
+      <Section title="Floor above">
+        {above ? (
+          <>
+            <LabeledRow label="Cut stairwell opening">
+              <Switch
+                label="Cut an opening in the floor above"
+                checked={stair.opening !== false}
+                onChange={(on) =>
+                  mutate(on ? 'Cut stairwell' : 'Close stairwell', (d) =>
+                    set((s) => void (s.opening = on))(d as Project),
+                  )
+                }
+              />
+            </LabeledRow>
+            <p className="text-xs text-fg-subtle">
+              {!reaches
+                ? `This stair does not reach ${above.name}, so no opening is cut.`
+                : stair.opening !== false
+                  ? `The ${above.name} floor and this level's ceiling are open above the stairs (${formatArea(openArea, u)}).`
+                  : `${above.name} keeps its floor here.`}
+            </p>
+            <Button
+              size="sm"
+              variant="secondary"
+              icon={<ArrowUpToLine className="h-3.5 w-3.5" />}
+              onClick={() => useEditor.getState().setActiveLevel(above.id)}
+            >
+              Go to {above.name}
+            </Button>
+          </>
+        ) : (
+          <>
+            <p className="text-xs text-fg-subtle">
+              There is no level above yet. Add one and the stairwell is cut automatically.
+            </p>
+            <Button
+              size="sm"
+              variant="secondary"
+              icon={<Plus className="h-3.5 w-3.5" />}
+              onClick={() => addLevel(true)}
+            >
+              Add a level above
+            </Button>
+          </>
+        )}
       </Section>
       <Section title="Finish">
         <MaterialPicker

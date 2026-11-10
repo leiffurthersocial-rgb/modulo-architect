@@ -85,6 +85,8 @@ export const StairSchema = z.object({
   turn: z.enum(['left', 'right']).default('left'),
   /** null = rise to the next level. */
   rise: num.positive().nullable(),
+  /** Cut a stairwell into the floor above (and this level's ceiling). */
+  opening: z.boolean().default(true),
   material: z.string(),
   ...flags,
 });

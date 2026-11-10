@@ -48,6 +48,7 @@ describe('stairs', () => {
     length2: 1.6,
     turn: 'left',
     rise: null,
+    opening: true,
     material: 'floor-oak',
   };
   it('picks comfortable risers', () => {

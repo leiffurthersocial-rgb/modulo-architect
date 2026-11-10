@@ -13,6 +13,7 @@ import { entityOutline } from '@/core/model/footprint';
 import { outlineCenter } from '@/features/tools/select';
 import { bounds } from '@/core/geometry/polygon';
 import { smartStep } from '@/core/snapping/snap';
+import { stairOpenings } from '@/core/model/voids';
 
 function fitBuilding(w: number, h: number, left = 0) {
   const p = useDocument.getState().project;
@@ -315,6 +316,7 @@ export default function PlanView() {
         )}
         <LevelPlan
           level={active}
+          voids={below ? stairOpenings(below) : []}
           k={k}
           units={project.settings.units}
           showDims={project.settings.showDimensions}
